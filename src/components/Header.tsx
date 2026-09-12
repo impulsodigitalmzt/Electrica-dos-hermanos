@@ -67,14 +67,12 @@ export function Header({ query, onQueryChange, onFilter }: Props) {
             type="button"
             onClick={() => setAbierto(true)}
             className="relative ml-auto inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-muted"
-            aria-label="Abrir cuenta"
+            aria-label={`Abrir carrito, ${piezas} productos`}
           >
             <IconCart />
-            {piezas > 0 ? (
-              <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-accent-foreground">
-                {piezas}
-              </span>
-            ) : null}
+            <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-accent-foreground">
+              {piezas}
+            </span>
           </button>
         </div>
         <div className="px-4 pb-3 md:hidden">

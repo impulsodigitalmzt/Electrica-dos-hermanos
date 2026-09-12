@@ -3,13 +3,12 @@ import { placeholderProducto } from "../lib/api";
 import { precioMx } from "../lib/format";
 import { IconClose } from "../lib/icons";
 
+const ENVIO_GRATIS_DESDE = 2500;
+
 export function CartDrawer() {
   const { abierto, setAbierto, lineas, cambiarCantidad, quitar, vaciar, piezas, total } = useCart();
-  const paquetes = new Map<string, string>();
-  for (const linea of lineas) {
-    if (linea.paqueteId && linea.paqueteTitulo) paquetes.set(linea.paqueteId, linea.paqueteTitulo);
-  }
-  const sueltas = lineas.filter((l) => !l.paqueteId);
+  const progresoEnvio = Math.min(100, Math.round((total / ENVIO_GRATIS_DESDE) * 100));
+  const faltaEnvio = Math.max(0, ENVIO_GRATIS_DESDE - total);
 
   return (
     <>
@@ -25,66 +24,65 @@ export function CartDrawer() {
       >
         <header className="flex items-start justify-between border-b border-border px-5 py-4">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">Cuenta abierta</p>
-            <h2 className="text-xl font-bold">Tu mostrador</h2>
+            <h2 className="text-xl font-bold">Tu carrito ({piezas})</h2>
             <p className="text-sm text-muted-foreground">
-              {piezas} {piezas === 1 ? "pieza" : "piezas"} · se acumula todo el hilo
+              {piezas === 0 ? "Aún no hay productos" : `${piezas} ${piezas === 1 ? "artículo" : "artículos"}`}
             </p>
           </div>
           <button
             type="button"
             onClick={() => setAbierto(false)}
             className="rounded-md p-2 text-muted-foreground hover:bg-muted"
-            aria-label="Cerrar cuenta"
+            aria-label="Cerrar carrito"
           >
             <IconClose />
           </button>
         </header>
 
-        <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5">
+        <div className="border-b border-border px-5 py-3">
+          <p className="text-sm font-semibold text-primary">
+            {faltaEnvio === 0 ? "¡Tu envío es gratis!" : `Te faltan ${precioMx(faltaEnvio)} para envío gratis`}
+          </p>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${progresoEnvio}%` }} />
+          </div>
+        </div>
+
+        <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
           {!lineas.length ? (
             <p className="rounded-md bg-muted px-4 py-8 text-center text-sm text-muted-foreground">
-              Aún no hay nada en la cuenta. Agrega piezas sueltas o un paquete de proyecto.
+              Agrega productos destacados para armar tu pedido de demostración.
             </p>
           ) : null}
-
-          {[...paquetes.entries()].map(([id, titulo]) => (
-            <section key={id} className="rounded-md border border-border p-3">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Paquete · {titulo}</p>
-              {lineas
-                .filter((l) => l.paqueteId === id)
-                .map((linea) => (
-                  <LineaKey key={`${id}-${linea.sku}`} linea={linea} onQty={cambiarCantidad} onRemove={quitar} />
-                ))}
-            </section>
+          {lineas.map((linea) => (
+            <LineaKey key={`${linea.paqueteId ?? "suelta"}-${linea.sku}`} linea={linea} onQty={cambiarCantidad} onRemove={quitar} />
           ))}
-
-          {sueltas.length ? (
-            <section>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Piezas sueltas</p>
-              {sueltas.map((linea) => (
-                <LineaKey key={`suelta-${linea.sku}`} linea={linea} onQty={cambiarCantidad} onRemove={quitar} />
-              ))}
-            </section>
-          ) : null}
         </div>
 
         <footer className="space-y-3 border-t border-border px-5 py-4">
           <div className="flex items-center justify-between">
-            <span className="font-medium">Total de la cuenta</span>
+            <span className="font-medium">Subtotal</span>
             <span className="text-2xl font-bold">{precioMx(total)}</span>
           </div>
-          <a
-            href={`https://wa.me/526699407077?text=${encodeURIComponent(
-              `Hola, quiero continuar este pedido de Eléctrica Dos Hermanos (${piezas} piezas, ${precioMx(total)}).`
-            )}`}
-            className="block w-full rounded-md bg-primary py-3 text-center text-sm font-semibold text-primary-foreground hover:bg-navy-soft"
+          <p className="text-xs text-muted-foreground">Impuestos incluidos. Envío al finalizar.</p>
+          <button
+            type="button"
+            disabled={!lineas.length}
+            className="w-full rounded-md bg-accent py-3 text-sm font-semibold text-accent-foreground hover:opacity-90 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
+            onClick={() => {
+              window.open(
+                `https://wa.me/526699407077?text=${encodeURIComponent(
+                  `Hola, quiero finalizar este pedido de Eléctrica Dos Hermanos (${piezas} piezas, ${precioMx(total)}).`
+                )}`,
+                "_blank"
+              );
+            }}
           >
-            Continuar pedido
-          </a>
+            Finalizar compra
+          </button>
           {lineas.length ? (
             <button type="button" onClick={vaciar} className="w-full text-xs text-muted-foreground underline">
-              Vaciar cuenta
+              Vaciar carrito
             </button>
           ) : null}
         </footer>
@@ -105,23 +103,20 @@ function LineaKey({
     precio: number;
     urlImagen?: string;
     paqueteId?: string;
-    categoria?: string;
   };
   onQty: (sku: string, paqueteId: string | undefined, cantidad: number) => void;
   onRemove: (sku: string, paqueteId?: string) => void;
 }) {
   return (
-    <div className="mb-3 flex gap-3">
+    <div className="flex gap-3">
       <img
         src={linea.urlImagen || placeholderProducto({ nombre: linea.nombre, categoria: "pieza" })}
         alt=""
-        className="h-16 w-16 rounded-md border border-border object-contain p-1"
+        className="h-16 w-16 rounded-md border border-border bg-muted object-contain p-1"
       />
       <div className="min-w-0 flex-1">
         <p className="truncate text-sm font-semibold">{linea.nombre}</p>
-        <p className="text-xs text-muted-foreground">
-          {linea.sku} · {precioMx(linea.precio)}
-        </p>
+        <p className="text-sm font-bold">{precioMx(linea.precio)}</p>
         <div className="mt-2 flex items-center gap-2">
           <button
             type="button"

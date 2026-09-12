@@ -2,7 +2,9 @@ export type Producto = {
   sku: string;
   nombre: string;
   categoria: string;
+  marca?: string;
   precio: number;
+  precioAnterior?: number;
   stock: number;
   descripcion: string;
   urlImagen: string;
