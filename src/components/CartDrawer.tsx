@@ -1,6 +1,7 @@
 import { useCart } from "../context/CartContext";
 import { placeholderProducto } from "../lib/api";
 import { precioMx } from "../lib/format";
+import { IconClose } from "../lib/icons";
 
 export function CartDrawer() {
   const { abierto, setAbierto, lineas, cambiarCantidad, quitar, vaciar, piezas, total } = useCart();
@@ -13,43 +14,43 @@ export function CartDrawer() {
   return (
     <>
       <div
-        className={`fixed inset-0 z-40 bg-navy/40 transition ${abierto ? "opacity-100" : "pointer-events-none opacity-0"}`}
+        className={`fixed inset-0 z-40 bg-foreground/40 transition ${abierto ? "opacity-100" : "pointer-events-none opacity-0"}`}
         onClick={() => setAbierto(false)}
       />
       <aside
         aria-hidden={!abierto}
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-white shadow-2xl transition-transform duration-300 ${
+        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-card shadow-2xl transition-transform duration-300 ${
           abierto ? "translate-x-0" : "pointer-events-none translate-x-full"
         }`}
       >
-        <header className="flex items-start justify-between border-b border-line px-5 py-4">
+        <header className="flex items-start justify-between border-b border-border px-5 py-4">
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-orange">Cuenta abierta</p>
-            <h2 className="text-xl font-bold text-navy">Tu mostrador</h2>
-            <p className="text-sm text-neutral-500">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent">Cuenta abierta</p>
+            <h2 className="text-xl font-bold">Tu mostrador</h2>
+            <p className="text-sm text-muted-foreground">
               {piezas} {piezas === 1 ? "pieza" : "piezas"} · se acumula todo el hilo
             </p>
           </div>
           <button
             type="button"
             onClick={() => setAbierto(false)}
-            className="rounded-full p-2 text-neutral-500 hover:bg-sand"
+            className="rounded-md p-2 text-muted-foreground hover:bg-muted"
             aria-label="Cerrar cuenta"
           >
-            ✕
+            <IconClose />
           </button>
         </header>
 
         <div className="flex-1 space-y-6 overflow-y-auto px-5 py-5">
           {!lineas.length ? (
-            <p className="rounded-2xl bg-sand px-4 py-8 text-center text-sm text-neutral-500">
+            <p className="rounded-md bg-muted px-4 py-8 text-center text-sm text-muted-foreground">
               Aún no hay nada en la cuenta. Agrega piezas sueltas o un paquete de proyecto.
             </p>
           ) : null}
 
           {[...paquetes.entries()].map(([id, titulo]) => (
-            <section key={id} className="rounded-2xl border border-line p-3">
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-blue">Paquete · {titulo}</p>
+            <section key={id} className="rounded-md border border-border p-3">
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Paquete · {titulo}</p>
               {lineas
                 .filter((l) => l.paqueteId === id)
                 .map((linea) => (
@@ -60,7 +61,7 @@ export function CartDrawer() {
 
           {sueltas.length ? (
             <section>
-              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-navy">Piezas sueltas</p>
+              <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Piezas sueltas</p>
               {sueltas.map((linea) => (
                 <LineaKey key={`suelta-${linea.sku}`} linea={linea} onQty={cambiarCantidad} onRemove={quitar} />
               ))}
@@ -68,19 +69,21 @@ export function CartDrawer() {
           ) : null}
         </div>
 
-        <footer className="space-y-3 border-t border-line px-5 py-4">
-          <div className="flex items-center justify-between text-navy">
+        <footer className="space-y-3 border-t border-border px-5 py-4">
+          <div className="flex items-center justify-between">
             <span className="font-medium">Total de la cuenta</span>
             <span className="text-2xl font-bold">{precioMx(total)}</span>
           </div>
-          <button
-            type="button"
-            className="w-full rounded-full bg-navy py-3 text-sm font-semibold text-white hover:bg-navy-soft"
+          <a
+            href={`https://wa.me/526699407077?text=${encodeURIComponent(
+              `Hola, quiero continuar este pedido de Eléctrica Dos Hermanos (${piezas} piezas, ${precioMx(total)}).`
+            )}`}
+            className="block w-full rounded-md bg-primary py-3 text-center text-sm font-semibold text-primary-foreground hover:bg-navy-soft"
           >
             Continuar pedido
-          </button>
+          </a>
           {lineas.length ? (
-            <button type="button" onClick={vaciar} className="w-full text-xs text-neutral-500 underline">
+            <button type="button" onClick={vaciar} className="w-full text-xs text-muted-foreground underline">
               Vaciar cuenta
             </button>
           ) : null}
@@ -112,17 +115,17 @@ function LineaKey({
       <img
         src={linea.urlImagen || placeholderProducto({ nombre: linea.nombre, categoria: "pieza" })}
         alt=""
-        className="h-16 w-16 rounded-xl border border-line object-contain p-1"
+        className="h-16 w-16 rounded-md border border-border object-contain p-1"
       />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold text-navy">{linea.nombre}</p>
-        <p className="text-xs text-neutral-500">
+        <p className="truncate text-sm font-semibold">{linea.nombre}</p>
+        <p className="text-xs text-muted-foreground">
           {linea.sku} · {precioMx(linea.precio)}
         </p>
         <div className="mt-2 flex items-center gap-2">
           <button
             type="button"
-            className="h-7 w-7 rounded-full border border-line"
+            className="h-7 w-7 rounded-md border border-border"
             onClick={() => onQty(linea.sku, linea.paqueteId, linea.cantidad - 1)}
           >
             −
@@ -130,12 +133,12 @@ function LineaKey({
           <span className="w-6 text-center text-sm font-semibold">{linea.cantidad}</span>
           <button
             type="button"
-            className="h-7 w-7 rounded-full border border-line"
+            className="h-7 w-7 rounded-md border border-border"
             onClick={() => onQty(linea.sku, linea.paqueteId, linea.cantidad + 1)}
           >
             +
           </button>
-          <button type="button" className="ml-auto text-xs text-orange" onClick={() => onRemove(linea.sku, linea.paqueteId)}>
+          <button type="button" className="ml-auto text-xs text-accent" onClick={() => onRemove(linea.sku, linea.paqueteId)}>
             Quitar
           </button>
         </div>

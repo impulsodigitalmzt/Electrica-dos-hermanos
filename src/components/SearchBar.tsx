@@ -2,7 +2,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useCart } from "../context/CartContext";
 import { preguntarAsistente } from "../lib/api";
 import { precioMx, sessionId } from "../lib/format";
-import type { PaqueteBom, Producto, RespuestaAsistente } from "../types";
+import { IconSearch } from "../lib/icons";
+import type { PaqueteBom, RespuestaAsistente } from "../types";
 
 type Props = {
   value: string;
@@ -39,45 +40,39 @@ export function SearchBar({ value, onChange, onFilter }: Props) {
       setTurno(data);
       if (data.pedido?.length) sincronizar(data.pedido);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "No se pudo consultar el mostrador.");
+      setError(err instanceof Error ? err.message : "El mostrador no pudo responder.");
     } finally {
       setCargando(false);
     }
   }
 
   return (
-    <form ref={box} onSubmit={enviar} className="relative w-full max-w-3xl">
-      <div className="flex overflow-hidden rounded-full border border-line bg-white shadow-[0_8px_24px_rgba(16,32,51,0.06)]">
+    <form ref={box} onSubmit={enviar} className="relative w-full max-w-xl">
+      <div className="flex h-10 items-center rounded-md border border-border bg-muted px-3">
+        <IconSearch className="size-4 shrink-0 text-muted-foreground" />
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => {
             if (turno || error) setAbierto(true);
           }}
-          placeholder="¿Qué ocupas hoy? Contacto dúplex, cinta, acometida de 220…"
-          className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-navy outline-none placeholder:text-neutral-400"
+          placeholder="Busca un producto o descríbele el trabajo al mostrador"
+          className="min-w-0 flex-1 bg-transparent px-2 text-sm text-foreground outline-none placeholder:text-muted-foreground"
         />
-        <button
-          type="submit"
-          className="m-1 rounded-full bg-navy px-5 text-sm font-semibold text-white hover:bg-navy-soft"
-        >
-          {cargando ? "Buscando…" : "Preguntar"}
+        <button type="submit" className="text-xs font-semibold text-primary hover:text-navy-soft">
+          {cargando ? "…" : "Buscar"}
         </button>
       </div>
 
       {abierto && (turno || error || cargando) ? (
-        <div className="absolute left-0 right-0 z-30 mt-2 max-h-[70vh] overflow-y-auto rounded-2xl border border-line bg-white p-4 shadow-2xl">
-          {cargando ? <p className="text-sm text-neutral-500">El mostrador está revisando anaquel…</p> : null}
-          {error ? <p className="text-sm text-orange">{error}</p> : null}
+        <div className="absolute left-0 right-0 z-30 mt-2 max-h-[70vh] overflow-y-auto rounded-lg border border-border bg-card p-4 shadow-xl">
+          {cargando ? <p className="text-sm text-muted-foreground">El mostrador está revisando anaquel…</p> : null}
+          {error ? <p className="text-sm text-accent">{error}</p> : null}
           {turno ? (
             <div className="space-y-4">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-blue">
-                Asistente de mostrador · {turno.ruta}
-              </p>
-              <p className="whitespace-pre-wrap text-sm leading-relaxed text-navy">{turno.respuesta}</p>
-              {turno.paquete?.lineas.length ? (
-                <PaquetePreview paquete={turno.paquete} onAdd={agregarPaquete} />
-              ) : null}
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-primary">Asesor de mostrador</p>
+              <p className="whitespace-pre-wrap text-sm leading-relaxed">{turno.respuesta}</p>
+              {turno.paquete?.lineas.length ? <PaquetePreview paquete={turno.paquete} onAdd={agregarPaquete} /> : null}
               {turno.productos.length ? (
                 <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {turno.productos.slice(0, 4).map((producto) => (
@@ -85,15 +80,15 @@ export function SearchBar({ value, onChange, onFilter }: Props) {
                       key={producto.sku}
                       type="button"
                       onClick={() => agregarProducto(producto)}
-                      className="flex items-center justify-between rounded-xl border border-line px-3 py-2 text-left hover:bg-sand"
+                      className="flex items-center justify-between rounded-md border border-border px-3 py-2 text-left hover:bg-muted"
                     >
                       <span className="min-w-0">
-                        <span className="block truncate text-sm font-semibold text-navy">{producto.nombre}</span>
-                        <span className="text-xs text-neutral-500">
+                        <span className="block truncate text-sm font-semibold">{producto.nombre}</span>
+                        <span className="text-xs text-muted-foreground">
                           {precioMx(producto.precio)} · {producto.stock} pza
                         </span>
                       </span>
-                      <span className="text-xs font-semibold text-orange">Sumar</span>
+                      <span className="text-xs font-semibold text-accent">Añadir</span>
                     </button>
                   ))}
                 </div>
@@ -109,18 +104,18 @@ export function SearchBar({ value, onChange, onFilter }: Props) {
 function PaquetePreview({ paquete, onAdd }: { paquete: PaqueteBom; onAdd: (p: PaqueteBom) => void }) {
   const total = paquete.lineas.reduce((acc, l) => acc + l.precio * l.cantidad, 0);
   return (
-    <div className="rounded-2xl bg-sand p-3">
+    <div className="rounded-md bg-muted p-3">
       <div className="mb-2 flex items-center justify-between gap-3">
-        <p className="font-semibold text-navy">{paquete.titulo}</p>
+        <p className="font-semibold">{paquete.titulo}</p>
         <button
           type="button"
           onClick={() => onAdd(paquete)}
-          className="rounded-full bg-orange px-3 py-1.5 text-xs font-semibold text-white"
+          className="rounded-md bg-accent px-3 py-1.5 text-xs font-semibold text-accent-foreground"
         >
           Meter paquete · {precioMx(total)}
         </button>
       </div>
-      <ul className="space-y-1 text-sm text-neutral-600">
+      <ul className="space-y-1 text-sm text-muted-foreground">
         {paquete.lineas.map((linea) => (
           <li key={linea.sku}>
             {linea.cantidad} × {linea.nombre}
@@ -130,5 +125,3 @@ function PaquetePreview({ paquete, onAdd }: { paquete: PaqueteBom; onAdd: (p: Pa
     </div>
   );
 }
-
-export type { Producto };

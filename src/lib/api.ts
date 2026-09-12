@@ -43,6 +43,6 @@ export async function preguntarAsistente(
 export function placeholderProducto(producto: Pick<Producto, "nombre" | "categoria">): string {
   const letra = (producto.nombre[0] ?? "E").toUpperCase();
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect fill="#f3efe8" width="400" height="400"/><text x="50%" y="48%" text-anchor="middle" font-size="92" font-family="DM Sans, sans-serif" fill="#1a4fb8">${letra}</text><text x="50%" y="68%" text-anchor="middle" font-size="18" font-family="DM Sans, sans-serif" fill="#102033">${producto.categoria}</text></svg>`
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><rect fill="#f1f3f7" width="400" height="400"/><text x="50%" y="48%" text-anchor="middle" font-size="92" font-family="Barlow, sans-serif" fill="#1d4ed8">${letra}</text><text x="50%" y="68%" text-anchor="middle" font-size="18" font-family="Barlow, sans-serif" fill="#1e293b">${producto.categoria}</text></svg>`
   )}`;
 }

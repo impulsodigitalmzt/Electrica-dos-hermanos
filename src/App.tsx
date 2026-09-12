@@ -1,6 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { CartDrawer } from "./components/CartDrawer";
 import { Header } from "./components/Header";
+import {
+  Brands,
+  CategoryExplorer,
+  Faq,
+  Hero,
+  PrivacyNotice,
+  SiteFooter,
+  Sucursales,
+  TrustBar,
+  WhatsAppFab,
+} from "./components/HomeSections";
 import { ProductGrid } from "./components/ProductGrid";
 import { useCart } from "./context/CartContext";
 import { fetchCatalogo, fetchCategorias } from "./lib/api";
@@ -40,67 +51,80 @@ export default function App() {
     return () => window.clearTimeout(handle);
   }, [categoria, filtro]);
 
+  function aplicarFiltro(value: string, cat = "") {
+    setQuery(value);
+    setFiltro(value);
+    setCategoria(cat);
+    if (value || cat) {
+      window.requestAnimationFrame(() => {
+        document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+      });
+    } else {
+      document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   const titulo = useMemo(() => {
     if (filtro) return `Resultados para “${filtro}”`;
     if (categoria) return etiquetaCategoria(categoria);
-    return "Catálogo del anaquel";
+    return "Productos destacados";
   }, [categoria, filtro]);
 
   return (
-    <div className="min-h-screen">
-      <Header query={query} onQueryChange={setQuery} onFilter={setFiltro} />
+    <div className="min-h-screen bg-background text-foreground">
+      <Header query={query} onQueryChange={setQuery} onFilter={aplicarFiltro} />
+      <Hero onFilter={aplicarFiltro} />
+      <CategoryExplorer onFilter={aplicarFiltro} />
 
-      <section className="bg-[linear-gradient(135deg,#102033_0%,#1a4fb8_58%,#f15a24_140%)] text-white">
-        <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 md:grid-cols-[1.2fr_0.8fr] md:px-6 md:py-16">
+      <section id="catalogo" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-10 md:px-6">
+        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#ead7ba]">Tienda en línea</p>
-            <h1 className="mt-3 max-w-xl text-4xl font-bold leading-tight md:text-5xl">
-              El anaquel de siempre, ahora con cuenta abierta.
-            </h1>
-            <p className="mt-4 max-w-xl text-base text-white/80">
-              Busca una pieza o descríbele el trabajo al mostrador. El asistente arma el BOM, recuerda lo que ya pediste y lo
-              acumula en tu cuenta.
-            </p>
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Selección E2H</p>
+            <h2 className="mt-1 text-3xl font-bold">{titulo}</h2>
+            <p className="text-sm text-muted-foreground">{total} productos en existencia</p>
           </div>
-          <img src="/logo.png" alt="" className="mx-auto hidden h-44 w-auto drop-shadow-2xl md:block" />
+          <button
+            type="button"
+            onClick={() => aplicarFiltro("")}
+            className="text-sm font-semibold text-primary hover:underline"
+          >
+            Ver catálogo completo
+          </button>
         </div>
+        <div className="mb-6 flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={() => aplicarFiltro("", "")}
+            className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
+              categoria === "" && filtro === "" ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-border"
+            }`}
+          >
+            Todo
+          </button>
+          {categorias.map((item) => (
+            <button
+              key={item.categoria}
+              type="button"
+              onClick={() => aplicarFiltro("", item.categoria)}
+              className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
+                categoria === item.categoria ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-border"
+              }`}
+            >
+              {etiquetaCategoria(item.categoria)}
+            </button>
+          ))}
+        </div>
+        {error ? <p className="mb-4 rounded-md bg-accent/10 px-4 py-3 text-sm text-accent">{error}</p> : null}
+        <ProductGrid productos={productos} cargando={cargando} onAdd={agregarProducto} />
       </section>
 
-      <main className="mx-auto max-w-7xl px-4 py-8 md:px-6">
-        <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-2xl font-bold text-navy">{titulo}</h2>
-            <p className="text-sm text-neutral-500">{total} productos en Neon</p>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={() => setCategoria("")}
-              className={`rounded-full px-3 py-1.5 text-sm ${categoria === "" ? "bg-navy text-white" : "bg-white text-navy"}`}
-            >
-              Todo
-            </button>
-            {categorias.map((item) => (
-              <button
-                key={item.categoria}
-                type="button"
-                onClick={() => setCategoria(item.categoria)}
-                className={`rounded-full px-3 py-1.5 text-sm ${
-                  categoria === item.categoria ? "bg-navy text-white" : "bg-white text-navy"
-                }`}
-              >
-                {etiquetaCategoria(item.categoria)}
-              </button>
-            ))}
-          </div>
-        </div>
-        {error ? <p className="mb-4 rounded-xl bg-orange/10 px-4 py-3 text-sm text-orange">{error}</p> : null}
-        <ProductGrid productos={productos} cargando={cargando} onAdd={agregarProducto} />
-      </main>
-
-      <footer className="mt-8 border-t border-line bg-white py-8 text-center text-sm text-neutral-500">
-        Eléctrica Dos Hermanos · inventario en vivo desde Neon · listo para Cloudflare Workers
-      </footer>
+      <TrustBar />
+      <Brands />
+      <Faq />
+      <Sucursales />
+      <PrivacyNotice />
+      <SiteFooter />
+      <WhatsAppFab />
       <CartDrawer />
     </div>
   );
