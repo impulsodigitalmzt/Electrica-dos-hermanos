@@ -154,7 +154,9 @@ export function ProductPage({ sku }: { sku: string }) {
                 <div className="relative overflow-hidden border bg-white">
                   <ProductImage
                     producto={galeria[thumb] ?? producto}
-                    className="aspect-square w-full bg-white object-contain"
+                    sprite={Boolean(producto.pos)}
+                    pos={producto.pos}
+                    className="aspect-square w-full object-contain p-8 sm:p-12"
                   />
                   {descuento > 0 ? (
                     <span className="absolute left-4 top-4 bg-sale px-2 py-1 text-xs font-bold text-sale-foreground">-{descuento}%</span>
@@ -169,7 +171,7 @@ export function ProductPage({ sku }: { sku: string }) {
                       className={`size-16 overflow-hidden border bg-white ${thumb === index ? "border-primary" : "border-border"}`}
                       aria-label={`Ver imagen ${index + 1}`}
                     >
-                      <ProductImage producto={item} className="h-full w-full object-cover p-1" />
+                      <ProductImage producto={item} sprite={Boolean(item.pos)} pos={item.pos} className="h-full w-full object-contain p-1" />
                     </button>
                   ))}
                 </div>
@@ -302,7 +304,9 @@ export function ProductPage({ sku }: { sku: string }) {
                       <button type="button" className="relative block" onClick={() => navigate(`/producto/${encodeURIComponent(item.sku)}`)}>
                         <ProductImage
                           producto={item}
-                          className="aspect-square w-full object-cover"
+                          sprite={Boolean(item.pos)}
+                          pos={item.pos}
+                          className="aspect-square w-full object-contain"
                         />
                       </button>
                       {item.stock > 0 ? (

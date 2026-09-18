@@ -4,6 +4,7 @@ export const ENVIO_GRATIS_DESDE = 1000;
 export const LOGO_SRC = "/logo.png";
 export const HERO_HOME = "/brand/lumi-hero-home.jpg";
 export const HERO_INDUSTRIAL = "/brand/lumi-hero-industrial.jpg";
+export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 
 export const NAV_ITEMS = [
   { id: "iluminacion", label: "Iluminación", to: "/iluminacion" },
@@ -16,12 +17,12 @@ export const NAV_ITEMS = [
 ] as const;
 
 export const CATEGORY_TILES = [
-  { label: "Lámparas de techo", q: "lampara", imagen: "/productos/colgante-niza.jpg" },
-  { label: "Focos LED", q: "foco led", imagen: "/productos/foco-led.jpg" },
-  { label: "Empotrados", q: "downlight empotrado", imagen: "/productos/downlight.jpg" },
-  { label: "Arbotantes", q: "arbotante", imagen: "/productos/arbotante.jpg" },
-  { label: "Reflectores", q: "reflector", imagen: "/productos/reflector-50.jpg" },
-  { label: "Tiras LED", q: "tira led", imagen: "/productos/tira-calida.jpg" },
+  { label: "Lámparas de techo", q: "lampara", pos: "0% 0%" },
+  { label: "Focos LED", q: "foco led", pos: "50% 0%" },
+  { label: "Empotrados", q: "downlight empotrado", pos: "100% 0%" },
+  { label: "Arbotantes", q: "arbotante", pos: "0% 50%" },
+  { label: "Reflectores", q: "reflector", pos: "50% 50%" },
+  { label: "Tiras LED", q: "tira led", pos: "100% 50%" },
 ] as const;
 
 export const MARCAS = ["TECNOLITE", "SIEMENS", "bticino", "PHILIPS", "VOLTECK", "MAGG", "CONDULAC"] as const;

@@ -21,7 +21,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 89,
     stock: 120,
     descripcion: "Foco LED de 9W equivalente a 60W, luz cálida 3000K.",
-    urlImagen: "/productos/foco-led.jpg",
+    urlImagen: "/productos/focos-pack.jpg",
     ubicacion: "Anaquel A2",
   },
   {
@@ -32,7 +32,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 385.12,
     stock: 42,
     descripcion: "Empotrado LED ultra plano para plafón.",
-    urlImagen: "/productos/downlight.jpg",
+    urlImagen: "/productos/downlight-luna.jpg",
     ubicacion: "Anaquel A3",
   },
   {
@@ -44,7 +44,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 715,
     stock: 24,
     descripcion: "Arbotante de muro para interiores y terrazas.",
-    urlImagen: "/productos/arbotante.jpg",
+    urlImagen: "/demo/arbotante.svg",
     ubicacion: "Anaquel A4",
   },
   {
@@ -56,7 +56,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 499,
     stock: 36,
     descripcion: "Reflector para áreas exteriores, protección IP65.",
-    urlImagen: "/productos/reflector-50.jpg",
+    urlImagen: "/demo/reflector.svg",
     ubicacion: "Anaquel B1",
   },
   {
@@ -67,7 +67,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 559,
     stock: 28,
     descripcion: "Tira LED de 5 metros con fuente incluida.",
-    urlImagen: "/productos/tira-calida.jpg",
+    urlImagen: "/demo/tira-led.svg",
     ubicacion: "Anaquel B2",
   },
   {
@@ -78,7 +78,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 247,
     stock: 55,
     descripcion: "Placa e interruptor sencillo línea Living Now.",
-    urlImagen: "/productos/placa.jpg",
+    urlImagen: "/demo/placa.svg",
     ubicacion: "Anaquel C1",
   },
   {
@@ -90,7 +90,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 2110,
     stock: 14,
     descripcion: "Conductor THW-LS calibre 12 AWG en rollo de 100 m.",
-    urlImagen: "/productos/cable.jpg",
+    urlImagen: "/demo/cable.svg",
     ubicacion: "Anaquel D1",
   },
   {
@@ -101,7 +101,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 46,
     stock: 80,
     descripcion: "Contacto residencial dúplex con tierra.",
-    urlImagen: "/productos/contacto.jpg",
+    urlImagen: "/demo/contacto.svg",
     ubicacion: "Anaquel C2",
   },
   {
@@ -112,7 +112,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 38,
     stock: 200,
     descripcion: "Tubería conduit de PVC para instalaciones visibles.",
-    urlImagen: "/productos/tubo.jpg",
+    urlImagen: "/demo/tubo.svg",
     ubicacion: "Anaquel E1",
   },
 ];
