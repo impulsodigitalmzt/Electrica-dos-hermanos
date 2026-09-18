@@ -114,3 +114,27 @@ export function sugerirComplementos(lineas: LineaCuenta[], extra: Producto[] = [
     .sort((a, b) => puntuarComplemento(b, carrito) - puntuarComplemento(a, carrito) || a.precio - b.precio)
     .slice(0, 6);
 }
+
+export function relacionadosDeProducto(producto: Producto, extra: Producto[] = []): Producto[] {
+  const vistos = new Set([producto.sku.toLowerCase()]);
+  const out: Producto[] = [];
+  const push = (item: Producto) => {
+    const sku = item.sku.toLowerCase();
+    if (vistos.has(sku)) return;
+    vistos.add(sku);
+    out.push(item);
+  };
+  const pool = [...extra, ...CATALOGO_ILUMINACION, ...DEMO_PRODUCTOS, ...ACCESORIOS_COMPLEMENTO];
+  for (const item of pool) {
+    if (producto.tipoLuminario && item.tipoLuminario === producto.tipoLuminario) push(item);
+  }
+  for (const item of pool) {
+    if (item.categoria === producto.categoria) push(item);
+  }
+  sugerirComplementos(
+    [{ sku: producto.sku, nombre: producto.nombre, cantidad: 1, precio: producto.precio, origen: "catalogo" }],
+    extra,
+  ).forEach(push);
+  extra.forEach(push);
+  return out.slice(0, 4);
+}
