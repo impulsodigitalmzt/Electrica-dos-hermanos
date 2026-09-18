@@ -8,132 +8,199 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/context/CartContext";
-import { fetchCatalogo, fetchCategorias } from "@/lib/api";
-import { HERO_HOME, marcaDe } from "@/lib/brand";
+import { fetchCatalogo } from "@/lib/api";
+import { marcaDe } from "@/lib/brand";
+import {
+  CATALOGO_ILUMINACION,
+  MARCAS_ILUMINACION,
+  ORDEN_CATALOGO,
+  TEMPERATURAS,
+  TIPOS_LUMINARIO,
+  USOS,
+  aplicarFiltros,
+  conteoTipo,
+  mezclarCatalogo,
+} from "@/lib/catalogo-iluminacion";
 import { DEMO_PRODUCTOS, filtrarDemo } from "@/lib/demo-productos";
-import { etiquetaCategoria, precioMx } from "@/lib/format";
-import { AppLink, navigate } from "@/lib/nav";
+import { precioMx } from "@/lib/format";
+import { AppLink } from "@/lib/nav";
 import type { Producto } from "@/types";
 
-const SORTERS = [
-  { id: "relevancia", label: "Relevancia" },
-  { id: "precio-asc", label: "Precio: menor a mayor" },
-  { id: "precio-desc", label: "Precio: mayor a menor" },
-] as const;
-
 type Props = { q: string; categoria: string; iluminacion: boolean };
+
+function toggleValor(lista: string[], valor: string): string[] {
+  return lista.includes(valor) ? lista.filter((item) => item !== valor) : [...lista, valor];
+}
 
 export function SearchPage({ q, categoria, iluminacion }: Props) {
   const { agregarProducto } = useCart();
   const [query, setQuery] = useState(q);
-  const [categoriaActiva, setCategoriaActiva] = useState(categoria);
-  const [categorias, setCategorias] = useState<{ categoria: string; total: number }[]>([]);
-  const [productos, setProductos] = useState<Producto[]>([]);
-  const [total, setTotal] = useState(0);
+  const [productos, setProductos] = useState<Producto[]>(iluminacion ? CATALOGO_ILUMINACION : []);
   const [cargando, setCargando] = useState(true);
-  const [sort, setSort] = useState("relevancia");
-  const [maxPrice, setMaxPrice] = useState(5000);
+  const [tipo, setTipo] = useState("todas");
+  const [marcas, setMarcas] = useState<string[]>([]);
+  const [temps, setTemps] = useState<string[]>([]);
+  const [uso, setUso] = useState("todos");
+  const [maxPrice, setMaxPrice] = useState(2500);
   const [onlyOffers, setOnlyOffers] = useState(false);
+  const [sort, setSort] = useState("relevancia");
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [quick, setQuick] = useState<Producto | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
-  const [usandoDemo, setUsandoDemo] = useState(false);
 
   useEffect(() => {
     setQuery(q);
-    setCategoriaActiva(categoria);
-  }, [categoria, q]);
-
-  useEffect(() => {
-    void fetchCategorias().then(setCategorias);
-  }, []);
+  }, [q]);
 
   useEffect(() => {
     const handle = window.setTimeout(() => {
       setCargando(true);
-      void fetchCatalogo({ q, categoria, limit: 36 })
+      void fetchCatalogo({ q: iluminacion ? "" : q, categoria, limit: 60 })
         .then((data) => {
-          setProductos(data.productos);
-          setTotal(data.total);
-          setUsandoDemo(false);
+          if (iluminacion) {
+            const extra = data.productos.filter((item) =>
+              /\b(foco|lampara|plafon|candil|tira led|reflector|arbotante|downlight|empotrado)\b/i.test(item.nombre)
+            );
+            setProductos(mezclarCatalogo(CATALOGO_ILUMINACION, extra));
+            return;
+          }
+          setProductos(data.productos.length ? data.productos : filtrarDemo(DEMO_PRODUCTOS, q, categoria));
         })
         .catch(() => {
-          const demo = filtrarDemo(DEMO_PRODUCTOS, q, categoria);
-          setProductos(demo);
-          setTotal(demo.length);
-          setUsandoDemo(true);
+          setProductos(iluminacion ? CATALOGO_ILUMINACION : filtrarDemo(DEMO_PRODUCTOS, q, categoria));
         })
         .finally(() => setCargando(false));
-    }, 200);
+    }, 160);
     return () => window.clearTimeout(handle);
-  }, [categoria, q]);
+  }, [categoria, iluminacion, q]);
 
-  const results = useMemo(() => {
-    const filtrados = productos.filter((item) => item.precio <= maxPrice && (!onlyOffers || Boolean(item.precioAnterior)));
-    const sorted = [...filtrados];
-    if (sort === "precio-asc") sorted.sort((a, b) => a.precio - b.precio);
-    if (sort === "precio-desc") sorted.sort((a, b) => b.precio - a.precio);
-    return sorted;
-  }, [maxPrice, onlyOffers, productos, sort]);
+  const techoPrecio = useMemo(() => {
+    const max = Math.max(2500, ...productos.map((item) => item.precio), 2500);
+    return Math.ceil(max / 10) * 10;
+  }, [productos]);
 
-  function aplicarCategoria(value: string) {
-    const params = new URLSearchParams();
-    if (q) params.set("q", q);
-    if (value) params.set("categoria", value);
-    navigate(`${iluminacion ? "/iluminacion" : "/buscar"}${params.toString() ? `?${params}` : ""}`);
-  }
+  useEffect(() => {
+    setMaxPrice((actual) => (actual > techoPrecio ? techoPrecio : actual));
+  }, [techoPrecio]);
+
+  const results = useMemo(
+    () =>
+      aplicarFiltros(productos, {
+        tipo,
+        marcas,
+        temperaturas: temps,
+        uso,
+        maxPrice,
+        onlyOffers,
+        q: query,
+        sort,
+      }),
+    [marcas, maxPrice, onlyOffers, productos, query, sort, temps, tipo, uso]
+  );
 
   function resetFilters() {
-    setMaxPrice(5000);
+    setTipo("todas");
+    setMarcas([]);
+    setTemps([]);
+    setUso("todos");
+    setMaxPrice(techoPrecio);
     setOnlyOffers(false);
     setSort("relevancia");
-    navigate(iluminacion ? "/iluminacion" : "/buscar");
+    if (!q) setQuery("");
   }
 
   const filtersPanel = (
     <div className="space-y-7">
       <div>
-        <h3 className="font-display text-sm font-extrabold uppercase text-primary">Categoría</h3>
+        <h3 className="font-display text-sm font-extrabold uppercase text-primary">Tipo de luminario</h3>
         <div className="mt-3 flex flex-col">
-          <button
-            type="button"
-            onClick={() => aplicarCategoria("")}
-            className={`flex items-center justify-between border-b py-2.5 text-left text-sm font-semibold transition ${
-              !categoriaActiva ? "text-accent" : "text-muted-foreground hover:text-primary"
-            }`}
-          >
-            Todas
-            <span className="text-xs">{usandoDemo ? DEMO_PRODUCTOS.length : total}</span>
-          </button>
-          {categorias.map((item) => (
+          {TIPOS_LUMINARIO.map((item) => (
             <button
-              key={item.categoria}
+              key={item.id}
               type="button"
-              onClick={() => aplicarCategoria(item.categoria)}
+              onClick={() => setTipo(item.id)}
+              aria-pressed={tipo === item.id}
               className={`flex items-center justify-between border-b py-2.5 text-left text-sm font-semibold transition ${
-                categoriaActiva === item.categoria ? "text-accent" : "text-muted-foreground hover:text-primary"
+                tipo === item.id ? "text-accent" : "text-muted-foreground hover:text-primary"
               }`}
             >
-              {etiquetaCategoria(item.categoria)}
-              <span className="text-xs">{item.total}</span>
+              {item.label}
+              <span className="text-xs">{conteoTipo(productos, item.id)}</span>
             </button>
           ))}
         </div>
       </div>
+
+      <div>
+        <h3 className="font-display text-sm font-extrabold uppercase text-primary">Marca</h3>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {MARCAS_ILUMINACION.map((brand) => (
+            <button
+              key={brand}
+              type="button"
+              onClick={() => setMarcas((current) => toggleValor(current, brand))}
+              aria-pressed={marcas.includes(brand)}
+              className={`border px-3 py-1.5 text-xs font-bold transition ${
+                marcas.includes(brand) ? "border-primary bg-primary text-primary-foreground" : "text-muted-foreground hover:border-primary hover:text-primary"
+              }`}
+            >
+              {brand}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-display text-sm font-extrabold uppercase text-primary">Temperatura de color</h3>
+        <div className="mt-3 flex flex-col gap-2">
+          {TEMPERATURAS.map((temp) => (
+            <label key={temp} className="flex cursor-pointer items-center gap-3 text-sm text-muted-foreground">
+              <input
+                type="checkbox"
+                checked={temps.includes(temp)}
+                onChange={() => setTemps((current) => toggleValor(current, temp))}
+                className="size-4 accent-[oklch(0.43_0.2_257)]"
+              />
+              {temp}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="font-display text-sm font-extrabold uppercase text-primary">Uso</h3>
+        <div className="mt-3 flex gap-2">
+          {["todos", ...USOS].map((item) => (
+            <button
+              key={item}
+              type="button"
+              onClick={() => setUso(item)}
+              aria-pressed={uso === item}
+              className={`flex-1 border px-3 py-2 text-xs font-bold capitalize transition ${
+                uso === item ? "border-primary bg-primary text-primary-foreground" : "text-muted-foreground hover:border-primary hover:text-primary"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div>
         <h3 className="font-display text-sm font-extrabold uppercase text-primary">Precio máximo</h3>
         <input
           type="range"
-          min={50}
-          max={5000}
-          step={50}
-          value={maxPrice}
+          min={89}
+          max={techoPrecio}
+          step={10}
+          value={Math.min(maxPrice, techoPrecio)}
           onChange={(e) => setMaxPrice(Number(e.target.value))}
           aria-label="Precio máximo"
           className="mt-4 w-full accent-[oklch(0.68_0.2_48)]"
         />
-        <p className="mt-2 text-sm font-bold text-primary">Hasta {precioMx(maxPrice)}</p>
+        <p className="mt-2 text-sm font-bold text-primary">Hasta {precioMx(Math.min(maxPrice, techoPrecio))}</p>
       </div>
+
       <label className="flex cursor-pointer items-center gap-3 border-t pt-5 text-sm font-semibold text-primary">
         <input
           type="checkbox"
@@ -143,6 +210,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
         />
         Solo productos en oferta
       </label>
+
       <Button variant="outline" className="w-full border-primary text-primary" onClick={resetFilters}>
         <RotateCcw /> Limpiar filtros
       </Button>
@@ -160,7 +228,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
       />
       <main>
         <section className="relative overflow-hidden bg-primary">
-          <img src={HERO_HOME} alt="Interiores iluminados con luminarios LED" className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
+          <img src="/brand/lumi-hero-home.jpg" alt="Interiores iluminados con luminarios LED" className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
           <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/70 to-transparent" />
           <div className="absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-6 text-primary-foreground sm:px-10">
             <nav aria-label="Ruta de navegación" className="text-xs font-semibold text-primary-foreground/75">
@@ -175,7 +243,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
             <p className="mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/85 sm:text-base">
               {iluminacion
                 ? "Luminarios LED de marcas originales, con garantía de fabricante y asesoría técnica desde Mazatlán, Culiacán y Los Cabos."
-                : "Busca por nombre, código o descríbele el trabajo al mostrador. También puedes usar voz o una foto."}
+                : "Filtra por tipo, marca, temperatura, uso y precio. También puedes usar voz o una foto en el buscador."}
             </p>
           </div>
         </section>
@@ -201,7 +269,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
                     aria-label="Ordenar productos"
                     className="h-10 border bg-background px-3 text-sm font-semibold text-primary outline-none focus:border-accent"
                   >
-                    {SORTERS.map((item) => (
+                    {ORDEN_CATALOGO.map((item) => (
                       <option key={item.id} value={item.id}>
                         {item.label}
                       </option>
@@ -210,17 +278,30 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
                 </label>
               </div>
             </div>
-            <ProductGrid
-              productos={results}
-              cargando={cargando}
-              columns="search"
-              onAdd={agregarProducto}
-              onQuick={setQuick}
-              favorites={favorites}
-              onFavorite={(sku) =>
-                setFavorites((current) => (current.includes(sku) ? current.filter((item) => item !== sku) : [...current, sku]))
-              }
-            />
+            {!cargando && results.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-24 text-center">
+                <Lightbulb className="size-14 text-border" />
+                <h2 className="mt-4 text-xl font-bold text-primary">Sin resultados</h2>
+                <p className="mt-2 max-w-sm text-sm text-muted-foreground">
+                  Ajusta los filtros o busca con otras palabras para encontrar el luminario que necesitas.
+                </p>
+                <Button className="mt-5" onClick={resetFilters}>
+                  <RotateCcw /> Limpiar filtros
+                </Button>
+              </div>
+            ) : (
+              <ProductGrid
+                productos={results}
+                cargando={cargando}
+                columns="search"
+                onAdd={agregarProducto}
+                onQuick={setQuick}
+                favorites={favorites}
+                onFavorite={(sku) =>
+                  setFavorites((current) => (current.includes(sku) ? current.filter((item) => item !== sku) : [...current, sku]))
+                }
+              />
+            )}
           </div>
         </section>
       </main>
@@ -239,7 +320,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
         {quick ? (
           <DialogContent className="max-w-2xl">
             <div className="grid gap-6 sm:grid-cols-2">
-              <ProductImage producto={quick} className="aspect-square bg-muted object-contain p-4" />
+              <ProductImage producto={quick} sprite={Boolean(quick.pos)} pos={quick.pos} className="aspect-square bg-muted object-contain p-4" />
               <div className="flex flex-col justify-center">
                 <DialogHeader>
                   <span className="text-xs font-bold text-accent">{marcaDe(quick.nombre, quick.marca)}</span>

@@ -7,7 +7,7 @@ type CartContextValue = {
   lineas: LineaCuenta[];
   abierto: boolean;
   setAbierto: (v: boolean) => void;
-  agregarProducto: (producto: Producto, cantidad?: number) => void;
+  agregarProducto: (producto: Producto, cantidad?: number, opciones?: { abrir?: boolean }) => void;
   agregarPaquete: (paquete: PaqueteBom) => void;
   cambiarCantidad: (sku: string, paqueteId: string | undefined, cantidad: number) => void;
   quitar: (sku: string, paqueteId?: string) => void;
@@ -49,7 +49,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       lineas,
       abierto,
       setAbierto,
-      agregarProducto: (producto, cantidad = 1) => {
+      agregarProducto: (producto, cantidad = 1, opciones) => {
         setLineas((prev) => {
           const extra: LineaCuenta = {
             sku: producto.sku,
@@ -63,7 +63,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
           if (idx < 0) return [...prev, extra];
           return prev.map((l, i) => (i === idx ? { ...l, cantidad: Math.min(999, l.cantidad + extra.cantidad) } : l));
         });
-        setAbierto(true);
+        if (opciones?.abrir !== false) setAbierto(true);
       },
       agregarPaquete: (paquete) => {
         setLineas((prev) => {

@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext";
 import { fetchCatalogo, fetchProducto } from "@/lib/api";
 import { descuentoDe, marcaDe } from "@/lib/brand";
 import { DEMO_PRODUCTOS } from "@/lib/demo-productos";
+import { encontrarProductoLocal } from "@/lib/catalogo-iluminacion";
 import { etiquetaCategoria, precioMx } from "@/lib/format";
 import { AppLink } from "@/lib/nav";
 import type { Producto } from "@/types";
@@ -31,7 +32,10 @@ export function ProductPage({ sku }: { sku: string }) {
         if (vivo) setProducto(item);
       })
       .catch(() => {
-        const demo = DEMO_PRODUCTOS.find((item) => item.sku.toLowerCase() === sku.toLowerCase()) ?? null;
+        const demo =
+          DEMO_PRODUCTOS.find((item) => item.sku.toLowerCase() === sku.toLowerCase()) ??
+          encontrarProductoLocal(sku) ??
+          null;
         if (vivo) {
           setProducto(demo);
           if (!demo) setError("No encontramos esa pieza.");

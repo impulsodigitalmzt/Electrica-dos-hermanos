@@ -1,23 +1,60 @@
-import { ArrowRight, BadgeCheck, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { BadgeCheck, ChevronLeft, ChevronRight, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/context/CartContext";
+import { fetchCatalogo } from "@/lib/api";
 import { ENVIO_GRATIS_DESDE, WHATSAPP_URL } from "@/lib/brand";
 import { precioMx } from "@/lib/format";
+import { consultaComplemento, sugerirComplementos } from "@/lib/recomendaciones-carrito";
+import type { Producto } from "@/types";
 
 export function CartDrawer() {
-  const { abierto, setAbierto, lineas, cambiarCantidad, quitar, piezas, total } = useCart();
+  const { abierto, setAbierto, lineas, cambiarCantidad, quitar, agregarProducto, piezas, total } = useCart();
   const remaining = Math.max(0, ENVIO_GRATIS_DESDE - total);
   const progress = Math.min(100, (total / ENVIO_GRATIS_DESDE) * 100);
+  const [extra, setExtra] = useState<Producto[]>([]);
+  const [slide, setSlide] = useState(0);
+  const skus = lineas.map((linea) => linea.sku).join(",");
+
+  useEffect(() => {
+    if (!abierto || !lineas.length) {
+      setExtra([]);
+      return;
+    }
+    const q = consultaComplemento(lineas);
+    let vivo = true;
+    void fetchCatalogo({ q, limit: 12 })
+      .then((data) => {
+        if (vivo) setExtra(data.productos);
+      })
+      .catch(() => {
+        if (vivo) setExtra([]);
+      });
+    return () => {
+      vivo = false;
+    };
+  }, [abierto, skus]);
+
+  const recomendaciones = useMemo(() => sugerirComplementos(lineas, extra), [extra, lineas]);
+
+  useEffect(() => {
+    setSlide(0);
+  }, [skus]);
+
+  const actual = recomendaciones.length ? recomendaciones[slide % recomendaciones.length] : undefined;
 
   return (
     <Sheet open={abierto} onOpenChange={setAbierto}>
       <SheetContent className="flex w-full max-w-md flex-col p-0 sm:max-w-md">
         <SheetHeader className="border-b p-5">
-          <SheetTitle className="flex items-center gap-2 text-xl text-primary">
-            <ShoppingCart /> Tu carrito <span className="text-sm font-normal text-muted-foreground">({piezas})</span>
-          </SheetTitle>
+          <div className="flex items-center justify-between gap-2 pr-8">
+            <SheetTitle className="flex items-center gap-2 text-xl uppercase tracking-wide text-primary">
+              <ShoppingCart /> Su carrito
+            </SheetTitle>
+            <span className="text-xs font-semibold text-accent">Ver carrito</span>
+          </div>
         </SheetHeader>
         <div className="border-b bg-muted p-4">
           <p className="text-sm font-semibold">
@@ -92,18 +129,68 @@ export function CartDrawer() {
                   </div>
                 </div>
               ))}
+
+              {actual ? (
+                <section className="border-t pt-5" aria-label="Podría interesarte">
+                  <div className="mb-3 flex items-center justify-between gap-2">
+                    <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary">Podría interesarte…</h3>
+                    {recomendaciones.length > 1 ? (
+                      <div className="flex gap-1">
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="size-8"
+                          aria-label="Recomendación anterior"
+                          onClick={() => setSlide((i) => (i - 1 + recomendaciones.length) % recomendaciones.length)}
+                        >
+                          <ChevronLeft className="size-4" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="icon"
+                          className="size-8"
+                          aria-label="Recomendación siguiente"
+                          onClick={() => setSlide((i) => (i + 1) % recomendaciones.length)}
+                        >
+                          <ChevronRight className="size-4" />
+                        </Button>
+                      </div>
+                    ) : null}
+                  </div>
+                  <article className="flex gap-3">
+                    <ProductImage
+                      producto={actual}
+                      sprite={Boolean(actual.pos)}
+                      pos={actual.pos}
+                      className="size-20 shrink-0 bg-muted object-contain p-1"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="line-clamp-3 text-xs font-semibold uppercase leading-snug">{actual.nombre}</p>
+                      <b className="mt-2 block text-sm text-primary">{precioMx(actual.precio)} MXN</b>
+                      <Button
+                        variant="outline"
+                        className="mt-3 h-8 border-accent px-3 text-[11px] font-bold uppercase text-accent hover:bg-accent hover:text-accent-foreground"
+                        onClick={() => agregarProducto(actual, 1, { abrir: false })}
+                      >
+                        Añadir al carrito
+                      </Button>
+                    </div>
+                  </article>
+                </section>
+              ) : null}
             </div>
           )}
         </div>
         {lineas.length > 0 ? (
           <div className="border-t p-5">
-            <div className="flex justify-between text-lg">
+            <p className="text-xs text-muted-foreground">Añadir observaciones del pedido</p>
+            <p className="mt-2 text-xs text-muted-foreground">Impuestos, descuentos y envío calculados en la pantalla de pago.</p>
+            <div className="mt-3 flex justify-between text-lg">
               <span>Subtotal</span>
               <b className="font-display text-primary">{precioMx(total)}</b>
             </div>
-            <p className="mt-1 text-xs text-muted-foreground">Impuestos incluidos. Envío calculado al finalizar.</p>
             <Button
-              className="mt-4 h-12 w-full bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90"
+              className="mt-4 h-12 w-full bg-primary font-bold uppercase tracking-wide"
               onClick={() => {
                 window.open(
                   `${WHATSAPP_URL}?text=${encodeURIComponent(
@@ -113,7 +200,7 @@ export function CartDrawer() {
                 );
               }}
             >
-              Finalizar compra <ArrowRight />
+              Pagar · {precioMx(total)}
             </Button>
           </div>
         ) : null}

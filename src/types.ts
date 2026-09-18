@@ -9,6 +9,12 @@ export type Producto = {
   descripcion: string;
   urlImagen: string;
   ubicacion: string;
+  pos?: string;
+  tipoLuminario?: string;
+  temperatura?: "Cálida 3000K" | "Neutra 4000K" | "Fría 6500K";
+  uso?: "Interior" | "Exterior";
+  watts?: number;
+  rating?: number;
 };
 
 export type LineaCuenta = {

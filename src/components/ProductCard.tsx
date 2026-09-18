@@ -1,4 +1,4 @@
-import { Eye, Heart, ShoppingCart } from "lucide-react";
+import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { descuentoDe, marcaDe } from "@/lib/brand";
@@ -22,7 +22,12 @@ export function ProductCard({ producto, onAdd, onQuick, favorite, onFavorite }: 
     <article className="group relative flex flex-col border bg-card">
       <div className="relative aspect-square overflow-hidden bg-background">
         <button type="button" className="block h-full w-full" onClick={() => navigate(`/producto/${encodeURIComponent(producto.sku)}`)}>
-          <ProductImage producto={producto} className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105" />
+          <ProductImage
+            producto={producto}
+            sprite={Boolean(producto.pos)}
+            pos={producto.pos}
+            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+          />
         </button>
         {descuento > 0 ? (
           <span className="absolute left-3 top-3 bg-sale px-2 py-1 text-xs font-bold text-sale-foreground">-{descuento}%</span>
@@ -55,6 +60,18 @@ export function ProductCard({ producto, onAdd, onQuick, favorite, onFavorite }: 
             {producto.nombre}
           </button>
         </h3>
+        {producto.temperatura || producto.watts || producto.uso ? (
+          <div className="mt-2 flex flex-wrap gap-1 text-[10px] font-bold uppercase text-muted-foreground">
+            {producto.temperatura ? <span className="border px-1.5 py-0.5">{producto.temperatura}</span> : null}
+            {producto.watts ? <span className="border px-1.5 py-0.5">{producto.watts}W</span> : null}
+            {producto.uso ? <span className="border px-1.5 py-0.5">{producto.uso}</span> : null}
+          </div>
+        ) : null}
+        {producto.rating ? (
+          <span className="mt-2 flex items-center gap-1 text-xs text-muted-foreground">
+            <Star className="size-3.5 fill-secondary text-secondary" /> {producto.rating.toFixed(1)}
+          </span>
+        ) : null}
         <div className="mt-3 flex flex-wrap items-baseline gap-2">
           <b className="font-display text-lg text-primary sm:text-xl">{precioMx(producto.precio)}</b>
           {producto.precioAnterior ? (
