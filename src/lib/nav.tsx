@@ -9,7 +9,7 @@ function leerRuta(pathname = window.location.pathname, search = window.location.
   const params = new URLSearchParams(search);
   const path = pathname.replace(/\/+$/, "") || "/";
   if (path === "/iluminacion") {
-    return { name: "search", q: params.get("q") ?? "foco led lampara", categoria: params.get("categoria") ?? "", iluminacion: true };
+    return { name: "search", q: params.get("q") ?? "", categoria: params.get("categoria") ?? "", iluminacion: true };
   }
   if (path === "/buscar") {
     return { name: "search", q: params.get("q") ?? "", categoria: params.get("categoria") ?? "", iluminacion: false };
