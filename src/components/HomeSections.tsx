@@ -1,10 +1,12 @@
 import { useState } from "react";
 import {
   ArrowRight,
+  CircleDollarSign,
   Headphones,
   Mail,
   MapPin,
   MessageCircle,
+  Package,
   Phone,
   ShieldCheck,
   Truck,
@@ -300,6 +302,42 @@ export function SiteFooter() {
         </div>
       </div>
     </footer>
+  );
+}
+
+export function PreFooterLeyenda() {
+  const items = [
+    { icon: MessageCircle, title: "Conoce nuestro centro de atención", text: "Atención y servicio" },
+    { icon: Package, title: "Entregas confiables", text: "Actualización y seguimiento de tu envío" },
+    { icon: Truck, title: "Envíos", text: "Seguridad de tus envíos" },
+    { icon: CircleDollarSign, title: "Precios competitivos", text: "Buscamos los mejores proveedores" },
+  ];
+
+  return (
+    <div className="bg-background">
+      <section className="border-y" aria-label="Beneficios de compra">
+        <div className="mx-auto grid max-w-7xl gap-8 px-4 py-8 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map(({ icon: Icon, title, text }) => (
+            <div key={title} className="flex items-start gap-3 text-primary">
+              <Icon className="mt-0.5 size-8 shrink-0" strokeWidth={1.5} />
+              <div>
+                <h3 className="text-sm font-bold leading-snug">{title}</h3>
+                <p className="mt-1 text-xs text-muted-foreground">{text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      <div className="py-5 text-center">
+        <button
+          type="button"
+          className="text-sm font-semibold text-primary hover:underline"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          Volver al principio
+        </button>
+      </div>
+    </div>
   );
 }
 

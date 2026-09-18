@@ -10,7 +10,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 1499,
     stock: 18,
     descripcion: "Luminaria colgante decorativa para sala y comedor.",
-    urlImagen: "/demo/lampara-niza.svg",
+    urlImagen: "/productos/colgante-niza.jpg",
     ubicacion: "Anaquel A1",
   },
   {
@@ -21,7 +21,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 89,
     stock: 120,
     descripcion: "Foco LED de 9W equivalente a 60W, luz cálida 3000K.",
-    urlImagen: "/demo/foco-led.svg",
+    urlImagen: "/productos/foco-led.jpg",
     ubicacion: "Anaquel A2",
   },
   {
@@ -32,7 +32,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 385.12,
     stock: 42,
     descripcion: "Empotrado LED ultra plano para plafón.",
-    urlImagen: "/demo/downlight.svg",
+    urlImagen: "/productos/downlight.jpg",
     ubicacion: "Anaquel A3",
   },
   {
@@ -44,7 +44,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 715,
     stock: 24,
     descripcion: "Arbotante de muro para interiores y terrazas.",
-    urlImagen: "/demo/arbotante.svg",
+    urlImagen: "/productos/arbotante.jpg",
     ubicacion: "Anaquel A4",
   },
   {
@@ -56,7 +56,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 499,
     stock: 36,
     descripcion: "Reflector para áreas exteriores, protección IP65.",
-    urlImagen: "/demo/reflector.svg",
+    urlImagen: "/productos/reflector-50.jpg",
     ubicacion: "Anaquel B1",
   },
   {
@@ -67,7 +67,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 559,
     stock: 28,
     descripcion: "Tira LED de 5 metros con fuente incluida.",
-    urlImagen: "/demo/tira-led.svg",
+    urlImagen: "/productos/tira-calida.jpg",
     ubicacion: "Anaquel B2",
   },
   {
@@ -78,7 +78,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 247,
     stock: 55,
     descripcion: "Placa e interruptor sencillo línea Living Now.",
-    urlImagen: "/demo/placa.svg",
+    urlImagen: "/productos/placa.jpg",
     ubicacion: "Anaquel C1",
   },
   {
@@ -90,7 +90,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 2110,
     stock: 14,
     descripcion: "Conductor THW-LS calibre 12 AWG en rollo de 100 m.",
-    urlImagen: "/demo/cable.svg",
+    urlImagen: "/productos/cable.jpg",
     ubicacion: "Anaquel D1",
   },
   {
@@ -101,7 +101,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 46,
     stock: 80,
     descripcion: "Contacto residencial dúplex con tierra.",
-    urlImagen: "/demo/contacto.svg",
+    urlImagen: "/productos/contacto.jpg",
     ubicacion: "Anaquel C2",
   },
   {
@@ -112,7 +112,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 38,
     stock: 200,
     descripcion: "Tubería conduit de PVC para instalaciones visibles.",
-    urlImagen: "/demo/tubo.svg",
+    urlImagen: "/productos/tubo.jpg",
     ubicacion: "Anaquel E1",
   },
 ];

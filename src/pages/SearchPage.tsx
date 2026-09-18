@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Lightbulb, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { GuiaRapida } from "@/components/GuiaRapida";
 import { Header } from "@/components/Header";
-import { CompactFooter } from "@/components/HomeSections";
+import { CompactFooter, PreFooterLeyenda } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
@@ -306,6 +306,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
           </div>
         </section>
         <GuiaRapida iluminacion={iluminacion} q={q} categoria={categoria} />
+        <PreFooterLeyenda />
       </main>
       <CompactFooter />
 
@@ -322,7 +323,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
         {quick ? (
           <DialogContent className="max-w-2xl">
             <div className="grid gap-6 sm:grid-cols-2">
-              <ProductImage producto={quick} sprite={Boolean(quick.pos)} pos={quick.pos} className="aspect-square bg-muted object-contain p-4" />
+              <ProductImage producto={quick} className="aspect-square bg-muted object-cover p-4" />
               <div className="flex flex-col justify-center">
                 <DialogHeader>
                   <span className="text-xs font-bold text-accent">{marcaDe(quick.nombre, quick.marca)}</span>

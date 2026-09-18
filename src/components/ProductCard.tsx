@@ -24,9 +24,7 @@ export function ProductCard({ producto, onAdd, onQuick, favorite, onFavorite }: 
         <button type="button" className="block h-full w-full" onClick={() => navigate(`/producto/${encodeURIComponent(producto.sku)}`)}>
           <ProductImage
             producto={producto}
-            sprite={Boolean(producto.pos)}
-            pos={producto.pos}
-            className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </button>
         {descuento > 0 ? (

@@ -11,7 +11,7 @@ export const ACCESORIOS_COMPLEMENTO: Producto[] = [
     precio: 82.48,
     stock: 40,
     descripcion: "Fotocelda para encendido automático de luminarios y focos exteriores.",
-    urlImagen: "/demo/reflector.svg",
+    urlImagen: "/productos/fotocelda.jpg",
     ubicacion: "Accesorios",
   },
   {
@@ -22,7 +22,7 @@ export const ACCESORIOS_COMPLEMENTO: Producto[] = [
     precio: 28.5,
     stock: 80,
     descripcion: "Base E27 compatible con focos y lámparas de uso general.",
-    urlImagen: "/demo/contacto.svg",
+    urlImagen: "/productos/socket.jpg",
     ubicacion: "Accesorios",
   },
   {
@@ -33,7 +33,7 @@ export const ACCESORIOS_COMPLEMENTO: Producto[] = [
     precio: 34.9,
     stock: 60,
     descripcion: "Soporte para instalar focos LED en plafón o luminario.",
-    urlImagen: "/demo/placa.svg",
+    urlImagen: "/productos/placa.jpg",
     ubicacion: "Accesorios",
   },
   {
@@ -44,7 +44,7 @@ export const ACCESORIOS_COMPLEMENTO: Producto[] = [
     precio: 49,
     stock: 35,
     descripcion: "Extensión para conectar lámparas, focos y arbotantes.",
-    urlImagen: "/demo/cable.svg",
+    urlImagen: "/productos/cable.jpg",
     ubicacion: "Accesorios",
   },
 ];

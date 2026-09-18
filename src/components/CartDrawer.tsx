@@ -160,9 +160,7 @@ export function CartDrawer() {
                   <article className="flex gap-3">
                     <ProductImage
                       producto={actual}
-                      sprite={Boolean(actual.pos)}
-                      pos={actual.pos}
-                      className="size-20 shrink-0 bg-muted object-contain p-1"
+                      className="size-20 shrink-0 bg-muted object-cover p-1"
                     />
                     <div className="min-w-0 flex-1">
                       <p className="line-clamp-3 text-xs font-semibold uppercase leading-snug">{actual.nombre}</p>

@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
 import { Header } from "@/components/Header";
-import { Brands, Faq, PrivacyNotice, SiteFooter, Sucursales, TrustBar } from "@/components/HomeSections";
+import { Brands, Faq, PreFooterLeyenda, PrivacyNotice, SiteFooter, Sucursales, TrustBar } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useCart } from "@/context/CartContext";
 import { fetchCatalogo } from "@/lib/api";
-import { CATEGORY_TILES, HERO_HOME, HERO_INDUSTRIAL, marcaDe, PRODUCT_SHEET } from "@/lib/brand";
+import { CATEGORY_TILES, HERO_HOME, HERO_INDUSTRIAL, marcaDe } from "@/lib/brand";
 import { DEMO_PRODUCTOS } from "@/lib/demo-productos";
 import { precioMx } from "@/lib/format";
 import { AppLink, navigate } from "@/lib/nav";
@@ -145,9 +145,10 @@ export function HomePage() {
             {CATEGORY_TILES.map((item) => (
               <AppLink key={item.label} to={`/buscar?q=${encodeURIComponent(item.q)}`} className="group text-left">
                 <div className="aspect-square overflow-hidden bg-muted">
-                  <div
-                    className="h-full w-full bg-no-repeat transition-transform duration-500 group-hover:scale-105"
-                    style={{ backgroundImage: `url(${PRODUCT_SHEET})`, backgroundSize: "300% 300%", backgroundPosition: item.pos }}
+                  <img
+                    src={item.imagen}
+                    alt={item.label}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <span className="mt-3 flex items-center justify-between font-display text-sm font-bold text-primary sm:text-base">
@@ -190,6 +191,7 @@ export function HomePage() {
         <Faq />
         <Sucursales />
         <PrivacyNotice />
+        <PreFooterLeyenda />
       </main>
       <SiteFooter />
 

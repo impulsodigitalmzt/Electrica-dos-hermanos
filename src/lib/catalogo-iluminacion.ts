@@ -29,7 +29,7 @@ type LightingSeed = {
   name: string;
   price: number;
   oldPrice?: number;
-  pos: string;
+  imagen: string;
   subcategory: string;
   temperature: Producto["temperatura"];
   watts: number;
@@ -39,34 +39,25 @@ type LightingSeed = {
 };
 
 const SEEDS: LightingSeed[] = [
-  { id: 101, brand: "TECNOLITE", name: "Lámpara colgante decorativa Niza", price: 1299, oldPrice: 1499, pos: "0% 0%", subcategory: "Lámparas de techo", temperature: "Cálida 3000K", watts: 24, use: "Interior", rating: 4.8, description: "Colgante decorativo de metal y vidrio ideal para comedor o barra de cocina." },
-  { id: 102, brand: "MAGG", name: "Plafón LED cuadrado 24W luz neutra", price: 749, oldPrice: 869, pos: "0% 0%", subcategory: "Lámparas de techo", temperature: "Neutra 4000K", watts: 24, use: "Interior", rating: 4.6, description: "Plafón de sobreponer con difusor opalino para salas y pasillos." },
-  { id: 103, brand: "PHILIPS", name: "Candil moderno 5 luces acabado negro", price: 2390, pos: "0% 0%", subcategory: "Lámparas de techo", temperature: "Cálida 3000K", watts: 45, use: "Interior", rating: 4.7, description: "Candil de líneas rectas para espacios de doble altura." },
-  { id: 104, brand: "PHILIPS", name: "Foco LED Essential 9W luz cálida", price: 89, pos: "50% 0%", subcategory: "Focos LED", temperature: "Cálida 3000K", watts: 9, use: "Interior", rating: 4.9, description: "Foco de bajo consumo con base E27, equivalente a 60W incandescentes." },
-  { id: 105, brand: "TECNOLITE", name: "Paquete 4 focos LED 12W luz fría", price: 299, oldPrice: 359, pos: "50% 0%", subcategory: "Focos LED", temperature: "Fría 6500K", watts: 12, use: "Interior", rating: 4.5, description: "Paquete ahorrador para iluminación general de casa o negocio." },
-  { id: 106, brand: "LEDVANCE", name: "Foco inteligente WiFi RGB 10W", price: 389, pos: "50% 0%", subcategory: "Focos LED", temperature: "Cálida 3000K", watts: 10, use: "Interior", rating: 4.4, description: "Control por app y voz, 16 millones de colores y escenas programables." },
-  { id: 107, brand: "MAGG", name: "Downlight Luna Flat 13W luz neutra", price: 385.12, pos: "100% 0%", subcategory: "Empotrados", temperature: "Neutra 4000K", watts: 13, use: "Interior", rating: 4.7, description: "Empotrado ultra delgado para plafón, instalación rápida a presión." },
-  { id: 108, brand: "TECNOLITE", name: "Empotrado dirigible 7W blanco", price: 279, oldPrice: 320, pos: "100% 0%", subcategory: "Empotrados", temperature: "Cálida 3000K", watts: 7, use: "Interior", rating: 4.6, description: "Luminario direccionable para acentuar muros, cuadros o estanterías." },
-  { id: 109, brand: "VOLTECK", name: "Empotrado exterior IP65 18W", price: 529, pos: "100% 0%", subcategory: "Empotrados", temperature: "Neutra 4000K", watts: 18, use: "Exterior", rating: 4.3, description: "Resistente a lluvia y polvo, apto para terrazas y cocheras." },
-  { id: 110, brand: "TECNOLITE", name: "Arbotante LED arquitectónico 12W", price: 629, oldPrice: 715, pos: "0% 50%", subcategory: "Arbotantes", temperature: "Cálida 3000K", watts: 12, use: "Exterior", rating: 4.8, description: "Doble haz de luz para fachadas, muros y accesos." },
-  { id: 111, brand: "MAGG", name: "Arbotante de pared tipo farol", price: 459, pos: "0% 50%", subcategory: "Arbotantes", temperature: "Cálida 3000K", watts: 9, use: "Exterior", rating: 4.2, description: "Estilo clásico en aluminio con vidrio templado." },
-  { id: 112, brand: "VOLTECK", name: "Reflector LED exterior 50W IP65", price: 419, oldPrice: 499, pos: "50% 50%", subcategory: "Reflectores", temperature: "Fría 6500K", watts: 50, use: "Exterior", rating: 4.7, description: "Alta potencia para patios, bodegas y estacionamientos." },
-  { id: 113, brand: "TECNOLITE", name: "Reflector LED 100W con sensor", price: 1189, oldPrice: 1349, pos: "50% 50%", subcategory: "Reflectores", temperature: "Fría 6500K", watts: 100, use: "Exterior", rating: 4.6, description: "Sensor de movimiento integrado y carcasa de aluminio inyectado." },
-  { id: 114, brand: "PHILIPS", name: "Reflector solar 30W recargable", price: 899, pos: "50% 50%", subcategory: "Reflectores", temperature: "Neutra 4000K", watts: 30, use: "Exterior", rating: 4.1, description: "Panel solar incluido, autonomía de hasta 10 horas." },
-  { id: 115, brand: "LEDVANCE", name: "Tira LED 5 m luz cálida con driver", price: 559, pos: "100% 50%", subcategory: "Tiras LED", temperature: "Cálida 3000K", watts: 36, use: "Interior", rating: 4.8, description: "Rollo de 5 metros con adhesivo 3M y fuente de poder incluida." },
-  { id: 116, brand: "VOLTECK", name: "Tira LED RGB 5 m con control remoto", price: 429, oldPrice: 499, pos: "100% 50%", subcategory: "Tiras LED", temperature: "Fría 6500K", watts: 30, use: "Interior", rating: 4.4, description: "Cambio de color, modos dinámicos y control remoto infrarrojo." },
-  { id: 117, brand: "MAGG", name: "Tira LED exterior IP67 10 m", price: 1099, pos: "100% 50%", subcategory: "Tiras LED", temperature: "Neutra 4000K", watts: 72, use: "Exterior", rating: 4.5, description: "Encapsulado resistente al agua para jardines y albercas." },
-  { id: 118, brand: "TECNOLITE", name: "Luminario suspendido lineal 40W", price: 1849, oldPrice: 2090, pos: "0% 0%", subcategory: "Lámparas de techo", temperature: "Neutra 4000K", watts: 40, use: "Interior", rating: 4.9, description: "Perfil lineal de 1.20 m para oficinas, locales y showrooms." },
+  { id: 101, brand: "TECNOLITE", name: "Lámpara colgante decorativa Niza", price: 1299, oldPrice: 1499, imagen: "/productos/colgante-niza.jpg", subcategory: "Lámparas de techo", temperature: "Cálida 3000K", watts: 24, use: "Interior", rating: 4.8, description: "Colgante decorativo de metal y vidrio ideal para comedor o barra de cocina." },
+  { id: 102, brand: "MAGG", name: "Plafón LED cuadrado 24W luz neutra", price: 749, oldPrice: 869, imagen: "/productos/plafon-led.jpg", subcategory: "Lámparas de techo", temperature: "Neutra 4000K", watts: 24, use: "Interior", rating: 4.6, description: "Plafón de sobreponer con difusor opalino para salas y pasillos." },
+  { id: 103, brand: "PHILIPS", name: "Candil moderno 5 luces acabado negro", price: 2390, imagen: "/productos/candil.jpg", subcategory: "Lámparas de techo", temperature: "Cálida 3000K", watts: 45, use: "Interior", rating: 4.7, description: "Candil de líneas rectas para espacios de doble altura." },
+  { id: 104, brand: "PHILIPS", name: "Foco LED Essential 9W luz cálida", price: 89, imagen: "/productos/foco-led.jpg", subcategory: "Focos LED", temperature: "Cálida 3000K", watts: 9, use: "Interior", rating: 4.9, description: "Foco de bajo consumo con base E27, equivalente a 60W incandescentes." },
+  { id: 105, brand: "TECNOLITE", name: "Paquete 4 focos LED 12W luz fría", price: 299, oldPrice: 359, imagen: "/productos/focos-pack.jpg", subcategory: "Focos LED", temperature: "Fría 6500K", watts: 12, use: "Interior", rating: 4.5, description: "Paquete ahorrador para iluminación general de casa o negocio." },
+  { id: 106, brand: "LEDVANCE", name: "Foco inteligente WiFi RGB 10W", price: 389, imagen: "/productos/foco-rgb.jpg", subcategory: "Focos LED", temperature: "Cálida 3000K", watts: 10, use: "Interior", rating: 4.4, description: "Control por app y voz, 16 millones de colores y escenas programables." },
+  { id: 107, brand: "MAGG", name: "Downlight Luna Flat 13W luz neutra", price: 385.12, imagen: "/productos/downlight.jpg", subcategory: "Empotrados", temperature: "Neutra 4000K", watts: 13, use: "Interior", rating: 4.7, description: "Empotrado ultra delgado para plafón, instalación rápida a presión." },
+  { id: 108, brand: "TECNOLITE", name: "Empotrado dirigible 7W blanco", price: 279, oldPrice: 320, imagen: "/productos/empotrado-dir.jpg", subcategory: "Empotrados", temperature: "Cálida 3000K", watts: 7, use: "Interior", rating: 4.6, description: "Luminario direccionable para acentuar muros, cuadros o estanterías." },
+  { id: 109, brand: "VOLTECK", name: "Empotrado exterior IP65 18W", price: 529, imagen: "/productos/empotrado-ext.jpg", subcategory: "Empotrados", temperature: "Neutra 4000K", watts: 18, use: "Exterior", rating: 4.3, description: "Resistente a lluvia y polvo, apto para terrazas y cocheras." },
+  { id: 110, brand: "TECNOLITE", name: "Arbotante LED arquitectónico 12W", price: 629, oldPrice: 715, imagen: "/productos/arbotante.jpg", subcategory: "Arbotantes", temperature: "Cálida 3000K", watts: 12, use: "Exterior", rating: 4.8, description: "Doble haz de luz para fachadas, muros y accesos." },
+  { id: 111, brand: "MAGG", name: "Arbotante de pared tipo farol", price: 459, imagen: "/productos/farol.jpg", subcategory: "Arbotantes", temperature: "Cálida 3000K", watts: 9, use: "Exterior", rating: 4.2, description: "Estilo clásico en aluminio con vidrio templado." },
+  { id: 112, brand: "VOLTECK", name: "Reflector LED exterior 50W IP65", price: 419, oldPrice: 499, imagen: "/productos/reflector-50.jpg", subcategory: "Reflectores", temperature: "Fría 6500K", watts: 50, use: "Exterior", rating: 4.7, description: "Alta potencia para patios, bodegas y estacionamientos." },
+  { id: 113, brand: "TECNOLITE", name: "Reflector LED 100W con sensor", price: 1189, oldPrice: 1349, imagen: "/productos/reflector-100.jpg", subcategory: "Reflectores", temperature: "Fría 6500K", watts: 100, use: "Exterior", rating: 4.6, description: "Sensor de movimiento integrado y carcasa de aluminio inyectado." },
+  { id: 114, brand: "PHILIPS", name: "Reflector solar 30W recargable", price: 899, imagen: "/productos/reflector-solar.jpg", subcategory: "Reflectores", temperature: "Neutra 4000K", watts: 30, use: "Exterior", rating: 4.1, description: "Panel solar incluido, autonomía de hasta 10 horas." },
+  { id: 115, brand: "LEDVANCE", name: "Tira LED 5 m luz cálida con driver", price: 559, imagen: "/productos/tira-calida.jpg", subcategory: "Tiras LED", temperature: "Cálida 3000K", watts: 36, use: "Interior", rating: 4.8, description: "Rollo de 5 metros con adhesivo 3M y fuente de poder incluida." },
+  { id: 116, brand: "VOLTECK", name: "Tira LED RGB 5 m con control remoto", price: 429, oldPrice: 499, imagen: "/productos/tira-rgb.jpg", subcategory: "Tiras LED", temperature: "Fría 6500K", watts: 30, use: "Interior", rating: 4.4, description: "Cambio de color, modos dinámicos y control remoto infrarrojo." },
+  { id: 117, brand: "MAGG", name: "Tira LED exterior IP67 10 m", price: 1099, imagen: "/productos/tira-ext.jpg", subcategory: "Tiras LED", temperature: "Neutra 4000K", watts: 72, use: "Exterior", rating: 4.5, description: "Encapsulado resistente al agua para jardines y albercas." },
+  { id: 118, brand: "TECNOLITE", name: "Luminario suspendido lineal 40W", price: 1849, oldPrice: 2090, imagen: "/productos/lineal.jpg", subcategory: "Lámparas de techo", temperature: "Neutra 4000K", watts: 40, use: "Interior", rating: 4.9, description: "Perfil lineal de 1.20 m para oficinas, locales y showrooms." },
 ];
-
-const DEMO_IMAGEN: Record<string, string> = {
-  "Lámpara colgante decorativa Niza": "/demo/lampara-niza.svg",
-  "Foco LED Essential 9W luz cálida": "/demo/foco-led.svg",
-  "Downlight Luna Flat 13W luz neutra": "/demo/downlight.svg",
-  "Arbotante LED arquitectónico 12W": "/demo/arbotante.svg",
-  "Reflector LED exterior 50W IP65": "/demo/reflector.svg",
-  "Tira LED 5 m luz cálida con driver": "/demo/tira-led.svg",
-};
 
 export const CATALOGO_ILUMINACION: Producto[] = SEEDS.map((item) => ({
   sku: `LUM-${item.id}`,
@@ -77,9 +68,8 @@ export const CATALOGO_ILUMINACION: Producto[] = SEEDS.map((item) => ({
   precioAnterior: item.oldPrice,
   stock: 20,
   descripcion: item.description,
-  urlImagen: DEMO_IMAGEN[item.name] ?? "",
+  urlImagen: item.imagen,
   ubicacion: "Iluminación",
-  pos: item.pos,
   tipoLuminario: item.subcategory,
   temperatura: item.temperature,
   uso: item.use,
