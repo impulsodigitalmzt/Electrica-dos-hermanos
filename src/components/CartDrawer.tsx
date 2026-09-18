@@ -1,143 +1,123 @@
-import { useCart } from "../context/CartContext";
-import { placeholderProducto } from "../lib/api";
-import { precioMx } from "../lib/format";
-import { IconClose } from "../lib/icons";
-
-const ENVIO_GRATIS_DESDE = 2500;
+import { ArrowRight, BadgeCheck, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { ProductImage } from "@/components/ProductImage";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useCart } from "@/context/CartContext";
+import { ENVIO_GRATIS_DESDE, WHATSAPP_URL } from "@/lib/brand";
+import { precioMx } from "@/lib/format";
 
 export function CartDrawer() {
-  const { abierto, setAbierto, lineas, cambiarCantidad, quitar, vaciar, piezas, total } = useCart();
-  const progresoEnvio = Math.min(100, Math.round((total / ENVIO_GRATIS_DESDE) * 100));
-  const faltaEnvio = Math.max(0, ENVIO_GRATIS_DESDE - total);
+  const { abierto, setAbierto, lineas, cambiarCantidad, quitar, piezas, total } = useCart();
+  const remaining = Math.max(0, ENVIO_GRATIS_DESDE - total);
+  const progress = Math.min(100, (total / ENVIO_GRATIS_DESDE) * 100);
 
   return (
-    <>
-      <div
-        className={`fixed inset-0 z-40 bg-foreground/40 transition ${abierto ? "opacity-100" : "pointer-events-none opacity-0"}`}
-        onClick={() => setAbierto(false)}
-      />
-      <aside
-        aria-hidden={!abierto}
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-card shadow-2xl transition-transform duration-300 ${
-          abierto ? "translate-x-0" : "pointer-events-none translate-x-full"
-        }`}
-      >
-        <header className="flex items-start justify-between border-b border-border px-5 py-4">
-          <div>
-            <h2 className="text-xl font-bold">Tu carrito ({piezas})</h2>
-            <p className="text-sm text-muted-foreground">
-              {piezas === 0 ? "Aún no hay productos" : `${piezas} ${piezas === 1 ? "artículo" : "artículos"}`}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setAbierto(false)}
-            className="rounded-md p-2 text-muted-foreground hover:bg-muted"
-            aria-label="Cerrar carrito"
-          >
-            <IconClose />
-          </button>
-        </header>
-
-        <div className="border-b border-border px-5 py-3">
-          <p className="text-sm font-semibold text-primary">
-            {faltaEnvio === 0 ? "¡Tu envío es gratis!" : `Te faltan ${precioMx(faltaEnvio)} para envío gratis`}
+    <Sheet open={abierto} onOpenChange={setAbierto}>
+      <SheetContent className="flex w-full max-w-md flex-col p-0 sm:max-w-md">
+        <SheetHeader className="border-b p-5">
+          <SheetTitle className="flex items-center gap-2 text-xl text-primary">
+            <ShoppingCart /> Tu carrito <span className="text-sm font-normal text-muted-foreground">({piezas})</span>
+          </SheetTitle>
+        </SheetHeader>
+        <div className="border-b bg-muted p-4">
+          <p className="text-sm font-semibold">
+            {remaining > 0 ? (
+              <>
+                Te faltan <b className="text-primary">{precioMx(remaining)}</b> para envío gratis
+              </>
+            ) : (
+              <span className="flex items-center gap-2 text-success">
+                <BadgeCheck className="size-4" /> ¡Tu envío es gratis!
+              </span>
+            )}
           </p>
-          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-muted">
-            <div className="h-full rounded-full bg-accent transition-all" style={{ width: `${progresoEnvio}%` }} />
+          <div className="mt-2 h-2 overflow-hidden rounded-full bg-border">
+            <div className="h-full bg-secondary transition-all" style={{ width: `${progress}%` }} />
           </div>
         </div>
-
-        <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-          {!lineas.length ? (
-            <p className="rounded-md bg-muted px-4 py-8 text-center text-sm text-muted-foreground">
-              Agrega productos destacados para armar tu pedido de demostración.
-            </p>
-          ) : null}
-          {lineas.map((linea) => (
-            <LineaKey key={`${linea.paqueteId ?? "suelta"}-${linea.sku}`} linea={linea} onQty={cambiarCantidad} onRemove={quitar} />
-          ))}
+        <div className="flex-1 overflow-y-auto p-5">
+          {lineas.length === 0 ? (
+            <div className="flex h-full flex-col items-center justify-center text-center">
+              <ShoppingCart className="size-14 text-border" />
+              <h3 className="mt-4 text-xl font-bold">Tu carrito está vacío</h3>
+              <p className="mt-2 text-sm text-muted-foreground">Encuentra iluminación y material eléctrico para tu proyecto.</p>
+              <Button className="mt-5" onClick={() => setAbierto(false)}>
+                Seguir comprando
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              {lineas.map((linea) => (
+                <div key={`${linea.paqueteId ?? "suelta"}-${linea.sku}`} className="flex gap-3 border-b pb-5">
+                  <ProductImage
+                    producto={{ nombre: linea.nombre, categoria: "pieza", urlImagen: linea.urlImagen ?? "" }}
+                    className="size-20 shrink-0 bg-muted object-contain p-1"
+                  />
+                  <div className="min-w-0 flex-1">
+                    <p className="line-clamp-2 text-sm font-semibold">{linea.nombre}</p>
+                    {linea.paqueteTitulo ? <p className="text-[11px] text-muted-foreground">{linea.paqueteTitulo}</p> : null}
+                    <b className="mt-1 block text-primary">{precioMx(linea.precio)}</b>
+                    <div className="mt-2 flex items-center gap-2">
+                      <div className="flex h-8 items-center border">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-7"
+                          onClick={() => cambiarCantidad(linea.sku, linea.paqueteId, linea.cantidad - 1)}
+                          aria-label="Reducir cantidad"
+                        >
+                          <Minus />
+                        </Button>
+                        <span className="w-7 text-center text-sm">{linea.cantidad}</span>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="size-7"
+                          onClick={() => cambiarCantidad(linea.sku, linea.paqueteId, linea.cantidad + 1)}
+                          aria-label="Aumentar cantidad"
+                        >
+                          <Plus />
+                        </Button>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="size-8 text-sale"
+                        onClick={() => quitar(linea.sku, linea.paqueteId)}
+                        aria-label="Eliminar producto"
+                      >
+                        <Trash2 />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-
-        <footer className="space-y-3 border-t border-border px-5 py-4">
-          <div className="flex items-center justify-between">
-            <span className="font-medium">Subtotal</span>
-            <span className="text-2xl font-bold">{precioMx(total)}</span>
+        {lineas.length > 0 ? (
+          <div className="border-t p-5">
+            <div className="flex justify-between text-lg">
+              <span>Subtotal</span>
+              <b className="font-display text-primary">{precioMx(total)}</b>
+            </div>
+            <p className="mt-1 text-xs text-muted-foreground">Impuestos incluidos. Envío calculado al finalizar.</p>
+            <Button
+              className="mt-4 h-12 w-full bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90"
+              onClick={() => {
+                window.open(
+                  `${WHATSAPP_URL}?text=${encodeURIComponent(
+                    `Hola, quiero finalizar este pedido de Eléctrica Dos Hermanos (${piezas} piezas, ${precioMx(total)}).`
+                  )}`,
+                  "_blank"
+                );
+              }}
+            >
+              Finalizar compra <ArrowRight />
+            </Button>
           </div>
-          <p className="text-xs text-muted-foreground">Impuestos incluidos. Envío al finalizar.</p>
-          <button
-            type="button"
-            disabled={!lineas.length}
-            className="w-full rounded-md bg-accent py-3 text-sm font-semibold text-accent-foreground hover:opacity-90 disabled:cursor-not-allowed disabled:bg-muted disabled:text-muted-foreground"
-            onClick={() => {
-              window.open(
-                `https://wa.me/526699407077?text=${encodeURIComponent(
-                  `Hola, quiero finalizar este pedido de Eléctrica Dos Hermanos (${piezas} piezas, ${precioMx(total)}).`
-                )}`,
-                "_blank"
-              );
-            }}
-          >
-            Finalizar compra
-          </button>
-          {lineas.length ? (
-            <button type="button" onClick={vaciar} className="w-full text-xs text-muted-foreground underline">
-              Vaciar carrito
-            </button>
-          ) : null}
-        </footer>
-      </aside>
-    </>
-  );
-}
-
-function LineaKey({
-  linea,
-  onQty,
-  onRemove,
-}: {
-  linea: {
-    sku: string;
-    nombre: string;
-    cantidad: number;
-    precio: number;
-    urlImagen?: string;
-    paqueteId?: string;
-  };
-  onQty: (sku: string, paqueteId: string | undefined, cantidad: number) => void;
-  onRemove: (sku: string, paqueteId?: string) => void;
-}) {
-  return (
-    <div className="flex gap-3">
-      <img
-        src={linea.urlImagen || placeholderProducto({ nombre: linea.nombre, categoria: "pieza" })}
-        alt=""
-        className="h-16 w-16 rounded-md border border-border bg-muted object-contain p-1"
-      />
-      <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{linea.nombre}</p>
-        <p className="text-sm font-bold">{precioMx(linea.precio)}</p>
-        <div className="mt-2 flex items-center gap-2">
-          <button
-            type="button"
-            className="h-7 w-7 rounded-md border border-border"
-            onClick={() => onQty(linea.sku, linea.paqueteId, linea.cantidad - 1)}
-          >
-            −
-          </button>
-          <span className="w-6 text-center text-sm font-semibold">{linea.cantidad}</span>
-          <button
-            type="button"
-            className="h-7 w-7 rounded-md border border-border"
-            onClick={() => onQty(linea.sku, linea.paqueteId, linea.cantidad + 1)}
-          >
-            +
-          </button>
-          <button type="button" className="ml-auto text-xs text-accent" onClick={() => onRemove(linea.sku, linea.paqueteId)}>
-            Quitar
-          </button>
-        </div>
-      </div>
-    </div>
+        ) : null}
+      </SheetContent>
+    </Sheet>
   );
 }

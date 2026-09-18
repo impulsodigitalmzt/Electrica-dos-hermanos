@@ -55,6 +55,49 @@ export async function groqChat(
   return String(data.choices?.[0]?.message?.content ?? "").trim();
 }
 
+export async function groqVisionQuery(env: Env, imageDataUrl: string): Promise<string> {
+  if (!claveApiGroq(env)) {
+    throw new AppError(503, "GROQ_API_KEY no está configurada.", "GROQ_NOT_CONFIGURED");
+  }
+  const model = "meta-llama/llama-4-scout-17b-16e-instruct";
+  const res = await fetch(GROQ_CHAT_URL, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${claveApiGroq(env)}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      model,
+      temperature: 0.1,
+      max_completion_tokens: 80,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text: "Eres mostrador de material eléctrico en México. Mira la foto y responde SOLO 3 a 8 palabras clave para buscar el producto en el catálogo (ejemplo: contacto duplex blanco, foco led 9w, tubo conduit pvc). Sin oraciones ni puntuación extra.",
+            },
+            { type: "image_url", image_url: { url: imageDataUrl } },
+          ],
+        },
+      ],
+    }),
+    signal: AbortSignal.timeout(20_000),
+  });
+  if (!res.ok) {
+    const detalle = (await res.text()).replace(/\s+/g, " ").slice(0, 180);
+    throw new AppError(502, `No se pudo leer la foto: ${detalle || res.status}`, "GROQ_VISION_ERROR");
+  }
+  const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+  const texto = String(data.choices?.[0]?.message?.content ?? "")
+    .replace(/[".]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!texto) throw new AppError(502, "No reconocí el material de la foto.", "GROQ_VISION_EMPTY");
+  return texto.slice(0, 120);
+}
+
 export function parseJsonObject(texto: string): Record<string, unknown> {
   const limpio = texto.replace(/^```(?:json)?/i, "").replace(/```$/i, "").trim();
   const inicio = limpio.indexOf("{");

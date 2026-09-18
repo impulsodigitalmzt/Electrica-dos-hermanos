@@ -2,6 +2,7 @@ import { Hono } from "hono";
 import { createSql } from "../db";
 import { AppError } from "../lib/errors";
 import { buscarProductos, listarCategorias, obtenerProducto } from "../lib/catalog";
+import { groqVisionQuery } from "../lib/groq";
 
 type AppEnv = { Bindings: Env };
 
@@ -29,6 +30,22 @@ catalogRoutes.get("/", async (c) => {
     total,
     productos,
   });
+});
+
+catalogRoutes.post("/imagen", async (c) => {
+  if (!c.env.DATABASE_URL) throw new AppError(503, "DATABASE_URL no está configurada.", "DB_NOT_CONFIGURED");
+  const body = (await c.req.json().catch(() => ({}))) as { image?: string };
+  const image = String(body.image ?? "").trim();
+  if (!image.startsWith("data:image/")) {
+    throw new AppError(400, "Sube una foto del material.", "BAD_IMAGE");
+  }
+  if (image.length > 1_400_000) {
+    throw new AppError(400, "La foto es demasiado pesada. Prueba con otra más cercana.", "IMAGE_TOO_LARGE");
+  }
+  const q = await groqVisionQuery(c.env, image);
+  const sql = createSql(c.env.DATABASE_URL);
+  const { productos, total } = await buscarProductos(sql, { q, limit: 16, offset: 0 });
+  return c.json({ ok: true, q, total, productos });
 });
 
 catalogRoutes.get("/categorias", async (c) => {

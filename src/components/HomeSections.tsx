@@ -1,111 +1,36 @@
 import { useState } from "react";
-import { ESPACIOS, MARCAS, SUCURSALES } from "../lib/format";
-import { IconHeadset, IconMail, IconPackage, IconPhone, IconPin, IconShield, IconWhatsApp } from "../lib/icons";
-
-type FilterFn = (q: string) => void;
-
-export function Hero({ onFilter }: { onFilter: FilterFn }) {
-  return (
-    <section id="inicio" className="mx-auto grid max-w-7xl gap-4 px-4 py-6 md:grid-cols-2 md:px-6">
-      <article className="relative min-h-[340px] overflow-hidden rounded-lg text-white md:min-h-[420px]">
-        <img
-          src="https://images.unsplash.com/photo-1556912173-46c336c7fd55?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground/85 via-foreground/40 to-transparent" />
-        <div className="relative flex h-full flex-col justify-end p-6 md:p-10">
-          <p className="text-sm font-semibold text-secondary">Eléctrica Dos Hermanos ilumina tu hogar</p>
-          <h1 className="mt-2 max-w-md text-4xl font-bold leading-tight md:text-5xl">La primavera se ilumina</h1>
-          <p className="mt-3 max-w-md text-sm text-white/85">
-            Luminarias decorativas para transformar tu hogar, oficina y cada espacio que imaginas.
-          </p>
-          <button
-            type="button"
-            onClick={() => onFilter("foco led lampara")}
-            className="mt-5 w-fit rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-accent-foreground hover:opacity-90"
-          >
-            Comprar iluminación
-          </button>
-        </div>
-      </article>
-
-      <article className="relative min-h-[340px] overflow-hidden rounded-lg text-white md:min-h-[420px]">
-        <img
-          src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1400&q=70"
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/45 to-transparent" />
-        <div className="relative flex h-full flex-col justify-end p-6 md:p-10">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-secondary">E2H · Soluciones profesionales</p>
-          <h2 className="mt-2 max-w-md text-3xl font-bold leading-tight md:text-4xl">Potencia cada proyecto</h2>
-          <p className="mt-3 max-w-md text-sm text-white/85">
-            Iluminación LED y material eléctrico confiable para instalaciones industriales de cualquier escala.
-          </p>
-          <button
-            type="button"
-            onClick={() => onFilter("")}
-            className="mt-5 w-fit rounded-md border border-white/40 bg-white/10 px-5 py-2.5 text-sm font-semibold backdrop-blur hover:bg-white/20"
-          >
-            Ver soluciones
-          </button>
-        </div>
-      </article>
-    </section>
-  );
-}
-
-export function CategoryExplorer({ onFilter }: { onFilter: FilterFn }) {
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-10 md:px-6">
-      <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Explora por espacio</p>
-          <h2 className="mt-1 text-3xl font-bold">Encuentra justo lo que necesitas</h2>
-        </div>
-        <button type="button" onClick={() => onFilter("")} className="text-sm font-semibold text-primary hover:underline">
-          Ver todas las categorías
-        </button>
-      </div>
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
-        {ESPACIOS.map((espacio) => (
-          <button
-            key={espacio.id}
-            type="button"
-            onClick={() => onFilter(espacio.q)}
-            className="group overflow-hidden rounded-md border border-border bg-card text-left shadow-sm"
-          >
-            <div className="aspect-[4/3] overflow-hidden">
-              <img
-                src={espacio.imagen}
-                alt=""
-                className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-              />
-            </div>
-            <p className="px-3 py-3 text-sm font-semibold">{espacio.label}</p>
-          </button>
-        ))}
-      </div>
-    </section>
-  );
-}
+import {
+  ArrowRight,
+  Headphones,
+  Mail,
+  MapPin,
+  MessageCircle,
+  Phone,
+  ShieldCheck,
+  Truck,
+} from "lucide-react";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
+import { AppLink } from "@/lib/nav";
 
 export function TrustBar() {
-  const items = [
-    { icon: IconPackage, title: "Envío seguro", copy: "Cobertura en todo México y rastreo de tu pedido." },
-    { icon: IconHeadset, title: "Asesoría técnica", copy: "Expertos listos para ayudarte a elegir." },
-    { icon: IconShield, title: "Compra con garantía", copy: "Productos originales y pagos protegidos." },
+  const benefits = [
+    { icon: Truck, title: "Envío seguro", text: "Cobertura en todo México y rastreo de tu pedido." },
+    { icon: Headphones, title: "Asesoría técnica", text: "Expertos listos para ayudarte a elegir." },
+    { icon: ShieldCheck, title: "Compra con garantía", text: "Productos originales y pagos protegidos." },
   ];
   return (
-    <section className="border-y border-border bg-card">
-      <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 md:grid-cols-3 md:px-6">
-        {items.map((item) => (
-          <div key={item.title} className="flex gap-4">
-            <item.icon className="size-7 shrink-0 text-primary" />
+    <section className="bg-primary py-10 text-primary-foreground">
+      <div className="mx-auto grid max-w-7xl gap-7 px-4 sm:grid-cols-3">
+        {benefits.map(({ icon: Icon, title, text }) => (
+          <div key={title} className="flex gap-4">
+            <span className="flex size-12 shrink-0 items-center justify-center border border-primary-foreground/30 text-secondary">
+              <Icon className="size-6" />
+            </span>
             <div>
-              <h3 className="font-semibold">{item.title}</h3>
-              <p className="text-sm text-muted-foreground">{item.copy}</p>
+              <h3 className="text-lg font-bold">{title}</h3>
+              <p className="mt-1 text-sm text-primary-foreground/70">{text}</p>
             </div>
           </div>
         ))}
@@ -116,16 +41,18 @@ export function TrustBar() {
 
 export function Brands() {
   return (
-    <section id="marcas" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-12 md:px-6">
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Aliados de confianza</p>
-      <h2 className="mt-1 text-3xl font-bold">Marcas que conectan tus ideas</h2>
-      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-        {MARCAS.map((marca) => (
+    <section id="marcas" className="mx-auto max-w-7xl px-4 py-16">
+      <div className="text-center">
+        <span className="text-xs font-bold uppercase text-accent">Aliados de confianza</span>
+        <h2 className="mt-2 text-3xl font-extrabold text-primary">Marcas que conectan tus ideas</h2>
+      </div>
+      <div className="mt-9 grid grid-cols-2 border-y sm:grid-cols-4 lg:grid-cols-7">
+        {MARCAS.map((brand) => (
           <div
-            key={marca}
-            className="flex h-20 items-center justify-center rounded-md border border-border bg-card text-sm font-bold tracking-wide text-muted-foreground"
+            key={brand}
+            className="flex h-24 items-center justify-center border-r font-display text-lg font-extrabold text-muted-foreground grayscale transition hover:text-primary hover:grayscale-0"
           >
-            {marca}
+            {brand}
           </div>
         ))}
       </div>
@@ -134,132 +61,127 @@ export function Brands() {
 }
 
 const FAQS = [
-  {
-    q: "¿Cuándo obtengo envío gratis?",
-    a: "En pedidos mayores a $2,500 MXN con entrega en Mazatlán, Culiacán y Los Cabos el envío no tiene costo. Al resto de México aplicamos tarifa preferencial según destino y peso.",
-  },
-  {
-    q: "¿Cómo puedo dar seguimiento a mi pedido?",
-    a: "Al confirmar tu compra te enviamos el número de guía por WhatsApp o correo. También puedes escribirnos a cotizaciones.mzt@electricadoshermanos.com.",
-  },
-  {
-    q: "¿Los productos tienen garantía?",
-    a: "Sí. Trabajamos marcas originales y respaldamos cada pieza contra defectos de fábrica. La cobertura varía según el fabricante.",
-  },
-  {
-    q: "¿Puedo recibir asesoría para mi proyecto?",
-    a: "Sí. Describe el trabajo en el buscador o escríbenos por WhatsApp. El mostrador arma la lista de materiales con existencias reales.",
-  },
-];
+  ["¿Cuándo obtengo envío gratis?", "En compras mayores a $1,000 MXN. Aplican restricciones según peso, volumen y destino."],
+  ["¿Cómo puedo dar seguimiento a mi pedido?", "Al confirmar tu compra recibirás una guía de rastreo en tu correo electrónico."],
+  ["¿Los productos tienen garantía?", "Sí. Todos nuestros productos cuentan con garantía de fabricante; el plazo depende de cada marca."],
+  ["¿Puedo recibir asesoría para mi proyecto?", "Claro. Nuestro equipo técnico te ayuda de lunes a viernes de 8:30 a 19:00 y sábados de 8:30 a 14:00."],
+] as const;
 
 export function Faq() {
-  const [abierta, setAbierta] = useState(0);
   return (
-    <section id="faq" className="scroll-mt-28 bg-muted/60">
-      <div className="mx-auto max-w-7xl px-4 py-14 md:px-6">
-        <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Estamos para ayudarte</p>
-        <div className="mt-1 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-3xl font-bold">Preguntas frecuentes</h2>
-          <a
-            href="https://wa.me/526699407077"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
-          >
-            <IconWhatsApp /> Hablar por WhatsApp
-          </a>
+    <section id="faq" className="bg-muted py-16">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 lg:grid-cols-[0.8fr_1.2fr]">
+        <div>
+          <span className="text-xs font-bold uppercase text-accent">Estamos para ayudarte</span>
+          <h2 className="mt-2 text-3xl font-extrabold text-primary sm:text-4xl">Preguntas frecuentes</h2>
+          <p className="mt-4 max-w-md text-muted-foreground">
+            Resolvemos las dudas más comunes antes de tu compra. También puedes hablar con un asesor.
+          </p>
+          <Button variant="outline" className="mt-6 border-primary text-primary" asChild>
+            <a href={WHATSAPP_URL}>
+              <MessageCircle /> Hablar por WhatsApp
+            </a>
+          </Button>
         </div>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-          Resolvemos las dudas más comunes antes de tu compra. También puedes hablar con un asesor.
-        </p>
-        <div className="mt-6 divide-y divide-border rounded-lg border border-border bg-card">
-          {FAQS.map((item, i) => (
-            <div key={item.q}>
-              <button
-                type="button"
-                onClick={() => setAbierta(abierta === i ? -1 : i)}
-                className="flex w-full items-center justify-between px-5 py-4 text-left font-semibold"
-              >
-                {item.q}
-                <span className="text-xl text-primary">{abierta === i ? "−" : "+"}</span>
-              </button>
-              {abierta === i ? <p className="px-5 pb-4 text-sm leading-relaxed text-muted-foreground">{item.a}</p> : null}
-            </div>
+        <Accordion type="single" collapsible className="border-t">
+          {FAQS.map(([q, a], i) => (
+            <AccordionItem key={q} value={`faq-${i}`}>
+              <AccordionTrigger className="py-5 text-base font-bold text-primary">{q}</AccordionTrigger>
+              <AccordionContent className="pb-5 text-muted-foreground">{a}</AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </div>
     </section>
   );
 }
 
 export function Sucursales() {
-  const [activa, setActiva] = useState<(typeof SUCURSALES)[number]["id"]>(SUCURSALES[0].id);
-  const sucursal = SUCURSALES.find((s) => s.id === activa) ?? SUCURSALES[0];
+  const first = BRANCHES[0];
+  const [active, setActive] = useState(first.id);
+  const branch: Branch = BRANCHES.find((item) => item.id === active) ?? first;
   return (
-    <section id="sucursales" className="scroll-mt-28 mx-auto max-w-7xl px-4 py-14 md:px-6">
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Estamos cerca de ti</p>
-      <h2 className="mt-1 text-3xl font-bold">Nuestras sucursales</h2>
-      <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-        Material eléctrico en alta y baja tensión, ferretería y plomería en Mazatlán, Culiacán, San José del Cabo y Cabo
-        San Lucas, con envíos a todo México.
-      </p>
-      <div className="mt-6 flex flex-wrap gap-2">
-        {SUCURSALES.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            onClick={() => setActiva(item.id)}
-            className={`rounded-md px-3 py-1.5 text-sm font-semibold ${
-              activa === item.id ? "bg-primary text-primary-foreground" : "bg-muted text-foreground hover:bg-border"
-            }`}
-          >
-            {item.titulo}
-          </button>
-        ))}
-      </div>
-      <article className="mt-6 rounded-lg border border-border bg-card p-6 shadow-sm">
-        <h3 className="text-xl font-bold">{sucursal.titulo}</h3>
-        <p className="text-sm text-muted-foreground">{sucursal.ciudad}</p>
-        <p className="mt-3 flex items-start gap-2 text-sm">
-          <IconPin className="mt-0.5 text-primary" /> {sucursal.direccion}
+    <section id="sucursales" className="mx-auto max-w-7xl px-4 py-16">
+      <div className="text-center">
+        <span className="text-xs font-bold uppercase text-accent">Estamos cerca de ti</span>
+        <h2 className="mt-2 text-3xl font-extrabold text-primary sm:text-4xl">Nuestras sucursales</h2>
+        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
+          Material eléctrico en alta y baja tensión, ferretería y plomería en Mazatlán, Culiacán, San José del Cabo y Cabo San
+          Lucas, con envíos a todo México.
         </p>
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-          {sucursal.tels.map((tel) => (
-            <a key={tel} href={`tel:${tel.replace(/\D/g, "")}`} className="inline-flex items-center gap-1 hover:text-primary">
-              <IconPhone className="text-primary" /> {tel}
-            </a>
+      </div>
+      <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="flex flex-col border-t">
+          {BRANCHES.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setActive(item.id)}
+              aria-pressed={item.id === active}
+              className={`flex items-center justify-between gap-3 border-b px-4 py-4 text-left font-bold transition ${
+                item.id === active ? "bg-primary text-primary-foreground" : "text-primary hover:bg-muted"
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <MapPin className="size-4 shrink-0" /> {item.name}
+              </span>
+              <ArrowRight className="size-4 shrink-0" />
+            </button>
           ))}
         </div>
-        <a href={`mailto:${sucursal.email}`} className="mt-2 inline-flex items-center gap-2 text-sm hover:text-primary">
-          <IconMail className="text-primary" /> {sucursal.email}
-        </a>
-        <div className="mt-5 flex flex-wrap gap-3">
-          <a
-            href={`tel:${sucursal.tels[0].replace(/\D/g, "")}`}
-            className="rounded-md bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground"
-          >
-            Llamar
-          </a>
-          <a
-            href={`mailto:${sucursal.email}`}
-            className="rounded-md border border-border px-4 py-2 text-sm font-semibold hover:bg-muted"
-          >
-            Cotizar
-          </a>
+        <div className="border bg-muted p-6 sm:p-8">
+          <h3 className="font-display text-2xl font-extrabold text-primary">{branch.name}</h3>
+          <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-accent">{branch.city}</p>
+          <p className="mt-5 flex gap-3 text-muted-foreground">
+            <MapPin className="mt-0.5 size-5 shrink-0 text-secondary" /> {branch.address}
+          </p>
+          <div className="mt-4 flex gap-3">
+            <Phone className="mt-0.5 size-5 shrink-0 text-secondary" />
+            <div className="flex flex-col">
+              {branch.phones.map((phone) => (
+                <a key={phone} href={telHref(phone)} className="font-semibold text-primary hover:underline">
+                  {phone}
+                </a>
+              ))}
+            </div>
+          </div>
+          <p className="mt-4 flex gap-3">
+            <Mail className="mt-0.5 size-5 shrink-0 text-secondary" />
+            <a href={`mailto:${branch.email}`} className="break-all font-semibold text-primary hover:underline">
+              {branch.email}
+            </a>
+          </p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Button asChild className="bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90">
+              <a href={telHref(branch.phones[0] ?? "6699407077")}>
+                <Phone /> Llamar
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="border-primary text-primary">
+              <a href={`mailto:${branch.email}`}>
+                <Mail /> Cotizar
+              </a>
+            </Button>
+          </div>
         </div>
-      </article>
+      </div>
     </section>
   );
 }
 
 export function PrivacyNotice() {
   return (
-    <section id="aviso" className="scroll-mt-28 bg-muted/60">
-      <div className="mx-auto max-w-7xl px-4 py-10 md:px-6">
-        <h2 className="text-2xl font-bold">Aviso de privacidad</h2>
-        <p className="mt-3 max-w-4xl text-sm leading-relaxed text-muted-foreground">
-          Eléctrica dos Hermanos S.A. de C.V., con domicilio en División Norte 1900, Col. Francisco Villa, CP 82127,
-          Mazatlán, Sin., utiliza tus datos personales únicamente para atender cotizaciones, pedidos, facturación y
-          envíos. No compartimos tu información con terceros ajenos a estos fines. Para ejercer tus derechos ARCO
-          escríbenos a cotizaciones.mzt@electricadoshermanos.com.
+    <section id="aviso-privacidad" className="border-t bg-background py-12">
+      <div className="mx-auto max-w-3xl px-4 text-center">
+        <h2 className="text-2xl font-extrabold text-primary">Aviso de privacidad</h2>
+        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+          Eléctrica dos Hermanos S.A. de C.V., con domicilio en División Norte 1900, Col. Francisco Villa, CP 82127, Mazatlán,
+          Sin., utiliza tus datos personales únicamente para atender cotizaciones, pedidos, facturación y envíos. No compartimos
+          tu información con terceros ajenos a estos fines. Para ejercer tus derechos ARCO escríbenos a{" "}
+          <a className="font-semibold text-primary hover:underline" href={`mailto:${MAIN_EMAIL}`}>
+            {MAIN_EMAIL}
+          </a>
+          .
         </p>
       </div>
     </section>
@@ -269,88 +191,127 @@ export function PrivacyNotice() {
 export function SiteFooter() {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-12 md:grid-cols-4 md:px-6">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex rounded-md bg-white p-1">
-              <img src="/logo.png" alt="" className="h-11 w-auto" />
+          <div className="flex items-center gap-3">
+            <span className="flex items-center justify-center bg-background p-1">
+              <img src={LOGO_SRC} alt="Eléctrica dos Hermanos" className="h-16 w-auto object-contain" />
             </span>
-            <span className="leading-none">
-              <span className="block text-lg font-bold">Eléctrica</span>
-              <span className="block text-lg font-bold text-secondary">dos Hermanos</span>
+            <span className="font-display text-lg font-extrabold leading-tight">
+              Eléctrica
+              <br />
+              dos Hermanos
             </span>
           </div>
-          <p className="mt-3 text-sm font-semibold">Eléctrica dos Hermanos S.A. de C.V.</p>
-          <p className="mt-2 text-sm text-primary-foreground/75">
+          <p className="mt-4 text-sm font-semibold text-primary-foreground/80">Eléctrica dos Hermanos S.A. de C.V.</p>
+          <p className="mt-2 text-sm leading-relaxed text-primary-foreground/70">
             Material eléctrico en alta y baja tensión, ferretería y plomería para su hogar o negocio.
           </p>
+          <div className="mt-5 flex gap-2">
+            <Button size="icon" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground" asChild>
+              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+                <MessageCircle />
+              </a>
+            </Button>
+            <Button size="icon" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground" asChild>
+              <a href={`mailto:${MAIN_EMAIL}`} aria-label="Correo">
+                <Mail />
+              </a>
+            </Button>
+            <Button size="icon" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground" asChild>
+              <a href={telHref("6699407077")} aria-label="Teléfono">
+                <Phone />
+              </a>
+            </Button>
+          </div>
         </div>
         <div>
-          <h3 className="mb-3 font-bold">Contacto</h3>
-          <ul className="space-y-2 text-sm text-primary-foreground/80">
+          <h3 className="text-base font-bold text-secondary">Contacto</h3>
+          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
             <li>
-              <a href="tel:+526699407077">Tel. (669) 940-7077</a>
+              <a className="hover:text-primary-foreground" href={telHref("6699407077")}>
+                Tel. (669) 940-7077
+              </a>
             </li>
             <li>
-              <a href="tel:+526699407088">Tel. (669) 940-7088</a>
+              <a className="hover:text-primary-foreground" href={telHref("6699407088")}>
+                Tel. (669) 940-7088
+              </a>
             </li>
             <li>
-              <a href="mailto:cotizaciones.mzt@electricadoshermanos.com">cotizaciones.mzt@electricadoshermanos.com</a>
+              <a className="break-all hover:text-primary-foreground" href={`mailto:${MAIN_EMAIL}`}>
+                {MAIN_EMAIL}
+              </a>
             </li>
             <li>
-              <a href="https://wa.me/526699407077">WhatsApp (669) 940-7077</a>
+              <a className="hover:text-primary-foreground" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
+                WhatsApp (669) 940-7077
+              </a>
             </li>
           </ul>
         </div>
         <div>
-          <h3 className="mb-3 font-bold">Sucursales</h3>
-          <ul className="space-y-2 text-sm text-primary-foreground/80">
-            {SUCURSALES.map((s) => (
-              <li key={s.id}>
-                <a href="#sucursales">{s.titulo}</a>
+          <h3 className="text-base font-bold text-secondary">Sucursales</h3>
+          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
+            {BRANCHES.map((branch) => (
+              <li key={branch.id}>
+                <a href="#sucursales" className="hover:text-primary-foreground">
+                  {branch.name}
+                </a>
               </li>
             ))}
           </ul>
         </div>
         <div>
-          <h3 className="mb-3 font-bold">Información</h3>
-          <ul className="space-y-2 text-sm text-primary-foreground/80">
+          <h3 className="text-base font-bold text-secondary">Información</h3>
+          <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
             <li>
-              <a href="#faq">Preguntas frecuentes</a>
+              <a href="#faq" className="hover:text-primary-foreground">
+                Preguntas frecuentes
+              </a>
             </li>
             <li>
-              <a href="#sucursales">Cobertura y envíos</a>
+              <a href="#sucursales" className="hover:text-primary-foreground">
+                Cobertura y envíos
+              </a>
             </li>
             <li>
-              <a href="mailto:cotizaciones.mzt@electricadoshermanos.com">Contacto directo</a>
+              <a href={`mailto:${MAIN_EMAIL}`} className="hover:text-primary-foreground">
+                Contacto directo
+              </a>
             </li>
             <li>
-              <a href="https://wa.me/526699407077">WhatsApp</a>
+              <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="hover:text-primary-foreground">
+                WhatsApp
+              </a>
             </li>
             <li>
-              <a href="#aviso">Aviso de privacidad</a>
+              <a href="#aviso-privacidad" className="hover:text-primary-foreground">
+                Aviso de privacidad
+              </a>
             </li>
           </ul>
         </div>
       </div>
-      <div className="border-t border-white/15">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-4 text-xs text-primary-foreground/70 md:px-6">
-          <p>© 2026 Eléctrica dos Hermanos S.A. de C.V. Todos los derechos reservados.</p>
-          <p>Visa · Mastercard · American Express · PayPal</p>
+      <div className="border-t border-primary-foreground/15">
+        <div className="mx-auto flex max-w-7xl flex-col gap-2 px-4 py-5 text-xs text-primary-foreground/60 sm:flex-row sm:justify-between">
+          <span>© 2026 Eléctrica dos Hermanos S.A. de C.V. Todos los derechos reservados.</span>
+          <span>Visa · Mastercard · American Express · PayPal</span>
         </div>
       </div>
     </footer>
   );
 }
 
-export function WhatsAppFab() {
+export function CompactFooter() {
   return (
-    <a
-      href="https://wa.me/526699407077"
-      className="fixed bottom-5 right-5 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg hover:scale-105"
-      aria-label="WhatsApp Eléctrica Dos Hermanos"
-    >
-      <IconWhatsApp className="size-7" />
-    </a>
+    <footer className="bg-primary py-8 text-primary-foreground">
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <span>Eléctrica dos Hermanos S.A. de C.V. · Iluminación LED con envíos a todo México.</span>
+        <AppLink to="/" className="font-bold text-secondary hover:underline">
+          Volver al inicio
+        </AppLink>
+      </div>
+    </footer>
   );
 }

@@ -1,107 +1,140 @@
 import { useState } from "react";
-import { useCart } from "../context/CartContext";
-import { NAV_CATEGORIAS } from "../lib/format";
-import { IconCart, IconMenu, IconTruck, IconWhatsApp } from "../lib/icons";
-import { SearchBar } from "./SearchBar";
+import { ChevronDown, CircleUserRound, Heart, Menu, MessageCircle, ShoppingCart, Truck } from "lucide-react";
+import { SearchBar } from "@/components/SearchBar";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { useCart } from "@/context/CartContext";
+import { LOGO_SRC, MAIN_EMAIL, NAV_ITEMS, telHref, WHATSAPP_URL } from "@/lib/brand";
+import { AppLink, navigate } from "@/lib/nav";
 
 type Props = {
   query: string;
   onQueryChange: (value: string) => void;
-  onFilter: (value: string, categoria?: string) => void;
+  variant?: "home" | "inner";
+  searchPath?: string;
+  favorites?: number;
 };
 
-export function Header({ query, onQueryChange, onFilter }: Props) {
+export function Header({ query, onQueryChange, variant = "home", searchPath = "/buscar", favorites = 0 }: Props) {
   const { piezas, setAbierto } = useCart();
   const [menu, setMenu] = useState(false);
 
-  function irA(item: (typeof NAV_CATEGORIAS)[number]) {
-    setMenu(false);
-    if ("href" in item && item.href) {
-      if (item.id === "ofertas") onFilter("");
-      document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
-      return;
-    }
-    onFilter("q" in item ? item.q : "");
-    document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" });
-  }
-
   return (
-    <header className="sticky top-0 z-40 bg-background/95 backdrop-blur">
+    <>
       <div className="bg-primary text-primary-foreground">
         <div className="mx-auto flex min-h-9 max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-1 text-center text-xs font-semibold sm:justify-between sm:text-sm">
           <span className="flex items-center gap-2">
-            <IconTruck className="size-4 text-secondary" />
-            Mazatlán · Culiacán · San José del Cabo · Cabo San Lucas y envíos a todo México
+            <Truck className="size-4 text-secondary" /> Mazatlán · Culiacán · San José del Cabo · Cabo San Lucas y envíos a todo México
           </span>
           <div className="hidden items-center gap-5 lg:flex">
-            <a href="tel:+526699407077">Tel. (669) 940-7077 / 940-7088</a>
-            <a href="mailto:cotizaciones.mzt@electricadoshermanos.com">cotizaciones.mzt@electricadoshermanos.com</a>
-            <a className="flex items-center gap-1 text-secondary" href="https://wa.me/526699407077">
-              <IconWhatsApp /> WhatsApp
+            <a href={telHref("6699407077")}>Tel. (669) 940-7077 / 940-7088</a>
+            <a href={`mailto:${MAIN_EMAIL}`}>{MAIN_EMAIL}</a>
+            <a className="flex items-center gap-1 text-secondary" href={WHATSAPP_URL}>
+              <MessageCircle className="size-4" /> WhatsApp
             </a>
           </div>
         </div>
       </div>
 
-      <div className="border-b border-border">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 md:gap-6">
-          <button
-            type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-muted lg:hidden"
-            aria-label="Abrir menú"
-            onClick={() => setMenu((v) => !v)}
-          >
-            <IconMenu />
-          </button>
-          <a href="#inicio" className="flex shrink-0 items-center gap-2" aria-label="Eléctrica Dos Hermanos inicio">
-            <img src="/logo.png" alt="" className="h-11 w-auto" />
-            <span className="leading-none">
-              <span className="block text-lg font-bold text-primary">Eléctrica</span>
-              <span className="block text-lg font-bold text-accent">Dos Hermanos</span>
+      <header className="sticky top-0 z-40 border-b bg-background/95 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-3 px-4 py-3 lg:flex-nowrap lg:gap-7">
+          <Button variant="ghost" size="icon" className="lg:hidden" aria-label="Abrir menú" onClick={() => setMenu(true)}>
+            <Menu />
+          </Button>
+          <AppLink to="/" className="flex shrink-0 items-center gap-2" aria-label="Eléctrica Dos Hermanos inicio">
+            <img src={LOGO_SRC} alt="Eléctrica Dos Hermanos" className="h-12 w-auto object-contain sm:h-14" />
+            <span className="hidden font-display text-base font-extrabold leading-tight text-primary xl:block">
+              Eléctrica
+              <br />
+              Dos Hermanos
             </span>
-          </a>
-          <div className="hidden min-w-0 flex-1 md:block">
-            <SearchBar value={query} onChange={onQueryChange} onFilter={(q) => onFilter(q)} />
+          </AppLink>
+          <div className="relative order-last w-full basis-full lg:order-none lg:basis-auto lg:flex-1">
+            <SearchBar value={query} onChange={onQueryChange} searchPath={searchPath} />
           </div>
-          <button
-            type="button"
-            onClick={() => setAbierto(true)}
-            className="relative ml-auto inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-muted"
-            aria-label={`Abrir carrito, ${piezas} productos`}
-          >
-            <IconCart />
-            <span className="absolute -right-0.5 -top-0.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-accent px-1 text-[11px] font-bold text-accent-foreground">
-              {piezas}
-            </span>
-          </button>
-        </div>
-        <div className="px-4 pb-3 md:hidden">
-          <SearchBar value={query} onChange={onQueryChange} onFilter={(q) => onFilter(q)} />
-        </div>
-        <nav className="hidden border-t border-border lg:block">
-          <div className="mx-auto flex max-w-7xl items-center justify-center gap-7 px-4 py-2.5 text-sm font-semibold text-foreground/80">
-            {NAV_CATEGORIAS.map((item) => (
-              <button key={item.id} type="button" onClick={() => irA(item)} className="hover:text-primary">
-                {item.label}
-              </button>
-            ))}
+          <div className="ml-auto flex items-center gap-1">
+            {variant === "inner" ? (
+              <Button variant="ghost" className="hidden text-primary sm:flex" onClick={() => navigate("/")}>
+                Inicio
+              </Button>
+            ) : null}
+            <Button variant="ghost" size="icon" aria-label="Mi cuenta">
+              <CircleUserRound />
+            </Button>
+            <Button variant="ghost" size="icon" className="relative" aria-label={`${favorites} favoritos`}>
+              <Heart className={favorites ? "fill-sale text-sale" : ""} />
+              {favorites > 0 ? <Counter value={favorites} /> : null}
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative"
+              aria-label={`${piezas} artículos en carrito`}
+              onClick={() => setAbierto(true)}
+            >
+              <ShoppingCart />
+              {piezas > 0 ? <Counter value={piezas} /> : null}
+            </Button>
           </div>
-        </nav>
-        {menu ? (
-          <div className="grid gap-1 border-t border-border px-4 py-3 lg:hidden">
-            {NAV_CATEGORIAS.map((item) => (
+        </div>
+        {variant === "home" ? (
+          <nav aria-label="Navegación principal" className="hidden border-t lg:block">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+              {NAV_ITEMS.map((item) => (
+                <AppLink
+                  key={item.id}
+                  to={item.to}
+                  className={`flex h-12 items-center gap-1 border-b-2 px-2 text-sm font-bold uppercase transition-colors hover:text-primary ${
+                    "sale" in item && item.sale ? "border-sale text-sale" : "border-transparent"
+                  }`}
+                >
+                  {item.label}
+                  {item.id !== "ofertas" ? <ChevronDown className="size-3" /> : null}
+                </AppLink>
+              ))}
+            </div>
+          </nav>
+        ) : null}
+      </header>
+
+      <Sheet open={menu} onOpenChange={setMenu}>
+        <SheetContent side="left" className="w-[88%]">
+          <SheetHeader>
+            <SheetTitle className="text-left text-2xl text-primary">Menú</SheetTitle>
+          </SheetHeader>
+          <nav className="mt-8 flex flex-col">
+            {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
                 type="button"
-                onClick={() => irA(item)}
-                className="rounded-md px-2 py-2 text-left text-sm font-semibold hover:bg-muted"
+                onClick={() => {
+                  setMenu(false);
+                  navigate(item.to);
+                }}
+                className="flex items-center justify-between border-b py-4 text-left font-bold text-primary"
               >
                 {item.label}
+                <ChevronDown className="size-4 -rotate-90" />
               </button>
             ))}
+          </nav>
+          <div className="mt-8 space-y-3 text-sm text-muted-foreground">
+            <p>Tel. (669) 940-7077 / 940-7088</p>
+            <p className="break-all">{MAIN_EMAIL}</p>
+            <p className="flex items-center gap-2">
+              <MessageCircle className="size-4" /> WhatsApp (669) 940-7077
+            </p>
           </div>
-        ) : null}
-      </div>
-    </header>
+        </SheetContent>
+      </Sheet>
+    </>
+  );
+}
+
+function Counter({ value }: { value: number }) {
+  return (
+    <span className="absolute -right-1 -top-1 flex size-5 items-center justify-center rounded-full bg-sale text-[10px] font-bold text-sale-foreground">
+      {value}
+    </span>
   );
 }
