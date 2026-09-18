@@ -26,6 +26,7 @@ const SELECT_BASE = `
 const NOMBRE_PLANO = `translate(lower(nombre_pieza), 'áàäéèëíìïóòöúùüñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑ', 'aaaeeeiiiooouuunAAAEEEIIIOOOUUUN')`;
 const DESC_PLANO = `translate(lower(coalesce(descripcion_tecnica, '')), 'áàäéèëíìïóòöúùüñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑ', 'aaaeeeiiiooouuunAAAEEEIIIOOOUUUN')`;
 const SKU_PLANO = `translate(lower(sku), 'áàäéèëíìïóòöúùüñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑ', 'aaaeeeiiiooouuunAAAEEEIIIOOOUUUN')`;
+const CAT_PLANO = `translate(lower(coalesce(categoria, '')), 'áàäéèëíìïóòöúùüñÁÀÄÉÈËÍÌÏÓÒÖÚÙÜÑ', 'aaaeeeiiiooouuunAAAEEEIIIOOOUUUN')`;
 
 export async function listarCategorias(sql: Sql): Promise<{ categoria: string; total: number }[]> {
   const rows = await sql`
@@ -85,7 +86,7 @@ export async function buscarProductos(
     const grupos = likeParts.map((like) => {
       params.push(like);
       const i = params.length;
-      return `(${NOMBRE_PLANO} ILIKE $${i} OR ${SKU_PLANO} ILIKE $${i} OR ${DESC_PLANO} ILIKE $${i})`;
+      return `(${NOMBRE_PLANO} ILIKE $${i} OR ${SKU_PLANO} ILIKE $${i} OR ${DESC_PLANO} ILIKE $${i} OR ${CAT_PLANO} ILIKE $${i})`;
     });
     where.push(`(${grupos.join(" AND ")})`);
   }

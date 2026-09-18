@@ -141,3 +141,14 @@ export function filtrarDemo(productos: Producto[], q: string, categoria = ""): P
 
   return filtrados.length ? filtrados : productos;
 }
+
+/** Coincidencias para el autocompletado. Vacío si no hay match (no rellena el catálogo entero). */
+export function sugerenciasLocales(q: string, limite = 6): Producto[] {
+  const n = normalizar(q);
+  if (n.length < 2) return [];
+  return DEMO_PRODUCTOS.filter((producto) =>
+    normalizar(
+      [producto.nombre, producto.marca, producto.categoria, producto.descripcion, producto.sku].join(" ")
+    ).includes(n)
+  ).slice(0, limite);
+}

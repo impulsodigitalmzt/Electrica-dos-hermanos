@@ -49,7 +49,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
               Dos Hermanos
             </span>
           </AppLink>
-          <div className="relative order-last w-full basis-full lg:order-none lg:basis-auto lg:flex-1">
+          <div className="relative z-50 order-last w-full basis-full overflow-visible lg:order-none lg:basis-auto lg:flex-1">
             <SearchBar value={query} onChange={onQueryChange} searchPath={searchPath} />
           </div>
           <div className="ml-auto flex items-center gap-1">
