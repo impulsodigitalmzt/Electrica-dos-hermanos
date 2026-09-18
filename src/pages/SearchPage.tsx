@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Lightbulb, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { GuiaRapida } from "@/components/GuiaRapida";
 import { Header } from "@/components/Header";
 import { CompactFooter } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -304,6 +305,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
             )}
           </div>
         </section>
+        <GuiaRapida iluminacion={iluminacion} q={q} categoria={categoria} />
       </main>
       <CompactFooter />
 
