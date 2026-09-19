@@ -163,44 +163,49 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetContent
           side="left"
-          className="flex w-[min(100%,380px)] flex-col gap-0 overflow-y-auto border-0 bg-[#f4f6f8] p-0 sm:max-w-[380px]"
+          className="flex w-[min(100%,400px)] flex-col gap-0 overflow-y-auto border-0 bg-[#eef1f5] p-0 shadow-2xl sm:max-w-[400px] [&>button]:right-4 [&>button]:top-4 [&>button]:flex [&>button]:size-10 [&>button]:items-center [&>button]:justify-center [&>button]:rounded-full [&>button]:border-0 [&>button]:bg-white [&>button]:opacity-100 [&>button]:shadow-md [&>button]:ring-0 [&>button]:hover:bg-white [&>button]:hover:opacity-100"
         >
-          <SheetTitle className="sr-only">Menú de navegación</SheetTitle>
+          <SheetTitle className="sr-only">Menú de navegación Eléctrica Dos Hermanos</SheetTitle>
 
-          <div className="flex items-center justify-between px-5 pb-2 pt-5">
-            <button type="button" className="flex items-center gap-2 text-left" aria-label="Inicio" onClick={() => ir("/")}>
-              <img src={LOGO_SRC} alt="" className="h-11 w-auto object-contain" />
-              <span className="font-display text-sm font-extrabold leading-tight text-primary">
-                Eléctrica
-                <br />
-                Dos Hermanos
-              </span>
+          <div className="relative">
+            <button type="button" onClick={() => ir("/")} className="block w-full text-left" aria-label="Ir al inicio">
+              <img
+                src="/brand/lumi-hero-home.jpg"
+                alt="Eléctrica Dos Hermanos"
+                className="h-44 w-full object-cover sm:h-52"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/35 to-black/10" />
+              <div className="absolute inset-x-0 bottom-0 flex items-end gap-3 p-4 pr-14">
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-white p-1.5 shadow-md">
+                  <img src={LOGO_SRC} alt="" className="h-full w-auto object-contain" />
+                </span>
+                <div className="min-w-0 text-white">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">Bienvenido</p>
+                  <p className="font-display text-lg font-extrabold leading-tight">Eléctrica Dos Hermanos</p>
+                  <p className="mt-0.5 text-xs text-white/80">Material eléctrico · Iluminación · Ferretería</p>
+                </div>
+              </div>
             </button>
           </div>
 
-          <div className="space-y-4 px-4 pb-8 pt-2">
+          <div className="space-y-4 px-4 pb-10 pt-4">
             <button
               type="button"
               onClick={() => ir("/buscar")}
-              className="group relative block w-full overflow-hidden rounded-[22px] text-left shadow-sm"
+              className="group relative block w-full overflow-hidden rounded-[22px] text-left shadow-sm ring-1 ring-black/5"
             >
-              <img
-                src={PROMO_TEMPORADA}
-                alt=""
-                className="aspect-[16/9] w-full object-cover object-left"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+              <img src={PROMO_TEMPORADA} alt="" className="aspect-[2.2/1] w-full object-cover object-left" />
+              <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-transparent to-transparent" />
+              <div className="absolute inset-y-0 left-0 flex flex-col justify-end p-4 text-white">
                 <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-secondary">Ofertas</p>
-                <p className="mt-1 font-display text-lg font-extrabold leading-tight">Ofertas de temporada</p>
-                <p className="mt-1 text-xs text-white/85">Descuentos exclusivos en material eléctrico e iluminación.</p>
-                <span className="mt-3 inline-flex items-center gap-1 text-sm font-bold text-secondary">
-                  Conocer más <ArrowUpRight className="size-4" />
+                <p className="mt-1 font-display text-base font-extrabold">Hasta -20% de temporada</p>
+                <span className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-secondary">
+                  Ver ofertas <ArrowUpRight className="size-4" />
                 </span>
               </div>
             </button>
 
-            <nav className="overflow-hidden rounded-[22px] bg-white p-2 shadow-sm" aria-label="Menú móvil">
+            <nav className="overflow-hidden rounded-[22px] bg-white p-2 shadow-sm ring-1 ring-black/5" aria-label="Menú móvil">
               {MENU_ITEMS.map((item) => {
                 const Icon = item.icon;
                 const activo = item.id === "inicio";
@@ -218,49 +223,57 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
                     }`}
                   >
                     <span
-                      className={`flex size-10 shrink-0 items-center justify-center rounded-xl ${
+                      className={`flex size-11 shrink-0 items-center justify-center rounded-2xl ${
                         activo
-                          ? "bg-primary text-primary-foreground"
+                          ? "bg-primary text-primary-foreground shadow-sm"
                           : item.sale
                             ? "bg-sale/15 text-sale"
-                            : "bg-muted text-primary"
+                            : "bg-[#eef2f7] text-primary"
                       }`}
                     >
-                      <Icon className="size-5" strokeWidth={1.75} />
+                      <Icon className="size-5" strokeWidth={1.85} />
                     </span>
                     <span className="min-w-0 flex-1 font-display text-[15px] font-bold leading-snug">{item.label}</span>
                     {item.sale ? (
-                      <span className="rounded-full bg-sale px-2 py-0.5 text-[10px] font-bold uppercase text-sale-foreground">
+                      <span className="rounded-full bg-sale px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-sale-foreground">
                         Hot
                       </span>
                     ) : (
-                      <ChevronDown className="size-4 shrink-0 -rotate-90 text-muted-foreground/70" />
+                      <ChevronDown className="size-4 shrink-0 -rotate-90 text-muted-foreground/60" />
                     )}
                   </button>
                 );
               })}
             </nav>
 
-            <div className="rounded-[22px] bg-white p-5 shadow-sm">
+            <div className="rounded-[22px] bg-white p-5 shadow-sm ring-1 ring-black/5">
               <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">Visítanos</p>
               <ul className="mt-4 space-y-3.5 text-sm text-muted-foreground">
                 <li className="flex gap-3">
-                  <Clock className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <span>Lun–Vie 8:30–19:00 · Sáb 8:30–14:00</span>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
+                    <Clock className="size-4" />
+                  </span>
+                  <span className="pt-1.5">Lun–Vie 8:30–19:00 · Sáb 8:30–14:00</span>
                 </li>
                 <li className="flex gap-3">
-                  <MapPin className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <span>Matriz Mazatlán · 5 sucursales más en Sin. y B.C.S.</span>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
+                    <MapPin className="size-4" />
+                  </span>
+                  <span className="pt-1.5">Matriz Mazatlán · 5 sucursales más en Sin. y B.C.S.</span>
                 </li>
                 <li className="flex gap-3">
-                  <Phone className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <a className="hover:text-primary" href={telHref("6699407077")}>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
+                    <Phone className="size-4" />
+                  </span>
+                  <a className="pt-1.5 hover:text-primary" href={telHref("6699407077")}>
                     (669) 940-7077 / 940-7088
                   </a>
                 </li>
                 <li className="flex gap-3">
-                  <Mail className="mt-0.5 size-4 shrink-0 text-primary" />
-                  <a className="break-all hover:text-primary" href={`mailto:${MAIN_EMAIL}`}>
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
+                    <Mail className="size-4" />
+                  </span>
+                  <a className="break-all pt-1.5 hover:text-primary" href={`mailto:${MAIN_EMAIL}`}>
                     {MAIN_EMAIL}
                   </a>
                 </li>
@@ -269,7 +282,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
 
             <div className="grid gap-2.5">
               <Button
-                className="h-12 rounded-full bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90"
+                className="h-12 rounded-full bg-secondary font-bold text-secondary-foreground shadow-sm hover:bg-secondary/90"
                 asChild
               >
                 <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" onClick={() => setMenu(false)}>
@@ -278,7 +291,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
               </Button>
               <Button
                 variant="outline"
-                className="h-12 rounded-full border-primary font-bold text-primary hover:bg-primary hover:text-primary-foreground"
+                className="h-12 rounded-full border-2 border-primary bg-white font-bold text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={() => ir("/#sucursales")}
               >
                 <MapPin /> Ver sucursales
