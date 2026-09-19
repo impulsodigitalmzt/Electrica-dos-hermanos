@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
-import { Brands, BrandLogoMarquee, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, PromoEnvio, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
+import { Brands, BrandLogoMarquee, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
@@ -243,8 +243,6 @@ export function HomePage() {
           onFavorite={toggleFavorite}
         />
 
-        <SucursalTourVideo />
-        <PromoEnvio />
         <Testimonials />
         <TrustBar />
         <Brands />
