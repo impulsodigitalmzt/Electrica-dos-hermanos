@@ -104,15 +104,17 @@ export function TrustBar() {
 export function PromoContactosVideo() {
   const video = VIDEOS.promocion;
   return (
-    <section className="w-full overflow-hidden bg-background" aria-label={video.title}>
-      <AppLink to={video.to} className="block w-full" aria-label={video.cta}>
-        <StoreVideo
-          src={video.src}
-          title={video.title}
-          controls={false}
-          className="aspect-video max-h-[70vh] w-full sm:max-h-none"
-        />
-      </AppLink>
+    <section className="w-full bg-background" aria-label={video.title}>
+      <div className="mx-auto max-w-7xl px-4">
+        <AppLink to={video.to} className="block w-full overflow-hidden" aria-label={video.cta}>
+          <StoreVideo
+            src={video.src}
+            title={video.title}
+            controls={false}
+            className="aspect-video w-full"
+          />
+        </AppLink>
+      </div>
     </section>
   );
 }
