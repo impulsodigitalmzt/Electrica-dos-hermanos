@@ -105,13 +105,20 @@ export function PromoContactosVideo() {
   const video = VIDEOS.promocion;
   return (
     <section className="bg-primary text-primary-foreground" aria-label={video.title}>
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-[260px_1fr] lg:py-16">
-        <StoreVideo src={video.src} title={video.title} fit="contain" className="mx-auto h-[380px] w-full max-w-[220px]" />
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:gap-10 lg:grid-cols-[minmax(280px,400px)_1fr] lg:gap-14 lg:py-16">
+        <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-3xl shadow-xl ring-1 ring-white/20 lg:max-w-none">
+          <StoreVideo
+            src={video.src}
+            title={video.title}
+            controls={false}
+            className="aspect-[9/16] w-full"
+          />
+        </div>
         <div className="text-center lg:text-left">
           <p className="text-xs font-bold uppercase tracking-widest text-secondary">{video.kicker}</p>
-          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">{video.heading}</h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/85 lg:mx-0 sm:text-base">{video.text}</p>
-          <Button size="lg" className="mt-6 bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
+          <h2 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">{video.heading}</h2>
+          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-primary-foreground/85 lg:mx-0 sm:text-lg">{video.text}</p>
+          <Button size="lg" className="mt-8 h-12 rounded-xl bg-secondary px-8 font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
             <AppLink to={video.to}>
               {video.cta} <ArrowRight />
             </AppLink>
@@ -169,7 +176,7 @@ export function Brands() {
           <AppLink
             key={brand.label}
             to={`/buscar?q=${encodeURIComponent(brand.q)}`}
-            className="flex h-24 items-center justify-center border-b border-r bg-background px-4 grayscale transition hover:bg-muted hover:grayscale-0"
+            className="flex h-24 items-center justify-center border-b border-r bg-background px-4 transition hover:bg-muted"
             aria-label={`Ver productos ${brand.label}`}
           >
             <img src={brand.logo} alt={brand.label} className="max-h-12 w-full object-contain" />

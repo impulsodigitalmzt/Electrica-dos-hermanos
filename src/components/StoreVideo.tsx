@@ -12,7 +12,7 @@ export function StoreVideo({ src, title, className = "", fit = "cover", controls
       src={src}
       title={title}
       aria-label={title}
-      className={`${fit === "contain" ? "object-contain" : "object-cover"} bg-black ${className}`}
+      className={`${fit === "contain" ? "object-contain bg-transparent" : "object-cover"} ${className}`}
       autoPlay
       muted
       loop
