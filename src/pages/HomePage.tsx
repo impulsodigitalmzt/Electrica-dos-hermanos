@@ -63,7 +63,7 @@ export function HomePage() {
     <div className="min-h-screen bg-background text-foreground">
       <Header query={query} onQueryChange={setQuery} favorites={favorites.length} />
       <main id="inicio">
-        <section className="relative overflow-hidden bg-primary" aria-label="Promociones destacadas">
+        <section className="relative overflow-hidden bg-muted" aria-label="Promociones destacadas">
           {HEROES.map((hero, index) => (
             <div
               key={hero.image}
@@ -71,9 +71,9 @@ export function HomePage() {
               className={`transition-opacity duration-700 ${slide === index ? "relative opacity-100" : "pointer-events-none absolute inset-0 opacity-0"}`}
             >
               <img src={hero.image} width={1600} height={768} alt={hero.alt} className="h-[430px] w-full object-cover sm:h-[540px]" />
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/45 to-primary/25" />
+              <div className="absolute inset-0 bg-black/25" />
               <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                <div className="max-w-3xl text-primary-foreground">
+                <div className="max-w-3xl text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.45)]">
                   <p className="text-sm font-bold uppercase tracking-[0.2em]">{hero.kicker}</p>
                   {index === 0 ? (
                     <h1 className="mt-3 text-4xl font-extrabold leading-tight sm:text-6xl">{hero.title}</h1>
