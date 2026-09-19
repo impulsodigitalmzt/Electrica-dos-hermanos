@@ -6,6 +6,7 @@ import {
   Mail,
   MapPin,
   MessageCircle,
+  Navigation,
   Package,
   Phone,
   ShieldCheck,
@@ -13,7 +14,7 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
+import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS, mapsDirHref, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
 import { AppLink } from "@/lib/nav";
 
 export function ScrollingBanner() {
@@ -189,40 +190,56 @@ export function Sucursales() {
             </button>
           ))}
         </div>
-        <div className="border bg-muted p-6 sm:p-8">
-          <h3 className="font-display text-2xl font-extrabold text-primary">{branch.name}</h3>
-          <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-accent">{branch.city}</p>
-          <p className="mt-5 flex gap-3 text-muted-foreground">
-            <MapPin className="mt-0.5 size-5 shrink-0 text-secondary" /> {branch.address}
-          </p>
-          <div className="mt-4 flex gap-3">
-            <Phone className="mt-0.5 size-5 shrink-0 text-secondary" />
-            <div className="flex flex-col">
-              {branch.phones.map((phone) => (
-                <a key={phone} href={telHref(phone)} className="font-semibold text-primary hover:underline">
-                  {phone}
+        <div className="border bg-muted">
+          <div className="p-6 sm:p-8">
+            <h3 className="font-display text-2xl font-extrabold text-primary">{branch.name}</h3>
+            <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-accent">{branch.city}</p>
+            <p className="mt-5 flex gap-3 text-muted-foreground">
+              <MapPin className="mt-0.5 size-5 shrink-0 text-secondary" /> {branch.address}
+            </p>
+            <div className="mt-4 flex gap-3">
+              <Phone className="mt-0.5 size-5 shrink-0 text-secondary" />
+              <div className="flex flex-col">
+                {branch.phones.map((phone) => (
+                  <a key={phone} href={telHref(phone)} className="font-semibold text-primary hover:underline">
+                    {phone}
+                  </a>
+                ))}
+              </div>
+            </div>
+            <p className="mt-4 flex gap-3">
+              <Mail className="mt-0.5 size-5 shrink-0 text-secondary" />
+              <a href={`mailto:${branch.email}`} className="break-all font-semibold text-primary hover:underline">
+                {branch.email}
+              </a>
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Button asChild className="bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90">
+                <a href={mapsDirHref(branch.address)} target="_blank" rel="noreferrer">
+                  <Navigation /> Cómo llegar
                 </a>
-              ))}
+              </Button>
+              <Button asChild variant="outline" className="border-primary text-primary">
+                <a href={telHref(branch.phones[0] ?? "6699407077")}>
+                  <Phone /> Llamar
+                </a>
+              </Button>
+              <Button asChild variant="outline" className="border-primary text-primary">
+                <a href={`mailto:${branch.email}`}>
+                  <Mail /> Cotizar
+                </a>
+              </Button>
             </div>
           </div>
-          <p className="mt-4 flex gap-3">
-            <Mail className="mt-0.5 size-5 shrink-0 text-secondary" />
-            <a href={`mailto:${branch.email}`} className="break-all font-semibold text-primary hover:underline">
-              {branch.email}
-            </a>
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Button asChild className="bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90">
-              <a href={telHref(branch.phones[0] ?? "6699407077")}>
-                <Phone /> Llamar
-              </a>
-            </Button>
-            <Button asChild variant="outline" className="border-primary text-primary">
-              <a href={`mailto:${branch.email}`}>
-                <Mail /> Cotizar
-              </a>
-            </Button>
-          </div>
+          <iframe
+            key={branch.id}
+            title={`Ubicación de ${branch.name}`}
+            src={branch.mapEmbed}
+            className="h-[240px] w-full border-0 sm:h-[320px] lg:h-[360px]"
+            loading="lazy"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
         </div>
       </div>
     </section>
@@ -235,7 +252,7 @@ export function PrivacyNotice() {
       <div className="mx-auto max-w-3xl px-4 text-center">
         <h2 className="text-2xl font-extrabold text-primary">Aviso de privacidad</h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Eléctrica dos Hermanos S.A. de C.V., con domicilio en División Norte 1900, Col. Francisco Villa, CP 82127, Mazatlán,
+          Eléctrica dos Hermanos S.A. de C.V., con domicilio en División del Nte. 1900, Francisco Villa, 82127 Mazatlán,
           Sin., utiliza tus datos personales únicamente para atender cotizaciones, pedidos, facturación y envíos. No compartimos
           tu información con terceros ajenos a estos fines. Para ejercer tus derechos ARCO escríbenos a{" "}
           <a className="font-semibold text-primary hover:underline" href={`mailto:${MAIN_EMAIL}`}>
