@@ -196,7 +196,7 @@ export function HomePage() {
           </div>
           <AppLink
             to="/buscar"
-            className="group mb-4 block overflow-hidden rounded-2xl border bg-card shadow-sm ring-1 ring-border/60"
+            className="group mb-4 block w-full"
             aria-label="Ofertas de temporada hasta 20% de descuento"
           >
             <img
@@ -204,7 +204,7 @@ export function HomePage() {
               alt="Ofertas de temporada: hasta 20% de descuento en material eléctrico e iluminación"
               width={1600}
               height={640}
-              className="aspect-[21/9] w-full object-cover object-left transition-transform duration-500 group-hover:scale-[1.02] sm:aspect-[2.6/1]"
+              className="h-auto w-full transition-opacity duration-300 group-hover:opacity-95"
             />
           </AppLink>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
