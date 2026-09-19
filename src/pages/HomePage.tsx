@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
-import { Brands, Faq, PreFooterLeyenda, PrivacyNotice, PromoEnvio, ScrollingBanner, SiteFooter, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
+import { Brands, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, PromoEnvio, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,6 @@ import { fetchCatalogo } from "@/lib/api";
 import {
   CATEGORY_TILES,
   COLLECTION_CARDS,
-  HERO_PROMO,
   HERO_SLIDES,
   PROMO_TILES,
   marcaDe,
@@ -215,20 +214,7 @@ export function HomePage() {
           onFavorite={toggleFavorite}
         />
 
-        <section className="relative overflow-hidden" aria-label="Promoción de envío">
-          <img src={HERO_PROMO} width={1600} height={540} alt="Promociones de temporada en material eléctrico" className="h-[240px] w-full object-cover sm:h-[320px]" />
-          <div className="absolute inset-0 flex items-center justify-center bg-primary/55 px-6 text-center">
-            <div className="text-primary-foreground">
-              <p className="text-xs font-bold uppercase tracking-widest">Temporada</p>
-              <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">Promociones para tu obra</h2>
-              <Button size="lg" className="mt-6 bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
-                <AppLink to="/buscar">
-                  Ver ofertas <ArrowRight />
-                </AppLink>
-              </Button>
-            </div>
-          </div>
-        </section>
+        <PromoContactosVideo />
 
         <ColeccionDestacada
           kicker="Residencial"
@@ -241,6 +227,7 @@ export function HomePage() {
           onFavorite={toggleFavorite}
         />
 
+        <SucursalTourVideo />
         <PromoEnvio />
         <Testimonials />
         <TrustBar />

@@ -11,6 +11,52 @@ export const HERO_ILUMINACION = "/brand/sala-minim-ilum1.jpg";
 export const HERO_CONTACTOS = "/brand/iluminacion-sala-reducida.jpeg";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 
+export const VIDEOS = {
+  sucursal: {
+    src: "/videos/anuncio.mp4",
+    title: "Recorrido por sucursal Eléctrica dos Hermanos",
+    kicker: "En sucursal",
+    heading: "Recoge hoy en piso",
+    text: "Más de 10,000 productos para obra, casa y negocio. Te armamos la lista el mismo día.",
+    cta: "Ver sucursales",
+    to: "/#sucursales",
+  },
+  marca: {
+    src: "/videos/anuncio-dos-hnos.mp4",
+    title: "Eléctrica dos Hermanos, material eléctrico de confianza",
+    kicker: "Nuestra casa",
+    heading: "Seis sucursales para tu proyecto",
+    text: "Mazatlán, Culiacán, San José del Cabo y Cabo San Lucas, con envío a todo México.",
+    cta: "Cómo llegar",
+    to: "/#sucursales",
+  },
+  makita: {
+    src: "/videos/anuncio-makita.mp4",
+    title: "Herramientas Makita en sucursal",
+    kicker: "Makita",
+    heading: "Herramientas profesionales Makita",
+    text: "Taladros, rotomartillos y equipo profesional listo para recoger en sucursal.",
+    cta: "Ver Makita",
+    to: "/buscar?q=makita",
+  },
+  promocion: {
+    src: "/videos/promocion-dos-hnos.mp4",
+    title: "Promoción de contactos calidad mexicana",
+    kicker: "Promoción",
+    heading: "Contactos calidad mexicana",
+    text: "Contactos y placas en promoción, con existencias para recoger o envío.",
+    cta: "Ver contactos",
+    to: "/buscar?q=contacto",
+  },
+} as const;
+
+export function videoDeConsulta(q: string) {
+  const texto = q.toLowerCase();
+  if (/\bmakita\b/.test(texto)) return VIDEOS.makita;
+  if (/\b(contacto|placa|apagador|interruptor)\b/.test(texto)) return VIDEOS.promocion;
+  return null;
+}
+
 export const HERO_SLIDES = [
   {
     image: "/brand/lumi-hero-home.jpg",

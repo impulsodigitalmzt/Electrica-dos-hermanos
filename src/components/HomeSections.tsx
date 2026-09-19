@@ -12,10 +12,11 @@ import {
   ShieldCheck,
   Truck,
 } from "lucide-react";
+import { StoreVideo } from "@/components/StoreVideo";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { AppLink } from "@/lib/nav";
-import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS_CATALOGO, mapsDirHref, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
+import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS_CATALOGO, mapsDirHref, telHref, VIDEOS, WHATSAPP_URL, type Branch } from "@/lib/brand";
 
 export function ScrollingBanner() {
   const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Recoge en sucursal Matriz Mazatlán  ·  Asesoría técnica en Culiacán y Los Cabos  ·  ";
@@ -100,12 +101,68 @@ export function TrustBar() {
   );
 }
 
+export function PromoContactosVideo() {
+  const video = VIDEOS.promocion;
+  return (
+    <section className="bg-primary text-primary-foreground" aria-label={video.title}>
+      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 lg:grid-cols-[260px_1fr] lg:py-16">
+        <StoreVideo src={video.src} title={video.title} fit="contain" className="mx-auto h-[380px] w-full max-w-[220px]" />
+        <div className="text-center lg:text-left">
+          <p className="text-xs font-bold uppercase tracking-widest text-secondary">{video.kicker}</p>
+          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">{video.heading}</h2>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/85 lg:mx-0 sm:text-base">{video.text}</p>
+          <Button size="lg" className="mt-6 bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
+            <AppLink to={video.to}>
+              {video.cta} <ArrowRight />
+            </AppLink>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function SucursalTourVideo() {
+  const video = VIDEOS.sucursal;
+  return (
+    <section className="relative overflow-hidden" aria-label={video.title}>
+      <StoreVideo src={video.src} title={video.title} controls={false} className="h-[260px] w-full sm:h-[380px]" />
+      <div className="absolute inset-0 flex items-center justify-center bg-primary/50 px-6 text-center">
+        <div className="max-w-2xl text-primary-foreground">
+          <p className="text-xs font-bold uppercase tracking-widest">{video.kicker}</p>
+          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">{video.heading}</h2>
+          <p className="mt-4 text-sm leading-relaxed text-primary-foreground/90 sm:text-base">{video.text}</p>
+          <Button size="lg" className="mt-6 bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
+            <AppLink to={video.to}>
+              {video.cta} <ArrowRight />
+            </AppLink>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Brands() {
+  const makita = VIDEOS.makita;
   return (
     <section id="marcas" className="mx-auto max-w-7xl px-4 py-16">
       <div className="text-center">
         <span className="text-xs font-bold uppercase text-accent">Aliados de confianza</span>
         <h2 className="mt-2 text-3xl font-extrabold text-primary">Marcas que conectan tus ideas</h2>
+      </div>
+      <div className="mt-10 grid items-center gap-6 overflow-hidden border bg-card lg:grid-cols-2">
+        <StoreVideo src={makita.src} title={makita.title} className="aspect-video w-full" />
+        <div className="px-6 py-8 sm:px-10">
+          <p className="text-xs font-bold uppercase tracking-widest text-accent">{makita.kicker}</p>
+          <h3 className="mt-2 text-2xl font-extrabold text-primary sm:text-3xl">{makita.heading}</h3>
+          <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{makita.text}</p>
+          <Button className="mt-6 font-bold" asChild>
+            <AppLink to={makita.to}>
+              {makita.cta} <ArrowRight />
+            </AppLink>
+          </Button>
+        </div>
       </div>
       <div className="mt-9 grid grid-cols-2 border sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
         {MARCAS_CATALOGO.map((brand) => (
@@ -172,6 +229,9 @@ export function Sucursales() {
           Material eléctrico en alta y baja tensión, ferretería y plomería en Mazatlán, Culiacán, San José del Cabo y Cabo San
           Lucas, con envíos a todo México.
         </p>
+      </div>
+      <div className="mx-auto mt-10 max-w-3xl overflow-hidden border bg-black">
+        <StoreVideo src={VIDEOS.marca.src} title={VIDEOS.marca.title} className="aspect-video w-full" />
       </div>
       <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="flex flex-col border-t">

@@ -11,7 +11,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { useCart } from "@/context/CartContext";
 import { fetchCatalogo } from "@/lib/api";
 import { BrandLogo } from "@/components/BrandLogo";
-import { logoDeMarca, marcaDe } from "@/lib/brand";
+import { StoreVideo } from "@/components/StoreVideo";
+import { logoDeMarca, marcaDe, videoDeConsulta } from "@/lib/brand";
 import {
   CATALOGO_ILUMINACION,
   MARCAS_ILUMINACION,
@@ -220,6 +221,8 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
     </div>
   );
 
+  const videoBanner = iluminacion ? null : videoDeConsulta(q);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Header
@@ -231,7 +234,11 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
       />
       <main>
         <section className="relative overflow-hidden bg-primary">
-          <img src="/brand/lumi-hero-home.jpg" alt="Interiores iluminados con luminarios LED" className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
+          {videoBanner ? (
+            <StoreVideo src={videoBanner.src} title={videoBanner.title} controls={false} className="h-64 w-full sm:h-80" />
+          ) : (
+            <img src="/brand/lumi-hero-home.jpg" alt="Interiores iluminados con luminarios LED" className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
+          )}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/70 to-transparent" />
           <div className="absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-6 text-primary-foreground sm:px-10">
             <nav aria-label="Ruta de navegación" className="text-xs font-semibold text-primary-foreground/75">
