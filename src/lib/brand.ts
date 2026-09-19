@@ -10,6 +10,7 @@ export const HERO_PROMO = "/brand/sala-minim-ilum.jpg";
 export const HERO_ILUMINACION = "/brand/iluminacion-sala-reducida.jpeg";
 export const HERO_CONTACTOS = "/brand/sala-minim-ilum1.jpg";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
+export const PROMO_TEMPORADA = "/promocion/promocion.jpg";
 
 export const VIDEOS = {
   sucursal: {
