@@ -1,4 +1,5 @@
 import { marcaDe } from "@/lib/brand";
+import { FOTO } from "@/lib/imagenes-locales";
 import type { Producto } from "@/types";
 
 export const TIPOS_LUMINARIO = [
@@ -60,10 +61,25 @@ const SEEDS: LightingSeed[] = [
 ];
 
 const FOTOS_REALES: Record<string, string> = {
-  "Lámpara colgante decorativa Niza": "/productos/colgante-niza.jpg",
-  "Foco LED Essential 9W luz cálida": "/productos/focos-pack.jpg",
-  "Downlight Luna Flat 13W luz neutra": "/productos/downlight-luna.jpg",
-  "Reflector solar 30W recargable": "/productos/reflector-solar.jpg",
+  "Lámpara colgante decorativa Niza": FOTO.colgante,
+  "Plafón LED cuadrado y 24W luz neutra": FOTO.promoPlafones,
+  "Plafón LED cuadrado 24W luz neutra": FOTO.promoPlafones,
+  "Candil moderno 5 luces acabado negro": FOTO.lamparasMesa,
+  "Foco LED Essential 9W luz cálida": FOTO.foco,
+  "Paquete 4 focos LED 12W luz fría": FOTO.foco,
+  "Foco inteligente WiFi RGB 10W": FOTO.foco,
+  "Downlight Luna Flat 13W luz neutra": FOTO.downlight,
+  "Empotrado dirigible 7W blanco": FOTO.promoSpot,
+  "Empotrado exterior IP65 18W": FOTO.promoLineal,
+  "Arbotante LED arquitectónico 12W": FOTO.arbotante,
+  "Arbotante de pared tipo farol": FOTO.arbotante3,
+  "Reflector LED exterior 50W IP65": FOTO.reflector,
+  "Reflector LED 100W con sensor": FOTO.reflector,
+  "Reflector solar 30W recargable": FOTO.promoSolar,
+  "Tira LED 5 m luz cálida con driver": FOTO.tira,
+  "Tira LED RGB 5 m con control remoto": FOTO.promoTira,
+  "Tira LED exterior IP67 10 m": FOTO.tira,
+  "Luminario suspendido lineal 40W": FOTO.promoLineal,
 };
 
 export const CATALOGO_ILUMINACION: Producto[] = SEEDS.map((item) => ({
@@ -100,6 +116,7 @@ export function tipoDe(producto: Producto): string {
   if (/\barbotante/.test(t)) return "Arbotantes";
   if (/\b(downlight|empotrado)/.test(t)) return "Empotrados";
   if (/\bfoco/.test(t)) return "Focos LED";
+  if (/\bemergenc/.test(t)) return "Lámparas de techo";
   if (/\b(lampara|plafon|candil|colgante|luminario|iluminacion)\b/.test(t)) return "Lámparas de techo";
   return "";
 }

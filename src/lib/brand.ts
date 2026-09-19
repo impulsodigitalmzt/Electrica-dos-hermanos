@@ -1,3 +1,5 @@
+import { FOTO } from "@/lib/imagenes-locales";
+
 export const WHATSAPP_URL = "https://wa.me/526699407077";
 export const MAIN_EMAIL = "cotizaciones.mzt@electricadoshermanos.com";
 export const ENVIO_GRATIS_DESDE = 1000;
@@ -20,21 +22,28 @@ export const NAV_ITEMS = [
 ] as const;
 
 export const CATEGORY_TILES = [
-  { label: "Lámparas de techo", q: "lampara", pos: "0% 0%" },
-  { label: "Focos LED", q: "foco led", pos: "50% 0%" },
-  { label: "Empotrados", q: "downlight empotrado", pos: "100% 0%" },
-  { label: "Arbotantes", q: "arbotante", pos: "0% 50%" },
-  { label: "Reflectores", q: "reflector", pos: "50% 50%" },
-  { label: "Tiras LED", q: "tira led", pos: "100% 50%" },
+  { label: "Lámparas de techo", q: "lampara", pos: "0% 0%", image: FOTO.colgante },
+  { label: "Focos LED", q: "foco led", pos: "50% 0%", image: FOTO.foco },
+  { label: "Empotrados", q: "downlight empotrado", pos: "100% 0%", image: FOTO.downlight },
+  { label: "Arbotantes", q: "arbotante", pos: "0% 50%", image: FOTO.arbotante3 },
+  { label: "Reflectores", q: "reflector", pos: "50% 50%", image: FOTO.reflector },
+  { label: "Tiras LED", q: "tira led", pos: "100% 50%", image: FOTO.tira },
+] as const;
+
+export const PROMO_TILES = [
+  { label: "Tiras LED", to: "/iluminacion?q=tira", image: FOTO.promoTira },
+  { label: "Plafones ultra delgados", to: "/iluminacion?q=plafon", image: FOTO.promoPlafones },
+  { label: "Luminario solar", to: "/iluminacion?q=solar", image: FOTO.promoSolar },
+  { label: "Empotrados", to: "/iluminacion?q=downlight", image: FOTO.promoSpot },
 ] as const;
 
 export const COLLECTION_CARDS = [
-  { label: "Iluminación", to: "/iluminacion", image: HERO_ILUMINACION },
-  { label: "Contactos Residenciales", to: "/buscar?q=contacto", image: HERO_CONTACTOS },
-  { label: "Placas e Interruptores", to: "/buscar?q=apagador+placa+interruptor", image: "/demo/placa.svg" },
-  { label: "Tubería", to: "/buscar?q=tubo+pvc+conduit", image: "/demo/tubo.svg" },
-  { label: "Conductores", to: "/buscar?q=cable+thw", image: "/demo/cable.svg" },
-  { label: "Ofertas", to: "/buscar", image: HERO_PROMO },
+  { label: "Iluminación", to: "/iluminacion", image: FOTO.colgante },
+  { label: "Contactos Residenciales", to: "/buscar?q=contacto", image: FOTO.contacto },
+  { label: "Placas e Interruptores", to: "/buscar?q=apagador+placa+interruptor", image: FOTO.tresApagadores },
+  { label: "Tubería", to: "/buscar?q=tubo+pvc+conduit", image: FOTO.tubo },
+  { label: "Conductores", to: "/buscar?q=cable+thw", image: FOTO.cables },
+  { label: "Ofertas", to: "/buscar", image: FOTO.promoOferta },
 ] as const;
 
 export const MARCAS = ["TECNOLITE", "SIEMENS", "bticino", "PHILIPS", "VOLTECK", "MAGG", "CONDULAC"] as const;

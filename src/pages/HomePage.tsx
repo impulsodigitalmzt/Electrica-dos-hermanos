@@ -11,11 +11,11 @@ import { fetchCatalogo } from "@/lib/api";
 import {
   CATEGORY_TILES,
   COLLECTION_CARDS,
+  PROMO_TILES,
   HERO_CONTACTOS,
   HERO_ILUMINACION,
   HERO_PROMO,
   marcaDe,
-  PRODUCT_SHEET,
 } from "@/lib/brand";
 import { CATALOGO_ILUMINACION, mezclarCatalogo } from "@/lib/catalogo-iluminacion";
 import { DEMO_PRODUCTOS } from "@/lib/demo-productos";
@@ -165,7 +165,7 @@ export function HomePage() {
                 <img
                   src={item.image}
                   alt=""
-                  className="aspect-[4/5] h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="aspect-[4/5] h-full w-full bg-background object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                 />
                 <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary/90 to-transparent p-3 pt-10 text-sm font-bold text-primary-foreground sm:text-base">
                   {item.label}
@@ -192,9 +192,10 @@ export function HomePage() {
               {CATEGORY_TILES.map((item) => (
                 <AppLink key={item.label} to={`/iluminacion?q=${encodeURIComponent(item.q.split(" ")[0])}`} className="group text-left">
                   <div className="aspect-square overflow-hidden bg-background">
-                    <div
-                      className="h-full w-full bg-no-repeat transition-transform duration-500 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${PRODUCT_SHEET})`, backgroundSize: "300% 300%", backgroundPosition: item.pos }}
+                    <img
+                      src={item.image}
+                      alt={item.label}
+                      className="h-full w-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <span className="mt-3 flex items-center justify-between font-display text-sm font-bold text-primary sm:text-base">
@@ -204,6 +205,30 @@ export function HomePage() {
                 </AppLink>
               ))}
             </div>
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-14" aria-labelledby="promos-sucursal">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <div>
+              <span className="text-xs font-bold uppercase text-accent">Promociones de sucursal</span>
+              <h2 id="promos-sucursal" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+                Lo que está en oferta
+              </h2>
+            </div>
+            <Button variant="ghost" className="hidden text-primary sm:flex" asChild>
+              <AppLink to="/buscar">
+                Ver ofertas <ArrowRight />
+              </AppLink>
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {PROMO_TILES.map((item) => (
+              <AppLink key={item.label} to={item.to} className="group overflow-hidden border bg-card">
+                <img src={item.image} alt={item.label} className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <span className="block px-3 py-3 text-sm font-bold text-primary">{item.label}</span>
+              </AppLink>
+            ))}
           </div>
         </section>
 

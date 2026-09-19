@@ -1,3 +1,4 @@
+import { FOTO } from "@/lib/imagenes-locales";
 import type { Producto } from "../types";
 
 export const DEMO_PRODUCTOS: Producto[] = [
@@ -10,7 +11,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 1499,
     stock: 18,
     descripcion: "Luminaria colgante decorativa para sala y comedor.",
-    urlImagen: "/productos/colgante-niza.jpg",
+    urlImagen: FOTO.colgante,
     ubicacion: "Anaquel A1",
   },
   {
@@ -21,7 +22,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 89,
     stock: 120,
     descripcion: "Foco LED de 9W equivalente a 60W, luz cálida 3000K.",
-    urlImagen: "/productos/focos-pack.jpg",
+    urlImagen: FOTO.foco,
     ubicacion: "Anaquel A2",
   },
   {
@@ -32,7 +33,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 385.12,
     stock: 42,
     descripcion: "Empotrado LED ultra plano para plafón.",
-    urlImagen: "/productos/downlight-luna.jpg",
+    urlImagen: FOTO.downlight,
     ubicacion: "Anaquel A3",
   },
   {
@@ -44,7 +45,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 715,
     stock: 24,
     descripcion: "Arbotante de muro para interiores y terrazas.",
-    urlImagen: "/demo/arbotante.svg",
+    urlImagen: FOTO.arbotante,
     ubicacion: "Anaquel A4",
   },
   {
@@ -56,7 +57,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 499,
     stock: 36,
     descripcion: "Reflector para áreas exteriores, protección IP65.",
-    urlImagen: "/demo/reflector.svg",
+    urlImagen: FOTO.reflector,
     ubicacion: "Anaquel B1",
   },
   {
@@ -67,7 +68,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 559,
     stock: 28,
     descripcion: "Tira LED de 5 metros con fuente incluida.",
-    urlImagen: "/demo/tira-led.svg",
+    urlImagen: FOTO.tira,
     ubicacion: "Anaquel B2",
   },
   {
@@ -78,7 +79,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 247,
     stock: 55,
     descripcion: "Placa e interruptor sencillo línea Living Now.",
-    urlImagen: "/demo/placa.svg",
+    urlImagen: FOTO.dobleApagador,
     ubicacion: "Anaquel C1",
   },
   {
@@ -90,7 +91,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precioAnterior: 2110,
     stock: 14,
     descripcion: "Conductor THW-LS calibre 12 AWG en rollo de 100 m.",
-    urlImagen: "/demo/cable.svg",
+    urlImagen: FOTO.cableNegro,
     ubicacion: "Anaquel D1",
   },
   {
@@ -101,7 +102,7 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 46,
     stock: 80,
     descripcion: "Contacto residencial dúplex con tierra.",
-    urlImagen: "/demo/contacto.svg",
+    urlImagen: FOTO.contacto,
     ubicacion: "Anaquel C2",
   },
   {
@@ -112,8 +113,74 @@ export const DEMO_PRODUCTOS: Producto[] = [
     precio: 38,
     stock: 200,
     descripcion: "Tubería conduit de PVC para instalaciones visibles.",
-    urlImagen: "/demo/tubo.svg",
+    urlImagen: FOTO.tubo,
     ubicacion: "Anaquel E1",
+  },
+  {
+    sku: "BTI-3G-01",
+    nombre: "Placa de 3 apagadores acabado acero",
+    marca: "BTICINO",
+    categoria: "placas",
+    precio: 289,
+    stock: 32,
+    descripcion: "Placa triple para control de circuitos independientes.",
+    urlImagen: FOTO.tresApagadores,
+    ubicacion: "Anaquel C1",
+  },
+  {
+    sku: "BTI-COMBO-01",
+    nombre: "Placa con apagador y contacto",
+    marca: "BTICINO",
+    categoria: "placas",
+    precio: 168,
+    stock: 40,
+    descripcion: "Combinación de interruptor y tomacorriente en una sola placa.",
+    urlImagen: FOTO.apagadorContacto,
+    ubicacion: "Anaquel C1",
+  },
+  {
+    sku: "EMG-LED-01",
+    nombre: "Lámpara de emergencia LED",
+    marca: "VOLTECK",
+    categoria: "iluminacion",
+    precio: 349,
+    stock: 22,
+    descripcion: "Iluminación de respaldo para pasillos, comercios y áreas comunes.",
+    urlImagen: FOTO.emergencia,
+    ubicacion: "Anaquel B3",
+  },
+  {
+    sku: "PIE-NIZA-01",
+    nombre: "Lámpara de pie Niza",
+    marca: "TECNOLITE",
+    categoria: "iluminacion",
+    precio: 1590,
+    stock: 8,
+    descripcion: "Lámpara de piso con pantalla de fibras naturales para sala o lectura.",
+    urlImagen: FOTO.lamparaPie,
+    ubicacion: "Anaquel A1",
+  },
+  {
+    sku: "BTI-QNZ-01",
+    nombre: "Kit placa negra con apagador y contacto",
+    marca: "BTICINO",
+    categoria: "placas",
+    precio: 198,
+    stock: 26,
+    descripcion: "Línea de color negro: placa de 2 ventanas, 1 apagador y 1 contacto.",
+    urlImagen: FOTO.promoQuinzi,
+    ubicacion: "Anaquel C1",
+  },
+  {
+    sku: "ROC-ESP-65",
+    nombre: "Foco espiral ahorrador 65W",
+    marca: "ROCE",
+    categoria: "iluminacion",
+    precio: 42,
+    stock: 90,
+    descripcion: "Foco espiral de 65W para iluminación general de alto rendimiento.",
+    urlImagen: FOTO.promoEspiral,
+    ubicacion: "Anaquel A2",
   },
 ];
 
