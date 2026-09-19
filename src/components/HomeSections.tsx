@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   ArrowRight,
   CircleDollarSign,
@@ -216,6 +216,28 @@ export function Faq() {
   );
 }
 
+function ContactRow({
+  icon: Icon,
+  label,
+  children,
+}: {
+  icon: typeof MapPin;
+  label: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="flex items-start gap-4 rounded-2xl bg-muted/70 px-4 py-3.5">
+      <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-background text-secondary shadow-sm">
+        <Icon className="size-5" strokeWidth={2} />
+      </span>
+      <div className="min-w-0">
+        <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-muted-foreground">{label}</p>
+        <div className="mt-1 text-sm font-semibold leading-relaxed text-primary sm:text-base">{children}</div>
+      </div>
+    </div>
+  );
+}
+
 export function Sucursales() {
   const first = BRANCHES[0];
   const [active, setActive] = useState(first.id);
@@ -230,78 +252,99 @@ export function Sucursales() {
           Lucas, con envíos a todo México.
         </p>
       </div>
-      <div className="mx-auto mt-10 max-w-3xl overflow-hidden border bg-black">
+      <div className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-3xl border bg-black shadow-sm">
         <StoreVideo src={VIDEOS.marca.src} title={VIDEOS.marca.title} className="aspect-video w-full" />
       </div>
-      <div className="mt-10 grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="flex flex-col border-t">
-          {BRANCHES.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              onClick={() => setActive(item.id)}
-              aria-pressed={item.id === active}
-              className={`flex items-center justify-between gap-3 border-b px-4 py-4 text-left font-bold transition ${
-                item.id === active ? "bg-primary text-primary-foreground" : "text-primary hover:bg-muted"
-              }`}
-            >
-              <span className="flex items-center gap-2">
-                <MapPin className="size-4 shrink-0" /> {item.name}
-              </span>
-              <ArrowRight className="size-4 shrink-0" />
-            </button>
-          ))}
+      <div className="mt-10 grid gap-6 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:items-start">
+        <div className="flex flex-col gap-3">
+          {BRANCHES.map((item) => {
+            const selected = item.id === active;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={() => setActive(item.id)}
+                aria-pressed={selected}
+                className={`group flex items-center justify-between gap-3 rounded-2xl px-4 py-3.5 text-left shadow-sm transition duration-200 ${
+                  selected
+                    ? "bg-primary text-primary-foreground shadow-md ring-2 ring-secondary/80"
+                    : "border border-border/80 bg-card text-primary hover:-translate-y-0.5 hover:border-primary/25 hover:bg-muted hover:shadow-md"
+                }`}
+              >
+                <span className="flex min-w-0 items-center gap-3">
+                  <span
+                    className={`flex size-10 shrink-0 items-center justify-center rounded-xl ${
+                      selected ? "bg-secondary text-secondary-foreground" : "bg-muted text-secondary"
+                    }`}
+                  >
+                    <MapPin className="size-4" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block truncate font-display text-sm font-extrabold sm:text-base">{item.name}</span>
+                    <span className={`mt-0.5 block text-xs font-medium ${selected ? "text-primary-foreground/75" : "text-muted-foreground"}`}>
+                      {item.city}
+                    </span>
+                  </span>
+                </span>
+                <ArrowRight className={`size-4 shrink-0 transition ${selected ? "text-secondary" : "text-muted-foreground group-hover:translate-x-0.5 group-hover:text-primary"}`} />
+              </button>
+            );
+          })}
         </div>
-        <div className="border bg-muted">
-          <div className="p-6 sm:p-8">
-            <h3 className="font-display text-2xl font-extrabold text-primary">{branch.name}</h3>
-            <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-accent">{branch.city}</p>
-            <p className="mt-5 flex gap-3 text-muted-foreground">
-              <MapPin className="mt-0.5 size-5 shrink-0 text-secondary" /> {branch.address}
+        <div className="flex flex-col gap-4">
+          <div className="rounded-3xl border border-border/80 bg-card p-5 shadow-sm sm:p-8">
+            <p className="inline-flex rounded-full bg-secondary/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-secondary-foreground">
+              {branch.city}
             </p>
-            <div className="mt-4 flex gap-3">
-              <Phone className="mt-0.5 size-5 shrink-0 text-secondary" />
-              <div className="flex flex-col">
-                {branch.phones.map((phone) => (
-                  <a key={phone} href={telHref(phone)} className="font-semibold text-primary hover:underline">
-                    {phone}
-                  </a>
-                ))}
-              </div>
+            <h3 className="mt-3 font-display text-2xl font-extrabold leading-tight text-primary sm:text-3xl">{branch.name}</h3>
+            <div className="mt-6 flex flex-col gap-3">
+              <ContactRow icon={MapPin} label="Dirección">
+                {branch.address}
+              </ContactRow>
+              <ContactRow icon={Phone} label="Teléfonos">
+                <div className="flex flex-col gap-1">
+                  {branch.phones.map((phone) => (
+                    <a key={phone} href={telHref(phone)} className="hover:text-accent hover:underline">
+                      {phone}
+                    </a>
+                  ))}
+                </div>
+              </ContactRow>
+              <ContactRow icon={Mail} label="Correo">
+                <a href={`mailto:${branch.email}`} className="break-all hover:text-accent hover:underline">
+                  {branch.email}
+                </a>
+              </ContactRow>
             </div>
-            <p className="mt-4 flex gap-3">
-              <Mail className="mt-0.5 size-5 shrink-0 text-secondary" />
-              <a href={`mailto:${branch.email}`} className="break-all font-semibold text-primary hover:underline">
-                {branch.email}
-              </a>
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button asChild className="bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90">
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              <Button asChild className="h-12 rounded-xl bg-secondary font-bold text-secondary-foreground shadow-sm hover:bg-secondary/90">
                 <a href={mapsDirHref(branch.address)} target="_blank" rel="noreferrer">
                   <Navigation /> Cómo llegar
                 </a>
               </Button>
-              <Button asChild variant="outline" className="border-primary text-primary">
+              <Button asChild variant="outline" className="h-12 rounded-xl border-primary/20 bg-background font-bold text-primary hover:bg-primary hover:text-primary-foreground">
                 <a href={telHref(branch.phones[0] ?? "6699407077")}>
                   <Phone /> Llamar
                 </a>
               </Button>
-              <Button asChild variant="outline" className="border-primary text-primary">
+              <Button asChild variant="outline" className="h-12 rounded-xl border-primary/20 bg-background font-bold text-primary hover:bg-primary hover:text-primary-foreground">
                 <a href={`mailto:${branch.email}`}>
                   <Mail /> Cotizar
                 </a>
               </Button>
             </div>
           </div>
-          <iframe
-            key={branch.id}
-            title={`Ubicación de ${branch.name}`}
-            src={branch.mapEmbed}
-            className="h-[240px] w-full border-0 sm:h-[320px] lg:h-[360px]"
-            loading="lazy"
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-          />
+          <div className="overflow-hidden rounded-3xl border border-border/70 shadow-lg">
+            <iframe
+              key={branch.id}
+              title={`Ubicación de ${branch.name}`}
+              src={branch.mapEmbed}
+              className="h-[240px] w-full border-0 sm:h-[300px] lg:h-[340px]"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
+            />
+          </div>
         </div>
       </div>
     </section>
