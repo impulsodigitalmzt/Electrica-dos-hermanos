@@ -7,8 +7,8 @@ export const LOGO_SRC = "/logo.png";
 export const HERO_HOME = "/brand/lumi-hero-home.jpg";
 export const HERO_INDUSTRIAL = "/brand/lumi-hero-industrial.jpg";
 export const HERO_PROMO = "/brand/sala-minim-ilum.jpg";
-export const HERO_ILUMINACION = "/brand/sala-minim-ilum1.jpg";
-export const HERO_CONTACTOS = "/brand/iluminacion-sala-reducida.jpeg";
+export const HERO_ILUMINACION = "/brand/iluminacion-sala-reducida.jpeg";
+export const HERO_CONTACTOS = "/brand/sala-minim-ilum1.jpg";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 
 export const VIDEOS = {
@@ -40,13 +40,13 @@ export const VIDEOS = {
     to: "/buscar?q=makita",
   },
   promocion: {
-    src: "/videos/promocion-dos-hnos.mp4",
-    title: "Promoción de contactos calidad mexicana",
+    src: "/videos/tecnolite.mp4",
+    title: "Promoción Tecnolite en Eléctrica dos Hermanos",
     kicker: "Promoción",
-    heading: "Contactos calidad mexicana",
-    text: "Contactos y placas en promoción, con existencias para recoger o envío.",
-    cta: "Ver contactos",
-    to: "/buscar?q=contacto",
+    heading: "Iluminación Tecnolite",
+    text: "Luminarios Tecnolite en promoción, con existencias para recoger en sucursal o envío a todo México.",
+    cta: "Ver Tecnolite",
+    to: "/buscar?q=tecnolite",
   },
 } as const;
 
