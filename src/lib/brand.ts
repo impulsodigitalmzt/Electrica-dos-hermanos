@@ -6,10 +6,76 @@ export const ENVIO_GRATIS_DESDE = 1000;
 export const LOGO_SRC = "/logo.png";
 export const HERO_HOME = "/brand/lumi-hero-home.jpg";
 export const HERO_INDUSTRIAL = "/brand/lumi-hero-industrial.jpg";
-export const HERO_PROMO = "/brand/lumi-hero-septiembre.jpg";
-export const HERO_ILUMINACION = "/brand/lumi-hero-iluminacion.png";
-export const HERO_CONTACTOS = "/brand/lumi-hero-contactos.jpg";
+export const HERO_PROMO = "/brand/sala-minim-ilum.jpg";
+export const HERO_ILUMINACION = "/brand/sala-minim-ilum1.jpg";
+export const HERO_CONTACTOS = "/brand/iluminacion-sala-reducida.jpeg";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
+
+export const HERO_SLIDES = [
+  {
+    image: "/brand/lumi-hero-home.jpg",
+    kicker: "Iluminación",
+    title: "La primavera se ilumina",
+    text: "Luminarias decorativas para transformar tu hogar, oficina y cada espacio que imaginas.",
+    cta: "Ver iluminación",
+    to: "/iluminacion",
+    alt: "Sala moderna con lámparas colgantes y arbotantes",
+  },
+  {
+    image: "/brand/sala-minim-ilum1.jpg",
+    kicker: "Hogar",
+    title: "Luz cálida para cada rincón",
+    text: "Plafones, tiras LED y empotrados para salas, recámaras y pasillos.",
+    cta: "Ver todo",
+    to: "/iluminacion",
+    alt: "Sala minimalista con plafón LED y tira perimetral",
+  },
+  {
+    image: "/brand/sala-minim-ilum.jpg",
+    kicker: "Decoración",
+    title: "Diseño que ilumina",
+    text: "Candiles y luminarios decorativos para comedor, sala y áreas sociales.",
+    cta: "Ver lámparas",
+    to: "/iluminacion?q=lampara",
+    alt: "Sala con candil decorativo y downlights empotrados",
+  },
+  {
+    image: "/brand/iluminacion-oficinas.jpg",
+    kicker: "Oficinas",
+    title: "Productividad con buena luz",
+    text: "Plafones y luminarios LED para oficinas, locales y áreas de trabajo.",
+    cta: "Ver catálogo",
+    to: "/iluminacion?q=plafon",
+    alt: "Oficina iluminada con plafones LED de techo",
+  },
+  {
+    image: "/brand/lumi-hero-industrial.jpg",
+    kicker: "Industrial",
+    title: "Potencia cada proyecto",
+    text: "Iluminación LED y material eléctrico confiable para naves, bodegas y obra.",
+    cta: "Ver soluciones",
+    to: "/buscar",
+    alt: "Nave industrial iluminada con luminarios LED",
+  },
+  {
+    image: "/brand/iluminacion-industrial.jpg",
+    kicker: "Obra e industria",
+    title: "Listos para tu instalación",
+    text: "Reflectores, tubería, conductores y existencias para recoger en sucursal.",
+    cta: "Ver ofertas",
+    to: "/buscar",
+    alt: "Espacio industrial con iluminación de alto rendimiento",
+  },
+  {
+    image: "/brand/iluminacion-sala-reducida.jpeg",
+    kicker: "Placas, apagadores y",
+    title: "Contactos Residenciales",
+    text: "Pequeños cambios que transforman grandes espacios.",
+    cta: "Ver todo",
+    to: "/buscar?q=contacto",
+    alt: "Interior residencial listo para contactos y placas",
+  },
+] as const;
 
 export const NAV_ITEMS = [
   { id: "iluminacion", label: "Iluminación", to: "/iluminacion" },

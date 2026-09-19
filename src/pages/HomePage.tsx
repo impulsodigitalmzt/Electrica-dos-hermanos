@@ -12,10 +12,9 @@ import { fetchCatalogo } from "@/lib/api";
 import {
   CATEGORY_TILES,
   COLLECTION_CARDS,
-  PROMO_TILES,
-  HERO_CONTACTOS,
-  HERO_ILUMINACION,
   HERO_PROMO,
+  HERO_SLIDES,
+  PROMO_TILES,
   marcaDe,
 } from "@/lib/brand";
 import { CATALOGO_ILUMINACION, mezclarCatalogo } from "@/lib/catalogo-iluminacion";
@@ -24,35 +23,7 @@ import { precioMx } from "@/lib/format";
 import { AppLink, navigate } from "@/lib/nav";
 import type { Producto } from "@/types";
 
-const HEROES = [
-  {
-    image: HERO_ILUMINACION,
-    kicker: "Iluminación",
-    title: "La primavera se ilumina",
-    text: "Encuentra luminarias decorativas para el hogar, oficina y cada espacio que imaginas.",
-    cta: "Ver todo",
-    to: "/iluminacion",
-    alt: "Sala moderna iluminada con luminarias decorativas",
-  },
-  {
-    image: HERO_CONTACTOS,
-    kicker: "Placas, apagadores y",
-    title: "Contactos Residenciales",
-    text: "Pequeños cambios que transforman grandes espacios.",
-    cta: "Ver todo",
-    to: "/buscar?q=contacto",
-    alt: "Placas y contactos residenciales en un interior moderno",
-  },
-  {
-    image: HERO_PROMO,
-    kicker: "Promociones",
-    title: "Envío gratis desde $1,000",
-    text: "Material eléctrico e iluminación con existencias para recoger en sucursal o envío a todo México.",
-    cta: "Ver ofertas",
-    to: "/buscar",
-    alt: "Promociones de material eléctrico e iluminación",
-  },
-] as const;
+const HEROES = HERO_SLIDES;
 
 const CONTACTOS_LOCALES = DEMO_PRODUCTOS.filter((producto) => ["contactos", "placas"].includes(producto.categoria));
 
@@ -101,7 +72,7 @@ export function HomePage() {
               className={`transition-opacity duration-700 ${slide === index ? "relative opacity-100" : "pointer-events-none absolute inset-0 opacity-0"}`}
             >
               <img src={hero.image} width={1600} height={768} alt={hero.alt} className="h-[430px] w-full object-cover sm:h-[540px]" />
-              <div className="absolute inset-0 bg-primary/45" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/45 to-primary/25" />
               <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
                 <div className="max-w-3xl text-primary-foreground">
                   <p className="text-sm font-bold uppercase tracking-[0.2em]">{hero.kicker}</p>
