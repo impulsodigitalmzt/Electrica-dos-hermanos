@@ -95,28 +95,35 @@ export function CartDrawer() {
                     {linea.paqueteTitulo ? <p className="text-[11px] text-muted-foreground">{linea.paqueteTitulo}</p> : null}
                     <b className="mt-1 block text-primary">{precioMx(linea.precio)}</b>
                     <div className="mt-2 flex items-center gap-2">
-                      <div className="flex h-8 items-center border">
+                      <div className="flex h-9 items-center overflow-hidden rounded-md border bg-background">
                         <Button
+                          type="button"
                           variant="ghost"
                           size="icon"
-                          className="size-7"
+                          className="size-8 shrink-0 rounded-none"
                           onClick={() => cambiarCantidad(linea.sku, linea.paqueteId, linea.cantidad - 1)}
                           aria-label="Reducir cantidad"
                         >
-                          <Minus />
+                          <Minus className="size-4" />
                         </Button>
-                        <span className="w-7 text-center text-sm">{linea.cantidad}</span>
+                        <CantidadInput
+                          value={linea.cantidad}
+                          nombre={linea.nombre}
+                          onChange={(n) => cambiarCantidad(linea.sku, linea.paqueteId, n)}
+                        />
                         <Button
+                          type="button"
                           variant="ghost"
                           size="icon"
-                          className="size-7"
-                          onClick={() => cambiarCantidad(linea.sku, linea.paqueteId, linea.cantidad + 1)}
+                          className="size-8 shrink-0 rounded-none"
+                          onClick={() => cambiarCantidad(linea.sku, linea.paqueteId, Math.min(999, linea.cantidad + 1))}
                           aria-label="Aumentar cantidad"
                         >
-                          <Plus />
+                          <Plus className="size-4" />
                         </Button>
                       </div>
                       <Button
+                        type="button"
                         variant="ghost"
                         size="icon"
                         className="size-8 text-sale"
@@ -206,5 +213,54 @@ export function CartDrawer() {
         ) : null}
       </SheetContent>
     </Sheet>
+  );
+}
+
+function CantidadInput({
+  value,
+  nombre,
+  onChange,
+}: {
+  value: number;
+  nombre: string;
+  onChange: (n: number) => void;
+}) {
+  const [texto, setTexto] = useState(String(value));
+
+  useEffect(() => {
+    setTexto(String(value));
+  }, [value]);
+
+  function aplicar(crudo: string) {
+    const digits = crudo.replace(/\D/g, "");
+    if (digits === "") {
+      setTexto("");
+      return;
+    }
+    const n = Math.min(999, Math.max(1, Number.parseInt(digits, 10)));
+    setTexto(String(n));
+    onChange(n);
+  }
+
+  return (
+    <input
+      type="text"
+      inputMode="numeric"
+      pattern="[0-9]*"
+      value={texto}
+      aria-label={`Cantidad de ${nombre}`}
+      onChange={(e) => aplicar(e.target.value)}
+      onBlur={() => {
+        if (texto.trim() === "" || Number(texto) < 1) {
+          setTexto("1");
+          onChange(1);
+        }
+      }}
+      onFocus={(e) => e.target.select()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") (e.target as HTMLInputElement).blur();
+      }}
+      className="h-8 w-12 border-x bg-transparent text-center text-sm font-semibold text-foreground outline-none"
+    />
   );
 }

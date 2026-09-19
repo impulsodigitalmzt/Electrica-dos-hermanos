@@ -84,9 +84,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         setAbierto(true);
       },
       cambiarCantidad: (sku, paqueteId, cantidad) => {
+        const n = Math.min(999, Math.max(0, Math.floor(Number(cantidad) || 0)));
         setLineas((prev) =>
           prev
-            .map((l) => (l.sku === sku && l.paqueteId === paqueteId ? { ...l, cantidad } : l))
+            .map((l) => (l.sku === sku && l.paqueteId === paqueteId ? { ...l, cantidad: n } : l))
             .filter((l) => l.cantidad > 0)
         );
       },
