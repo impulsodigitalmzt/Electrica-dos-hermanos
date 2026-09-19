@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Camera, LoaderCircle, Mic, Search, X } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { ProductImage } from "@/components/ProductImage";
 import { useCart } from "@/context/CartContext";
 import { buscarPorImagen, compactarImagen, fetchCatalogo, preguntarAsistente } from "@/lib/api";
@@ -280,7 +281,7 @@ export function SearchBar({
               <ProductImage producto={item} className="size-12 shrink-0 bg-muted object-contain" />
               <span className="min-w-0 flex-1">
                 <strong className="block truncate text-sm">{item.nombre}</strong>
-                <span className="text-xs text-muted-foreground">{marcaDe(item.nombre, item.marca)}</span>
+                <BrandLogo nombre={item.nombre} marca={marcaDe(item.nombre, item.marca)} className="h-3.5" />
               </span>
               <b className="text-sm text-primary">{precioMx(item.precio)}</b>
             </button>

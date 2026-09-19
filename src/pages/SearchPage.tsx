@@ -10,7 +10,8 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { useCart } from "@/context/CartContext";
 import { fetchCatalogo } from "@/lib/api";
-import { marcaDe } from "@/lib/brand";
+import { BrandLogo } from "@/components/BrandLogo";
+import { logoDeMarca, marcaDe } from "@/lib/brand";
 import {
   CATALOGO_ILUMINACION,
   MARCAS_ILUMINACION,
@@ -141,10 +142,11 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
               type="button"
               onClick={() => setMarcas((current) => toggleValor(current, brand))}
               aria-pressed={marcas.includes(brand)}
-              className={`border px-3 py-1.5 text-xs font-bold transition ${
+              className={`flex items-center gap-2 border px-3 py-1.5 text-xs font-bold transition ${
                 marcas.includes(brand) ? "border-primary bg-primary text-primary-foreground" : "text-muted-foreground hover:border-primary hover:text-primary"
               }`}
             >
+              {logoDeMarca("", brand) ? <img src={logoDeMarca("", brand)} alt="" className="h-4 w-auto object-contain" /> : null}
               {brand}
             </button>
           ))}
@@ -326,7 +328,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
               <ProductImage producto={quick} sprite={Boolean(quick.pos)} pos={quick.pos} className="aspect-square bg-muted object-contain p-4" />
               <div className="flex flex-col justify-center">
                 <DialogHeader>
-                  <span className="text-xs font-bold text-accent">{marcaDe(quick.nombre, quick.marca)}</span>
+                  <BrandLogo nombre={quick.nombre} marca={marcaDe(quick.nombre, quick.marca)} className="h-5" />
                   <DialogTitle className="text-2xl leading-tight text-primary">{quick.nombre}</DialogTitle>
                   <DialogDescription>{quick.descripcion || "Producto original con garantía de fabricante."}</DialogDescription>
                 </DialogHeader>

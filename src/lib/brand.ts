@@ -46,14 +46,79 @@ export const COLLECTION_CARDS = [
   { label: "Ofertas", to: "/buscar", image: FOTO.promoOferta },
 ] as const;
 
-export const MARCAS = ["TECNOLITE", "SIEMENS", "bticino", "PHILIPS", "VOLTECK", "MAGG", "CONDULAC"] as const;
+export const MARCAS_CATALOGO = [
+  { label: "TECNOLITE", q: "tecnolite", logo: "/marcas/brand_Tecnolite.png" },
+  { label: "BTICINO", q: "bticino", logo: "/marcas/BTicino-logo.png" },
+  { label: "CONDULAC", q: "condulac", logo: "/marcas/Condulac-logo.png" },
+  { label: "CONDUMEX", q: "condumex", logo: "/marcas/condumex.png" },
+  { label: "PHILIPS", q: "philips", logo: "/marcas/Phillips-Logo-1948.png" },
+  { label: "OSRAM", q: "osram", logo: "/marcas/Osram_logo_large.png" },
+  { label: "SIEMENS", q: "siemens", logo: "/marcas/siemens.png" },
+  { label: "VOLTECK", q: "volteck", logo: "/marcas/volteck.png" },
+  { label: "MAGG", q: "magg", logo: "/marcas/Magg-1.png" },
+  { label: "IUSA", q: "iusa", logo: "/marcas/iusa-vector-logo.png" },
+  { label: "ANCLO", q: "anclo", logo: "/marcas/anclo.png" },
+  { label: "ARROW HART", q: "arrow hart", logo: "/marcas/arrow-hart.png" },
+  { label: "EMMSA", q: "emmsa", logo: "/marcas/images.png" },
+  { label: "VIAKON", q: "viakon", logo: "/marcas/Logo-2022-inovamosconenergia.png" },
+  { label: "3M", q: "3M", logo: "/marcas/Logo-3M.png" },
+  { label: "MAKITA", q: "makita", logo: "/marcas/logo-Makita.png" },
+  { label: "TULMEX", q: "tulmex", logo: "/marcas/logo_tulmex.png" },
+  { label: "POLIFLEX", q: "poliflex", logo: "/marcas/poliflex.jpg" },
+  { label: "RAWELT", q: "rawelt", logo: "/marcas/rawelt.png" },
+  { label: "SQUARE D", q: "square d", logo: "/marcas/SquareD_Logo.png" },
+  { label: "SOLA BASIC", q: "sola basic", logo: "/marcas/solabasic.jpg" },
+  { label: "TORK", q: "tork", logo: "/marcas/Tork-logo.png" },
+  { label: "TRUPER", q: "truper", logo: "/marcas/trupper.png" },
+] as const;
 
-const MARCAS_DETECT = ["TECNOLITE", "PHILIPS", "SIEMENS", "BTICINO", "VOLTECK", "MAGG", "CONDULAC", "LEDVANCE", "IUSA"];
+export const MARCAS = MARCAS_CATALOGO.map((item) => item.label);
+
+const MARCAS_DETECT = [
+  "ARROW HART",
+  "SQUARE D",
+  "SOLA BASIC",
+  "TECNOLITE",
+  "BTICINO",
+  "CONDULAC",
+  "CONDUMEX",
+  "PHILIPS",
+  "SIEMENS",
+  "VOLTECK",
+  "LEDVANCE",
+  "VIAKON",
+  "EMMSA",
+  "TULMEX",
+  "MAKITA",
+  "POLIFLEX",
+  "RAWELT",
+  "TRUPER",
+  "ANCLO",
+  "OSRAM",
+  "TORK",
+  "MAGG",
+  "IUSA",
+  "3M",
+] as const;
 
 export function marcaDe(nombre: string, marca?: string): string {
-  if (marca?.trim()) return marca.trim();
+  if (marca?.trim()) {
+    const pedida = marca.trim().toUpperCase();
+    if (pedida === "ISB" || pedida === "ISB SOLA BASIC") return "SOLA BASIC";
+    const conocida = MARCAS_CATALOGO.find((item) => item.label.toUpperCase() === pedida);
+    if (pedida === "LEDVANCE") return "LEDVANCE";
+    return conocida?.label ?? marca.trim();
+  }
   const upper = nombre.toUpperCase();
   return MARCAS_DETECT.find((item) => upper.includes(item)) ?? "E2H";
+}
+
+export function logoDeMarca(nombre: string, marca?: string): string {
+  const key = marcaDe(nombre, marca).toUpperCase();
+  if (key === "LEDVANCE") {
+    return MARCAS_CATALOGO.find((item) => item.label === "OSRAM")?.logo ?? "";
+  }
+  return MARCAS_CATALOGO.find((item) => item.label.toUpperCase() === key)?.logo ?? "";
 }
 
 export function descuentoDe(precio: number, anterior?: number): number {

@@ -6,6 +6,7 @@ import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 import { fetchCatalogo, fetchProducto } from "@/lib/api";
+import { BrandLogo } from "@/components/BrandLogo";
 import { BRANCHES, descuentoDe, marcaDe } from "@/lib/brand";
 import { CATALOGO_ILUMINACION, encontrarProductoLocal } from "@/lib/catalogo-iluminacion";
 import { DEMO_PRODUCTOS } from "@/lib/demo-productos";
@@ -213,8 +214,9 @@ export function ProductPage({ sku }: { sku: string }) {
               </div>
 
               <aside className="lg:sticky lg:top-28">
-                <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                  {marca} <span className="text-border">|</span> SKU: {producto.sku}
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                  <BrandLogo nombre={producto.nombre} marca={marca} className="h-6" />
+                  <span className="text-border">|</span> SKU: {producto.sku}
                 </p>
                 <h1 className="mt-2 text-2xl font-extrabold uppercase leading-tight text-primary sm:text-3xl">{producto.nombre}</h1>
                 <div className="mt-5 flex flex-wrap items-baseline gap-3">
@@ -319,7 +321,9 @@ export function ProductPage({ sku }: { sku: string }) {
                           <ShoppingCart />
                         </Button>
                       ) : null}
-                      <span className="mt-3 text-[11px] font-bold uppercase text-muted-foreground">{marcaDe(item.nombre, item.marca)}</span>
+                      <span className="mt-3">
+                        <BrandLogo nombre={item.nombre} marca={marcaDe(item.nombre, item.marca)} className="h-4" />
+                      </span>
                       <button
                         type="button"
                         className="mt-1 line-clamp-3 text-left text-sm font-semibold uppercase leading-snug text-primary"

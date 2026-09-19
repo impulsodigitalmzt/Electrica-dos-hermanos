@@ -1,6 +1,7 @@
 import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
+import { BrandLogo } from "@/components/BrandLogo";
 import { descuentoDe, marcaDe } from "@/lib/brand";
 import { precioMx } from "@/lib/format";
 import { navigate } from "@/lib/nav";
@@ -54,7 +55,7 @@ export function ProductCard({ producto, onAdd, onQuick, favorite, onFavorite }: 
         ) : null}
       </div>
       <div className="flex flex-1 flex-col p-3 sm:p-5">
-        <span className="text-[11px] font-bold text-accent">{marca}</span>
+        <BrandLogo nombre={producto.nombre} marca={marca} className="h-5" />
         <h3 className="mt-1 min-h-10 text-sm font-semibold leading-snug sm:text-base">
           <button type="button" className="text-left" onClick={() => navigate(`/producto/${encodeURIComponent(producto.sku)}`)}>
             {producto.nombre}

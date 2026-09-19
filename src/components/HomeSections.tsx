@@ -14,8 +14,8 @@ import {
 } from "lucide-react";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS, mapsDirHref, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
 import { AppLink } from "@/lib/nav";
+import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS_CATALOGO, mapsDirHref, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
 
 export function ScrollingBanner() {
   const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Recoge en sucursal Matriz Mazatlán  ·  Asesoría técnica en Culiacán y Los Cabos  ·  ";
@@ -107,14 +107,16 @@ export function Brands() {
         <span className="text-xs font-bold uppercase text-accent">Aliados de confianza</span>
         <h2 className="mt-2 text-3xl font-extrabold text-primary">Marcas que conectan tus ideas</h2>
       </div>
-      <div className="mt-9 grid grid-cols-2 border-y sm:grid-cols-4 lg:grid-cols-7">
-        {MARCAS.map((brand) => (
-          <div
-            key={brand}
-            className="flex h-24 items-center justify-center border-r font-display text-lg font-extrabold text-muted-foreground grayscale transition hover:text-primary hover:grayscale-0"
+      <div className="mt-9 grid grid-cols-2 border sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {MARCAS_CATALOGO.map((brand) => (
+          <AppLink
+            key={brand.label}
+            to={`/buscar?q=${encodeURIComponent(brand.q)}`}
+            className="flex h-24 items-center justify-center border-b border-r bg-background px-4 grayscale transition hover:bg-muted hover:grayscale-0"
+            aria-label={`Ver productos ${brand.label}`}
           >
-            {brand}
-          </div>
+            <img src={brand.logo} alt={brand.label} className="max-h-12 w-full object-contain" />
+          </AppLink>
         ))}
       </div>
     </section>

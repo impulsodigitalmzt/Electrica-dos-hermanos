@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
 import { Brands, Faq, PreFooterLeyenda, PrivacyNotice, PromoEnvio, ScrollingBanner, SiteFooter, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
@@ -287,7 +288,7 @@ export function HomePage() {
               <ProductImage producto={quick} className="aspect-square bg-muted object-contain p-4" />
               <div className="flex flex-col justify-center">
                 <DialogHeader>
-                  <span className="text-xs font-bold text-accent">{marcaDe(quick.nombre, quick.marca)}</span>
+                  <BrandLogo nombre={quick.nombre} marca={marcaDe(quick.nombre, quick.marca)} className="h-5" />
                   <DialogTitle className="text-2xl leading-tight text-primary">{quick.nombre}</DialogTitle>
                   <DialogDescription>
                     {quick.descripcion || "Producto original con garantía de fabricante. Disponibilidad inmediata."}
