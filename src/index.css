@@ -114,6 +114,10 @@
   animation: edh-marquee 32s linear infinite;
 }
 
+.edh-marquee-brands {
+  animation: edh-marquee 55s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

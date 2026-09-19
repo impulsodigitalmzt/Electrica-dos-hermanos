@@ -32,6 +32,40 @@ export function ScrollingBanner() {
   );
 }
 
+export function BrandLogoMarquee() {
+  function pista(prefijo: string, interactivo: boolean) {
+    return (
+      <div className="flex items-center gap-10 px-6 sm:gap-14 sm:px-8" aria-hidden={interactivo ? undefined : true}>
+        {MARCAS_CATALOGO.map((brand) =>
+          interactivo ? (
+            <AppLink
+              key={`${prefijo}-${brand.label}`}
+              to={`/buscar?q=${encodeURIComponent(brand.q)}`}
+              className="flex h-12 w-28 shrink-0 items-center justify-center sm:h-14 sm:w-32"
+              aria-label={`Ver productos ${brand.label}`}
+            >
+              <img src={brand.logo} alt="" className="max-h-10 w-full object-contain sm:max-h-12" />
+            </AppLink>
+          ) : (
+            <span key={`${prefijo}-${brand.label}`} className="flex h-12 w-28 shrink-0 items-center justify-center sm:h-14 sm:w-32">
+              <img src={brand.logo} alt="" className="max-h-10 w-full object-contain sm:max-h-12" />
+            </span>
+          )
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <section className="overflow-hidden border-y bg-background py-5" aria-label="Marcas disponibles">
+      <div className="edh-marquee-brands flex w-max items-center">
+        {pista("a", true)}
+        {pista("b", false)}
+      </div>
+    </section>
+  );
+}
+
 export function PromoEnvio() {
   return (
     <section className="bg-secondary py-8 text-center text-secondary-foreground">
