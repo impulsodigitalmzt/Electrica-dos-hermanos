@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type DragEvent } from "react";
 import { Camera, ImagePlus, LoaderCircle, Upload } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { ProductImage } from "@/components/ProductImage";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { buscarPorImagen, compactarImagen } from "@/lib/api";
 import { marcaDe } from "@/lib/brand";
 import { precioMx } from "@/lib/format";
@@ -96,9 +96,6 @@ export function ImageSearchDialog({ open, onOpenChange, searchPath = "/buscar", 
       <DialogContent className="max-w-[640px] gap-0 overflow-hidden rounded-[28px] border-0 p-0 shadow-2xl sm:rounded-[28px]">
         <DialogHeader className="px-6 pb-1 pt-5 text-left">
           <DialogTitle className="text-xl font-normal text-foreground">Buscar con una imagen</DialogTitle>
-          <DialogDescription className="text-sm text-muted-foreground">
-            Sube o pega una foto del material. Groq lo identifica y lo busca en el inventario.
-          </DialogDescription>
         </DialogHeader>
 
         {!preview ? (
