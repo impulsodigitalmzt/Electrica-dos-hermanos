@@ -38,8 +38,15 @@ export async function buscarPorImagen(image: string): Promise<CatalogoResponse &
     body: JSON.stringify({ image }),
   });
   if (!res.ok) {
-    const body = (await res.json().catch(() => ({}))) as { detail?: string };
-    throw new Error(body.detail || "No se pudo leer la foto.");
+    const body = (await res.json().catch(() => ({}))) as { detail?: string; code?: string };
+    const detail = body.detail || "No se pudo leer la foto.";
+    if (/rate limit|ITPM|tokens per minute/i.test(detail)) {
+      throw new Error("La IA está ocupada un momento. Espera unos segundos e intenta de nuevo.");
+    }
+    if (body.code === "GROQ_NOT_CONFIGURED") {
+      throw new Error("Falta configurar GROQ_API_KEY en el servidor.");
+    }
+    throw new Error(detail);
   }
   return (await res.json()) as CatalogoResponse & { q: string };
 }

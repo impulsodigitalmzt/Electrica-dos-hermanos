@@ -44,7 +44,23 @@ catalogRoutes.post("/imagen", async (c) => {
   }
   const q = await groqVisionQuery(c.env, image);
   const sql = createSql(c.env.DATABASE_URL);
-  const { productos, total } = await buscarProductos(sql, { q, limit: 16, offset: 0 });
+  let { productos, total } = await buscarProductos(sql, { q, limit: 16, offset: 0 });
+  if (!productos.length) {
+    const corto = q.split(/\s+/).slice(0, 2).join(" ");
+    if (corto && corto !== q) {
+      const segundo = await buscarProductos(sql, { q: corto, limit: 16, offset: 0 });
+      productos = segundo.productos;
+      total = segundo.total;
+    }
+  }
+  if (!productos.length) {
+    const primero = q.split(/\s+/).find((t) => t.length >= 4) ?? "";
+    if (primero) {
+      const tercero = await buscarProductos(sql, { q: primero, limit: 16, offset: 0 });
+      productos = tercero.productos;
+      total = tercero.total;
+    }
+  }
   return c.json({ ok: true, q, total, productos });
 });
 

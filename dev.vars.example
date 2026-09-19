@@ -3,4 +3,5 @@ APP_NAME=Eléctrica Dos Hermanos
 DATABASE_URL=postgresql://USER:PASSWORD@HOST/neondb?sslmode=require
 GROQ_API_KEY=
 GROQ_MODEL=openai/gpt-oss-120b
+GROQ_VISION_MODEL=qwen/qwen3.8-27b
 SECRET_KEY=CHANGE_ME_TO_A_RANDOM_64_CHAR_STRING

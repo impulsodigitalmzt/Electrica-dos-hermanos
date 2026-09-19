@@ -13,3 +13,4 @@ head_sampling_rate = 1
 
 [vars]
 APP_NAME = "Eléctrica Dos Hermanos"
+GROQ_VISION_MODEL = "qwen/qwen3.8-27b"
