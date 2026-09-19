@@ -4,6 +4,9 @@ export const ENVIO_GRATIS_DESDE = 1000;
 export const LOGO_SRC = "/logo.png";
 export const HERO_HOME = "/brand/lumi-hero-home.jpg";
 export const HERO_INDUSTRIAL = "/brand/lumi-hero-industrial.jpg";
+export const HERO_PROMO = "/brand/lumi-hero-septiembre.jpg";
+export const HERO_ILUMINACION = "/brand/lumi-hero-iluminacion.png";
+export const HERO_CONTACTOS = "/brand/lumi-hero-contactos.jpg";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 
 export const NAV_ITEMS = [
@@ -23,6 +26,15 @@ export const CATEGORY_TILES = [
   { label: "Arbotantes", q: "arbotante", pos: "0% 50%" },
   { label: "Reflectores", q: "reflector", pos: "50% 50%" },
   { label: "Tiras LED", q: "tira led", pos: "100% 50%" },
+] as const;
+
+export const COLLECTION_CARDS = [
+  { label: "Iluminación", to: "/iluminacion", image: HERO_ILUMINACION },
+  { label: "Contactos Residenciales", to: "/buscar?q=contacto", image: HERO_CONTACTOS },
+  { label: "Placas e Interruptores", to: "/buscar?q=apagador+placa+interruptor", image: "/demo/placa.svg" },
+  { label: "Tubería", to: "/buscar?q=tubo+pvc+conduit", image: "/demo/tubo.svg" },
+  { label: "Conductores", to: "/buscar?q=cable+thw", image: "/demo/cable.svg" },
+  { label: "Ofertas", to: "/buscar", image: HERO_PROMO },
 ] as const;
 
 export const MARCAS = ["TECNOLITE", "SIEMENS", "bticino", "PHILIPS", "VOLTECK", "MAGG", "CONDULAC"] as const;

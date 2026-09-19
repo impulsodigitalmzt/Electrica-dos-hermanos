@@ -101,6 +101,19 @@
   }
 }
 
+@keyframes edh-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.edh-marquee {
+  animation: edh-marquee 32s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

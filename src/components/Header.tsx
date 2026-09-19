@@ -24,7 +24,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
       <div className="bg-primary text-primary-foreground">
         <div className="mx-auto flex min-h-9 max-w-7xl flex-wrap items-center justify-center gap-x-5 gap-y-1 px-4 py-1 text-center text-xs font-semibold sm:justify-between sm:text-sm">
           <span className="flex items-center gap-2">
-            <Truck className="size-4 text-secondary" /> Mazatlán · Culiacán · San José del Cabo · Cabo San Lucas y envíos a todo México
+            <Truck className="size-4 text-secondary" /> Envíos gratis a todo México en compras mayores a $1,000
           </span>
           <div className="hidden items-center gap-5 lg:flex">
             <a href={telHref("6699407077")}>Tel. (669) 940-7077 / 940-7088</a>

@@ -16,6 +16,64 @@ import { Button } from "@/components/ui/button";
 import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS, telHref, WHATSAPP_URL, type Branch } from "@/lib/brand";
 import { AppLink } from "@/lib/nav";
 
+export function ScrollingBanner() {
+  const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Recoge en sucursal Matriz Mazatlán  ·  Asesoría técnica en Culiacán y Los Cabos  ·  ";
+  return (
+    <section className="overflow-hidden bg-primary py-3 text-primary-foreground" aria-label="Promociones de envío">
+      <div className="edh-marquee flex w-max whitespace-nowrap text-sm font-bold uppercase tracking-wide sm:text-base">
+        <span className="px-6">{frase.repeat(2)}</span>
+        <span className="px-6" aria-hidden>
+          {frase.repeat(2)}
+        </span>
+      </div>
+    </section>
+  );
+}
+
+export function PromoEnvio() {
+  return (
+    <section className="bg-secondary py-8 text-center text-secondary-foreground">
+      <p className="text-xs font-bold uppercase tracking-widest">Envío sin costo</p>
+      <h2 className="mt-1 text-2xl font-extrabold sm:text-3xl">A partir de $1,000 MXN</h2>
+      <p className="mt-2 text-sm">Aplican restricciones según peso, volumen y destino. Recoge también en sucursal.</p>
+      <Button className="mt-5 bg-primary font-bold text-primary-foreground hover:bg-primary/90" asChild>
+        <AppLink to="/buscar">
+          Ver catálogo <ArrowRight />
+        </AppLink>
+      </Button>
+    </section>
+  );
+}
+
+export function Testimonials() {
+  const opiniones = [
+    { nombre: "Ing. Ramírez", ciudad: "Mazatlán, Sin.", texto: "Pedí el material de una casa completa y me armaron la lista el mismo día en Matriz." },
+    { nombre: "Arq. Beltrán", ciudad: "Culiacán, Sin.", texto: "Buen surtido de Tecnolite y Siemens. Recogí en sucursal sin esperas." },
+    { nombre: "Constructora Pacífico", ciudad: "Los Cabos, B.C.S.", texto: "Precios competitivos y envío puntual para la obra. Así se trabaja." },
+  ];
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-16" aria-labelledby="opiniones">
+      <div className="text-center">
+        <span className="text-xs font-bold uppercase text-accent">Nuestros clientes opinan</span>
+        <h2 id="opiniones" className="mt-2 text-3xl font-extrabold text-primary">
+          Confianza de obra en obra
+        </h2>
+      </div>
+      <div className="mt-10 grid gap-5 md:grid-cols-3">
+        {opiniones.map((item) => (
+          <blockquote key={item.nombre} className="border bg-card p-6">
+            <p className="text-sm leading-relaxed text-muted-foreground">“{item.texto}”</p>
+            <footer className="mt-5">
+              <cite className="not-italic text-sm font-bold text-primary">{item.nombre}</cite>
+              <p className="text-xs text-muted-foreground">{item.ciudad}</p>
+            </footer>
+          </blockquote>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function TrustBar() {
   const benefits = [
     { icon: Truck, title: "Envío seguro", text: "Cobertura en todo México y rastreo de tu pedido." },

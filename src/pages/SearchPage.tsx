@@ -87,16 +87,16 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
   const results = useMemo(
     () =>
       aplicarFiltros(productos, {
-        tipo,
+        tipo: iluminacion ? tipo : "todas",
         marcas,
-        temperaturas: temps,
-        uso,
+        temperaturas: iluminacion ? temps : [],
+        uso: iluminacion ? uso : "todos",
         maxPrice,
         onlyOffers,
-        q: query,
+        q: iluminacion ? query : "",
         sort,
       }),
-    [marcas, maxPrice, onlyOffers, productos, query, sort, temps, tipo, uso]
+    [iluminacion, marcas, maxPrice, onlyOffers, productos, query, sort, temps, tipo, uso]
   );
 
   function resetFilters() {
