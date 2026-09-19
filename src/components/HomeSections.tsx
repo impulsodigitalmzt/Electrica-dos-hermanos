@@ -150,6 +150,17 @@ export function SucursalTourVideo() {
   );
 }
 
+const LOGO_TAMANO: Partial<Record<(typeof MARCAS_CATALOGO)[number]["label"], string>> = {
+  TECNOLITE: "max-h-16 scale-110",
+  BTICINO: "max-h-16 scale-[1.55]",
+  CONDULAC: "max-h-16 scale-[1.5]",
+  CONDUMEX: "max-h-16 scale-[1.4]",
+  PHILIPS: "max-h-16 scale-[1.4]",
+  SIEMENS: "max-h-16 scale-[1.55]",
+  VOLTECK: "max-h-16 scale-[1.5]",
+  MAGG: "max-h-16 scale-[1.5]",
+};
+
 export function Brands() {
   const makita = VIDEOS.makita;
   return (
@@ -176,10 +187,14 @@ export function Brands() {
           <AppLink
             key={brand.label}
             to={`/buscar?q=${encodeURIComponent(brand.q)}`}
-            className="flex h-24 items-center justify-center border-b border-r bg-background px-4 transition hover:bg-muted"
+            className="flex h-28 items-center justify-center overflow-hidden border-b border-r bg-background px-3 transition hover:bg-muted"
             aria-label={`Ver productos ${brand.label}`}
           >
-            <img src={brand.logo} alt={brand.label} className="max-h-12 w-full object-contain" />
+            <img
+              src={brand.logo}
+              alt={brand.label}
+              className={`w-full object-contain ${LOGO_TAMANO[brand.label] ?? "max-h-14"}`}
+            />
           </AppLink>
         ))}
       </div>
