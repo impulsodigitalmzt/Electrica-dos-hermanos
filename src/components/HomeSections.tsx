@@ -438,9 +438,9 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
             {BRANCHES.map((branch) => (
               <li key={branch.id}>
-                <a href="#sucursales" className="hover:text-primary-foreground">
+                <AppLink to="/#sucursales" className="hover:text-primary-foreground">
                   {branch.name}
-                </a>
+                </AppLink>
               </li>
             ))}
           </ul>
@@ -449,14 +449,14 @@ export function SiteFooter() {
           <h3 className="text-base font-bold text-secondary">Información</h3>
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
             <li>
-              <a href="#faq" className="hover:text-primary-foreground">
+              <AppLink to="/#faq" className="hover:text-primary-foreground">
                 Preguntas frecuentes
-              </a>
+              </AppLink>
             </li>
             <li>
-              <a href="#sucursales" className="hover:text-primary-foreground">
+              <AppLink to="/#sucursales" className="hover:text-primary-foreground">
                 Cobertura y envíos
-              </a>
+              </AppLink>
             </li>
             <li>
               <a href={`mailto:${MAIN_EMAIL}`} className="hover:text-primary-foreground">
@@ -469,9 +469,9 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a href="#aviso-privacidad" className="hover:text-primary-foreground">
+              <AppLink to="/#aviso-privacidad" className="hover:text-primary-foreground">
                 Aviso de privacidad
-              </a>
+              </AppLink>
             </li>
           </ul>
         </div>
@@ -523,14 +523,5 @@ export function PreFooterLeyenda() {
 }
 
 export function CompactFooter() {
-  return (
-    <footer className="bg-primary py-8 text-primary-foreground">
-      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <span>Eléctrica dos Hermanos S.A. de C.V. · Iluminación LED con envíos a todo México.</span>
-        <AppLink to="/" className="font-bold text-secondary hover:underline">
-          Volver al inicio
-        </AppLink>
-      </div>
-    </footer>
-  );
+  return <SiteFooter />;
 }

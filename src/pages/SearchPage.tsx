@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Lightbulb, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { GuiaRapida } from "@/components/GuiaRapida";
 import { Header } from "@/components/Header";
-import { CompactFooter, PreFooterLeyenda } from "@/components/HomeSections";
+import { PreFooterLeyenda, SiteFooter } from "@/components/HomeSections";
 import { ProductGrid } from "@/components/ProductGrid";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { useCart } from "@/context/CartContext";
 import { fetchCatalogo } from "@/lib/api";
 import { BrandLogo } from "@/components/BrandLogo";
-import { StoreVideo } from "@/components/StoreVideo";
-import { logoDeMarca, marcaDe, videoDeConsulta } from "@/lib/brand";
+import { imagenDeConsulta, logoDeMarca, marcaDe } from "@/lib/brand";
 import {
   CATALOGO_ILUMINACION,
   MARCAS_ILUMINACION,
@@ -221,7 +220,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
     </div>
   );
 
-  const videoBanner = iluminacion ? null : videoDeConsulta(q);
+  const banner = imagenDeConsulta(q, iluminacion);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -233,15 +232,11 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
         favorites={favorites.length}
       />
       <main>
-        <section className="relative overflow-hidden bg-primary">
-          {videoBanner ? (
-            <StoreVideo src={videoBanner.src} title={videoBanner.title} controls={false} className="h-64 w-full sm:h-80" />
-          ) : (
-            <img src="/brand/lumi-hero-home.jpg" alt="Interiores iluminados con luminarios LED" className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
-          )}
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/70 to-transparent" />
-          <div className="absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-6 text-primary-foreground sm:px-10">
-            <nav aria-label="Ruta de navegación" className="text-xs font-semibold text-primary-foreground/75">
+        <section className="relative overflow-hidden bg-muted">
+          <img src={banner.src} alt={banner.alt} className="h-64 w-full object-cover sm:h-80" width={1600} height={640} />
+          <div className="absolute inset-0 bg-black/25" />
+          <div className="absolute inset-0 mx-auto flex max-w-7xl flex-col justify-center px-6 text-white [text-shadow:0_2px_16px_rgba(0,0,0,0.45)] sm:px-10">
+            <nav aria-label="Ruta de navegación" className="text-xs font-semibold text-white/80">
               <AppLink to="/" className="hover:text-secondary">
                 Inicio
               </AppLink>{" "}
@@ -250,7 +245,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
             <h1 className="mt-3 flex items-center gap-3 text-4xl font-extrabold sm:text-5xl">
               <Lightbulb className="size-9 text-secondary" /> {iluminacion ? "Iluminación" : q ? `Resultados para “${q}”` : "Catálogo"}
             </h1>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-primary-foreground/85 sm:text-base">
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
               {iluminacion
                 ? "Luminarios LED de marcas originales, con garantía de fabricante y asesoría técnica desde Mazatlán, Culiacán y Los Cabos."
                 : "Filtra por tipo, marca, temperatura, uso y precio. También puedes usar voz o una foto en el buscador."}
@@ -317,7 +312,7 @@ export function SearchPage({ q, categoria, iluminacion }: Props) {
         <GuiaRapida iluminacion={iluminacion} q={q} categoria={categoria} />
         <PreFooterLeyenda />
       </main>
-      <CompactFooter />
+      <SiteFooter />
 
       <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
         <SheetContent side="left" className="w-[88%] overflow-y-auto">

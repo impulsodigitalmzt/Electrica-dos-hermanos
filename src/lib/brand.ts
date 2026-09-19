@@ -57,6 +57,26 @@ export function videoDeConsulta(q: string) {
   return null;
 }
 
+export function imagenDeConsulta(q: string, iluminacion = false) {
+  const texto = q.toLowerCase();
+  if (iluminacion) {
+    return { src: HERO_ILUMINACION, alt: "Sala iluminada con luminarios LED" };
+  }
+  if (/\b(contacto|placa|apagador|interruptor)\b/.test(texto)) {
+    return { src: HERO_CONTACTOS, alt: "Interior residencial para contactos y placas" };
+  }
+  if (/\bmakita\b/.test(texto)) {
+    return { src: HERO_INDUSTRIAL, alt: "Nave industrial lista para herramientas y material eléctrico" };
+  }
+  if (/\b(tubo|tuberia|conduit|pvc)\b/.test(texto)) {
+    return { src: "/brand/iluminacion-industrial.jpg", alt: "Espacio industrial para tubería e instalación" };
+  }
+  if (/\b(cable|conductor|thw)\b/.test(texto)) {
+    return { src: HERO_INDUSTRIAL, alt: "Obra e industria para conductores eléctricos" };
+  }
+  return { src: "/brand/iluminacion-oficinas.jpg", alt: "Oficina iluminada con material eléctrico" };
+}
+
 export const HERO_SLIDES = [
   {
     image: "/brand/lumi-hero-home.jpg",

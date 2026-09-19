@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, FileText, Minus, Plus, Share2, ShoppingCart } from "lucide-react";
 import { Header } from "@/components/Header";
-import { CompactFooter, PreFooterLeyenda } from "@/components/HomeSections";
+import { PreFooterLeyenda, SiteFooter } from "@/components/HomeSections";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
@@ -344,7 +344,7 @@ export function ProductPage({ sku }: { sku: string }) {
         )}
       </main>
       <PreFooterLeyenda />
-      <CompactFooter />
+      <SiteFooter />
     </div>
   );
 }
