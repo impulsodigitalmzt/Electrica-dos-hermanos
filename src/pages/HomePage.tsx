@@ -3,7 +3,8 @@ import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react"
 import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
 import { Brands, BrandLogoMarquee, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
-import { ProductGrid } from "@/components/ProductGrid";
+import { ProductCarousel } from "@/components/ProductCarousel";
+import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
@@ -329,7 +330,18 @@ function ColeccionDestacada({
           </Button>
         </div>
         <div className="mt-8">
-          <ProductGrid productos={productos} cargando={false} onAdd={onAdd} onQuick={onQuick} favorites={favorites} onFavorite={onFavorite} />
+          <ProductCarousel label={titulo}>
+            {productos.map((producto) => (
+              <ProductCard
+                key={producto.sku}
+                producto={producto}
+                onAdd={onAdd}
+                onQuick={onQuick}
+                favorite={favorites.includes(producto.sku)}
+                onFavorite={onFavorite}
+              />
+            ))}
+          </ProductCarousel>
         </div>
       </div>
     </section>

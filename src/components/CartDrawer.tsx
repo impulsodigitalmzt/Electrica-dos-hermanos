@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import { BadgeCheck, ChevronLeft, ChevronRight, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { BadgeCheck, Minus, Plus, Trash2 } from "lucide-react";
+import { CantidadInput } from "@/components/CantidadInput";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
@@ -15,7 +17,6 @@ export function CartDrawer() {
   const remaining = Math.max(0, ENVIO_GRATIS_DESDE - total);
   const progress = Math.min(100, (total / ENVIO_GRATIS_DESDE) * 100);
   const [extra, setExtra] = useState<Producto[]>([]);
-  const [slide, setSlide] = useState(0);
   const skus = lineas.map((linea) => linea.sku).join(",");
 
   useEffect(() => {
@@ -38,12 +39,6 @@ export function CartDrawer() {
   }, [abierto, skus]);
 
   const recomendaciones = useMemo(() => sugerirComplementos(lineas, extra), [extra, lineas]);
-
-  useEffect(() => {
-    setSlide(0);
-  }, [skus]);
-
-  const actual = recomendaciones.length ? recomendaciones[slide % recomendaciones.length] : undefined;
 
   return (
     <Sheet open={abierto} onOpenChange={setAbierto}>
@@ -137,52 +132,36 @@ export function CartDrawer() {
                 </div>
               ))}
 
-              {actual ? (
+              {recomendaciones.length ? (
                 <section className="border-t pt-5" aria-label="Podría interesarte">
-                  <div className="mb-3 flex items-center justify-between gap-2">
-                    <h3 className="text-sm font-extrabold uppercase tracking-wide text-primary">Podría interesarte…</h3>
-                    {recomendaciones.length > 1 ? (
-                      <div className="flex gap-1">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="size-8"
-                          aria-label="Recomendación anterior"
-                          onClick={() => setSlide((i) => (i - 1 + recomendaciones.length) % recomendaciones.length)}
-                        >
-                          <ChevronLeft className="size-4" />
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="size-8"
-                          aria-label="Recomendación siguiente"
-                          onClick={() => setSlide((i) => (i + 1) % recomendaciones.length)}
-                        >
-                          <ChevronRight className="size-4" />
-                        </Button>
-                      </div>
-                    ) : null}
-                  </div>
-                  <article className="flex gap-3">
-                    <ProductImage
-                      producto={actual}
-                      sprite={Boolean(actual.pos)}
-                      pos={actual.pos}
-                      className="size-20 shrink-0 bg-muted object-contain p-1"
-                    />
-                    <div className="min-w-0 flex-1">
-                      <p className="line-clamp-3 text-xs font-semibold uppercase leading-snug">{actual.nombre}</p>
-                      <b className="mt-2 block text-sm text-primary">{precioMx(actual.precio)} MXN</b>
-                      <Button
-                        variant="outline"
-                        className="mt-3 h-8 border-accent px-3 text-[11px] font-bold uppercase text-accent hover:bg-accent hover:text-accent-foreground"
-                        onClick={() => agregarProducto(actual, 1, { abrir: false })}
-                      >
-                        Añadir al carrito
-                      </Button>
-                    </div>
-                  </article>
+                  <h3 className="mb-3 text-sm font-extrabold uppercase tracking-wide text-primary">Podría interesarte…</h3>
+                  <ProductCarousel
+                    label="Podría interesarte"
+                    itemClassName="w-[85%] max-w-[280px]"
+                    showArrows={recomendaciones.length > 1}
+                  >
+                    {recomendaciones.map((item) => (
+                      <article key={item.sku} className="flex h-full gap-3 rounded-xl border bg-card p-3">
+                        <ProductImage
+                          producto={item}
+                          sprite={Boolean(item.pos)}
+                          pos={item.pos}
+                          className="size-20 shrink-0 bg-muted object-contain p-1"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <p className="line-clamp-3 text-xs font-semibold uppercase leading-snug">{item.nombre}</p>
+                          <b className="mt-2 block text-sm text-primary">{precioMx(item.precio)} MXN</b>
+                          <Button
+                            variant="outline"
+                            className="mt-3 h-8 border-accent px-3 text-[11px] font-bold uppercase text-accent hover:bg-accent hover:text-accent-foreground"
+                            onClick={() => agregarProducto(item, 1, { abrir: false })}
+                          >
+                            Añadir al carrito
+                          </Button>
+                        </div>
+                      </article>
+                    ))}
+                  </ProductCarousel>
                 </section>
               ) : null}
             </div>
@@ -213,54 +192,5 @@ export function CartDrawer() {
         ) : null}
       </SheetContent>
     </Sheet>
-  );
-}
-
-function CantidadInput({
-  value,
-  nombre,
-  onChange,
-}: {
-  value: number;
-  nombre: string;
-  onChange: (n: number) => void;
-}) {
-  const [texto, setTexto] = useState(String(value));
-
-  useEffect(() => {
-    setTexto(String(value));
-  }, [value]);
-
-  function aplicar(crudo: string) {
-    const digits = crudo.replace(/\D/g, "");
-    if (digits === "") {
-      setTexto("");
-      return;
-    }
-    const n = Math.min(999, Math.max(1, Number.parseInt(digits, 10)));
-    setTexto(String(n));
-    onChange(n);
-  }
-
-  return (
-    <input
-      type="text"
-      inputMode="numeric"
-      pattern="[0-9]*"
-      value={texto}
-      aria-label={`Cantidad de ${nombre}`}
-      onChange={(e) => aplicar(e.target.value)}
-      onBlur={() => {
-        if (texto.trim() === "" || Number(texto) < 1) {
-          setTexto("1");
-          onChange(1);
-        }
-      }}
-      onFocus={(e) => e.target.select()}
-      onKeyDown={(e) => {
-        if (e.key === "Enter") (e.target as HTMLInputElement).blur();
-      }}
-      className="h-8 w-12 border-x bg-transparent text-center text-sm font-semibold text-foreground outline-none"
-    />
   );
 }

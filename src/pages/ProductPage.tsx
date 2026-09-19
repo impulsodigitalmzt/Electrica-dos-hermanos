@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, FileText, Minus, Plus, Share2, ShoppingCart } from "lucide-react";
+import { CantidadInput } from "@/components/CantidadInput";
 import { Header } from "@/components/Header";
 import { PreFooterLeyenda, SiteFooter } from "@/components/HomeSections";
+import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductImage } from "@/components/ProductImage";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
@@ -241,15 +243,29 @@ export function ProductPage({ sku }: { sku: string }) {
                 </div>
 
                 <div className="mt-6 flex flex-wrap items-center gap-3">
-                  <div className="flex h-12 items-center border">
-                    <Button variant="ghost" size="icon" className="size-12 rounded-none" onClick={() => setCantidad((n) => Math.max(1, n - 1))} aria-label="Reducir cantidad">
-                      <Minus />
-                    </Button>
-                    <span className="w-10 text-center font-semibold">{cantidad}</span>
+                  <div className="flex h-12 w-36 items-center overflow-hidden border">
                     <Button
+                      type="button"
                       variant="ghost"
                       size="icon"
-                      className="size-12 rounded-none"
+                      className="size-12 shrink-0 rounded-none"
+                      onClick={() => setCantidad((n) => Math.max(1, n - 1))}
+                      aria-label="Reducir cantidad"
+                    >
+                      <Minus />
+                    </Button>
+                    <CantidadInput
+                      value={cantidad}
+                      nombre={producto.nombre}
+                      max={Math.max(1, producto.stock || 999)}
+                      onChange={setCantidad}
+                      className="h-full min-w-0 flex-1 border-x bg-transparent text-center text-base font-semibold text-foreground outline-none"
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="size-12 shrink-0 rounded-none"
                       onClick={() => setCantidad((n) => Math.min(Math.max(producto.stock, 1), n + 1))}
                       aria-label="Aumentar cantidad"
                     >
@@ -300,43 +316,45 @@ export function ProductPage({ sku }: { sku: string }) {
             {relacionados.length ? (
               <section className="mt-16 border-t pt-10">
                 <h2 className="text-center text-2xl font-extrabold uppercase tracking-wide text-primary">También puede interesarte</h2>
-                <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-                  {relacionados.map((item) => (
-                    <article key={item.sku} className="group relative flex flex-col border bg-card p-3">
-                      <button type="button" className="relative block" onClick={() => navigate(`/producto/${encodeURIComponent(item.sku)}`)}>
-                        <ProductImage
-                          producto={item}
-                          sprite={Boolean(item.pos)}
-                          pos={item.pos}
-                          className="aspect-square w-full object-contain"
-                        />
-                      </button>
-                      {item.stock > 0 ? (
-                        <Button
-                          size="icon"
-                          className="absolute right-4 top-4 opacity-100 shadow-md transition sm:opacity-0 sm:group-hover:opacity-100"
-                          aria-label={`Añadir ${item.nombre} al carrito`}
-                          onClick={() => agregarProducto(item, 1, { abrir: false })}
+                <div className="mt-8">
+                  <ProductCarousel label="También puede interesarte">
+                    {relacionados.map((item) => (
+                      <article key={item.sku} className="group relative flex h-full flex-col border bg-card p-3">
+                        <button type="button" className="relative block w-full" onClick={() => navigate(`/producto/${encodeURIComponent(item.sku)}`)}>
+                          <ProductImage
+                            producto={item}
+                            sprite={Boolean(item.pos)}
+                            pos={item.pos}
+                            className="aspect-square w-full object-contain"
+                          />
+                        </button>
+                        {item.stock > 0 ? (
+                          <Button
+                            size="icon"
+                            className="absolute right-4 top-4 opacity-100 shadow-md transition sm:opacity-0 sm:group-hover:opacity-100"
+                            aria-label={`Añadir ${item.nombre} al carrito`}
+                            onClick={() => agregarProducto(item, 1, { abrir: false })}
+                          >
+                            <ShoppingCart />
+                          </Button>
+                        ) : null}
+                        <span className="mt-3">
+                          <BrandLogo nombre={item.nombre} marca={marcaDe(item.nombre, item.marca)} className="h-4" />
+                        </span>
+                        <button
+                          type="button"
+                          className="mt-1 line-clamp-3 text-left text-sm font-semibold uppercase leading-snug text-primary"
+                          onClick={() => navigate(`/producto/${encodeURIComponent(item.sku)}`)}
                         >
-                          <ShoppingCart />
-                        </Button>
-                      ) : null}
-                      <span className="mt-3">
-                        <BrandLogo nombre={item.nombre} marca={marcaDe(item.nombre, item.marca)} className="h-4" />
-                      </span>
-                      <button
-                        type="button"
-                        className="mt-1 line-clamp-3 text-left text-sm font-semibold uppercase leading-snug text-primary"
-                        onClick={() => navigate(`/producto/${encodeURIComponent(item.sku)}`)}
-                      >
-                        {item.nombre}
-                      </button>
-                      <b className="mt-3 font-display text-lg text-primary">{precioMx(item.precio)} MXN</b>
-                      <p className={`mt-2 text-xs font-semibold ${item.stock > 0 ? "text-success" : "text-sale"}`}>
-                        {item.stock > 0 ? `Disponibles (${item.stock} unidades)` : "Agotado"}
-                      </p>
-                    </article>
-                  ))}
+                          {item.nombre}
+                        </button>
+                        <b className="mt-3 font-display text-lg text-primary">{precioMx(item.precio)} MXN</b>
+                        <p className={`mt-2 text-xs font-semibold ${item.stock > 0 ? "text-success" : "text-sale"}`}>
+                          {item.stock > 0 ? `Disponibles (${item.stock} unidades)` : "Agotado"}
+                        </p>
+                      </article>
+                    ))}
+                  </ProductCarousel>
                 </div>
               </section>
             ) : null}
