@@ -8,7 +8,7 @@ export const HERO_HOME = "/brand/lumi-hero-home.jpg";
 export const HERO_INDUSTRIAL = "/brand/lumi-hero-industrial.jpg";
 export const HERO_PROMO = "/brand/sala-minim-ilum.jpg";
 export const HERO_ILUMINACION = "/brand/iluminacion-sala-reducida.jpeg";
-export const HERO_CONTACTOS = "/brand/sala-minim-ilum1.jpg";
+export const HERO_CONTACTOS = "/brand/apagador%20wifi.JPG";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 export const PROMO_TEMPORADA = "/promocion/promocion.jpg";
 
@@ -64,7 +64,7 @@ export function imagenDeConsulta(q: string, iluminacion = false) {
     return { src: HERO_ILUMINACION, alt: "Sala iluminada con luminarios LED" };
   }
   if (/\b(contacto|placa|apagador|interruptor)\b/.test(texto)) {
-    return { src: HERO_CONTACTOS, alt: "Interior residencial para contactos y placas" };
+    return { src: HERO_CONTACTOS, alt: "Apagador inteligente en cocina iluminada" };
   }
   if (/\bmakita\b/.test(texto)) {
     return { src: HERO_INDUSTRIAL, alt: "Nave industrial lista para herramientas y material eléctrico" };
