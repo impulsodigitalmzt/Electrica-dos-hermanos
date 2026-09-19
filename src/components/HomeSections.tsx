@@ -104,27 +104,15 @@ export function TrustBar() {
 export function PromoContactosVideo() {
   const video = VIDEOS.promocion;
   return (
-    <section className="bg-primary text-primary-foreground" aria-label={video.title}>
-      <div className="mx-auto grid max-w-7xl items-center gap-8 px-4 py-12 sm:gap-10 lg:grid-cols-[minmax(280px,400px)_1fr] lg:gap-14 lg:py-16">
-        <div className="mx-auto w-full max-w-[360px] overflow-hidden rounded-3xl shadow-xl ring-1 ring-white/20 lg:max-w-none">
-          <StoreVideo
-            src={video.src}
-            title={video.title}
-            controls={false}
-            className="aspect-[9/16] w-full"
-          />
-        </div>
-        <div className="text-center lg:text-left">
-          <p className="text-xs font-bold uppercase tracking-widest text-secondary">{video.kicker}</p>
-          <h2 className="mt-3 text-3xl font-extrabold leading-tight sm:text-5xl">{video.heading}</h2>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-primary-foreground/85 lg:mx-0 sm:text-lg">{video.text}</p>
-          <Button size="lg" className="mt-8 h-12 rounded-xl bg-secondary px-8 font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
-            <AppLink to={video.to}>
-              {video.cta} <ArrowRight />
-            </AppLink>
-          </Button>
-        </div>
-      </div>
+    <section className="w-full overflow-hidden bg-background" aria-label={video.title}>
+      <AppLink to={video.to} className="block w-full" aria-label={video.cta}>
+        <StoreVideo
+          src={video.src}
+          title={video.title}
+          controls={false}
+          className="aspect-video max-h-[70vh] w-full sm:max-h-none"
+        />
+      </AppLink>
     </section>
   );
 }
