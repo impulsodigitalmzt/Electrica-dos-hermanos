@@ -156,19 +156,16 @@ export function PromoContactosVideo() {
 export function SucursalTourVideo() {
   const video = VIDEOS.sucursal;
   return (
-    <section className="relative overflow-hidden" aria-label={video.title}>
-      <StoreVideo src={video.src} title={video.title} controls={false} className="h-[260px] w-full sm:h-[380px]" />
-      <div className="absolute inset-0 flex items-center justify-center bg-primary/50 px-6 text-center">
-        <div className="max-w-2xl text-primary-foreground">
-          <p className="text-xs font-bold uppercase tracking-widest">{video.kicker}</p>
-          <h2 className="mt-2 text-3xl font-extrabold sm:text-4xl">{video.heading}</h2>
-          <p className="mt-4 text-sm leading-relaxed text-primary-foreground/90 sm:text-base">{video.text}</p>
-          <Button size="lg" className="mt-6 bg-secondary font-bold text-secondary-foreground hover:bg-secondary/90" asChild>
-            <AppLink to={video.to}>
-              {video.cta} <ArrowRight />
-            </AppLink>
-          </Button>
-        </div>
+    <section className="w-full bg-background py-6 sm:py-8" aria-label={video.title}>
+      <div className="mx-auto max-w-7xl px-4">
+        <AppLink to={video.to} className="block w-full overflow-hidden" aria-label={video.cta}>
+          <StoreVideo
+            src={video.src}
+            title={video.title}
+            controls={false}
+            className="aspect-video w-full"
+          />
+        </AppLink>
       </div>
     </section>
   );
