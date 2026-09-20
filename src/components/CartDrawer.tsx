@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
-import { BadgeCheck, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useState, type SVGProps } from "react";
+import { BadgeCheck, Minus, Plus, Trash2 } from "lucide-react";
 import { CantidadInput } from "@/components/CantidadInput";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductImage } from "@/components/ProductImage";
@@ -11,6 +11,26 @@ import { ENVIO_GRATIS_DESDE, WHATSAPP_URL } from "@/lib/brand";
 import { precioMx } from "@/lib/format";
 import { consultaComplemento, sugerirComplementos } from "@/lib/recomendaciones-carrito";
 import type { Producto } from "@/types";
+
+function IconoCarrito(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+      {...props}
+    >
+      <circle cx="8" cy="21" r="1" />
+      <circle cx="19" cy="21" r="1" />
+      <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+    </svg>
+  );
+}
 
 export function CartDrawer() {
   const { abierto, setAbierto, lineas, cambiarCantidad, quitar, agregarProducto, piezas, total } = useCart();
@@ -46,7 +66,7 @@ export function CartDrawer() {
         <SheetHeader className="border-b p-5">
           <div className="flex items-center justify-between gap-2 pr-8">
             <SheetTitle className="flex items-center gap-2 text-xl uppercase tracking-wide text-primary">
-              <ShoppingCart /> Su carrito
+              <IconoCarrito className="size-5" /> Su carrito
             </SheetTitle>
             <span className="text-xs font-semibold text-accent">Ver carrito</span>
           </div>
@@ -70,7 +90,7 @@ export function CartDrawer() {
         <div className="flex-1 overflow-y-auto p-5">
           {lineas.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <ShoppingCart className="size-14 text-border" />
+              <IconoCarrito className="size-14 text-border" />
               <h3 className="mt-4 text-xl font-bold">Tu carrito está vacío</h3>
               <p className="mt-2 text-sm text-muted-foreground">Encuentra iluminación y material eléctrico para tu proyecto.</p>
               <Button className="mt-5" onClick={() => setAbierto(false)}>
