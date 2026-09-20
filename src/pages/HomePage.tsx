@@ -204,11 +204,11 @@ export function HomePage() {
             <img
               src={PROMO_TEMPORADA}
               alt="Ofertas de temporada: hasta 35% de descuento en material eléctrico e iluminación"
-              width={1600}
-              height={640}
+              width={983}
+              height={768}
               className="h-auto w-full transition-opacity duration-300 group-hover:opacity-95"
             />
-            <div className="pointer-events-none absolute top-[8%] right-[2%] bottom-[8%] left-[43%] overflow-hidden rounded-[clamp(12px,2vw,32px)]">
+            <div className="pointer-events-none absolute top-[5%] right-[2.5%] bottom-[5%] left-[48%] overflow-hidden rounded-[clamp(14px,2.2vw,36px)]">
               <video
                 src={PROMO_TEMPORADA_VIDEO}
                 className="h-full w-full object-cover"
