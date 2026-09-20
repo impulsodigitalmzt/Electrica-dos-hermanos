@@ -35,15 +35,15 @@ export function ScrollingBanner() {
 export function BrandLogoMarquee() {
   function pista(prefijo: string, interactivo: boolean) {
     return (
-      <div className="flex items-center gap-8 px-6 sm:gap-10 sm:px-8" aria-hidden={interactivo ? undefined : true}>
+      <div className="flex items-center gap-10 px-8 sm:gap-12 sm:px-10" aria-hidden={interactivo ? undefined : true}>
         {MARCAS_CATALOGO.map((brand) => {
           const celda =
-            "flex h-12 w-28 shrink-0 items-center justify-center overflow-hidden sm:h-14 sm:w-32";
+            "flex h-14 shrink-0 items-center justify-center px-1 sm:h-16";
           const img = (
             <img
               src={brand.logo}
               alt=""
-              className="max-h-10 w-auto max-w-full object-contain sm:max-h-11"
+              className="h-9 w-auto object-contain sm:h-10"
             />
           );
           return interactivo ? (
@@ -206,13 +206,13 @@ export function Brands() {
           <AppLink
             key={brand.label}
             to={`/buscar?q=${encodeURIComponent(brand.q)}`}
-            className="flex h-28 items-center justify-center overflow-hidden border-b border-r bg-background px-4 transition hover:bg-muted"
+            className="flex h-28 items-center justify-center overflow-hidden border-b border-r bg-background px-5 transition hover:bg-muted"
             aria-label={`Ver productos ${brand.label}`}
           >
             <img
               src={brand.logo}
               alt={brand.label}
-              className="max-h-14 w-auto max-w-full object-contain"
+              className="h-12 w-auto max-w-[85%] object-contain"
             />
           </AppLink>
         ))}
