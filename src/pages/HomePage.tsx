@@ -199,7 +199,7 @@ export function HomePage() {
           <AppLink
             to="/buscar"
             className="group relative mb-4 block w-full overflow-hidden"
-            aria-label="Ofertas de temporada hasta 35% de descuento"
+            aria-label="Ofertas de temporada hasta 35% de descuento — comprar ahora"
           >
             <img
               src={PROMO_TEMPORADA}
@@ -223,6 +223,12 @@ export function HomePage() {
                 />
               </div>
             </div>
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-[4%] top-[71%] inline-flex max-w-[48%] items-center justify-center rounded-full bg-secondary px-[clamp(0.7rem,2.4vw,1.6rem)] py-[clamp(0.32rem,0.95vw,0.6rem)] text-[clamp(0.55rem,1.55vw,0.9rem)] font-bold uppercase tracking-wide text-secondary-foreground shadow-sm transition group-hover:bg-secondary/90 sm:left-[5%] sm:top-[72%]"
+            >
+              Comprar ahora
+            </span>
           </AppLink>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {PROMO_TILES.map((item) => (
