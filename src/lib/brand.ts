@@ -11,6 +11,7 @@ export const HERO_ILUMINACION = "/brand/iluminacion-sala-reducida.jpeg";
 export const HERO_CONTACTOS = "/brand/apagador%20wifi.JPG";
 export const PRODUCT_SHEET = "/brand/lumi-products-sheet.jpg";
 export const PROMO_TEMPORADA = "/promocion/promocion.jpg";
+export const PROMO_TEMPORADA_VIDEO = "/videos/promocion-dos-hnos.mp4";
 
 export const VIDEOS = {
   sucursal: {

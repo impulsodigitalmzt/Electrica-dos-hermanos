@@ -15,6 +15,7 @@ import {
   COLLECTION_CARDS,
   HERO_SLIDES,
   PROMO_TEMPORADA,
+  PROMO_TEMPORADA_VIDEO,
   PROMO_TILES,
   marcaDe,
 } from "@/lib/brand";
@@ -197,16 +198,29 @@ export function HomePage() {
           </div>
           <AppLink
             to="/buscar"
-            className="group mb-4 block w-full"
-            aria-label="Ofertas de temporada hasta 20% de descuento"
+            className="group relative mb-4 block w-full overflow-hidden"
+            aria-label="Ofertas de temporada hasta 35% de descuento"
           >
             <img
               src={PROMO_TEMPORADA}
-              alt="Ofertas de temporada: hasta 20% de descuento en material eléctrico e iluminación"
+              alt="Ofertas de temporada: hasta 35% de descuento en material eléctrico e iluminación"
               width={1600}
               height={640}
               className="h-auto w-full transition-opacity duration-300 group-hover:opacity-95"
             />
+            <div className="pointer-events-none absolute top-[8%] right-[2%] bottom-[8%] left-[43%] overflow-hidden rounded-[clamp(12px,2vw,32px)]">
+              <video
+                src={PROMO_TEMPORADA_VIDEO}
+                className="h-full w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-hidden
+                title="Promoción Eléctrica Dos Hermanos"
+              />
+            </div>
           </AppLink>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
             {PROMO_TILES.map((item) => (
