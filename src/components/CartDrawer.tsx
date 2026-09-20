@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { BadgeCheck, Minus, Plus, Trash2 } from "lucide-react";
+import { BadgeCheck, Minus, Plus, ShoppingCart, Trash2 } from "lucide-react";
 import { CantidadInput } from "@/components/CantidadInput";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductImage } from "@/components/ProductImage";
