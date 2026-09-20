@@ -208,18 +208,20 @@ export function HomePage() {
               height={768}
               className="h-auto w-full transition-opacity duration-300 group-hover:opacity-95"
             />
-            <div className="pointer-events-none absolute top-[5%] right-[2.5%] bottom-[5%] left-[48%] overflow-hidden rounded-[clamp(14px,2.2vw,36px)]">
-              <video
-                src={PROMO_TEMPORADA_VIDEO}
-                className="h-full w-full object-cover"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-hidden
-                title="Promoción Eléctrica Dos Hermanos"
-              />
+            <div className="pointer-events-none absolute inset-y-[6%] right-[2.5%] left-[56%] flex items-center justify-end">
+              <div className="h-full max-w-full aspect-[9/16] overflow-hidden rounded-[clamp(16px,2.5vw,40px)] shadow-md">
+                <video
+                  src={PROMO_TEMPORADA_VIDEO}
+                  className="h-full w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-hidden
+                  title="Promoción Eléctrica Dos Hermanos"
+                />
+              </div>
             </div>
           </AppLink>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
