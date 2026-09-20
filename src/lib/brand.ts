@@ -18,7 +18,7 @@ export const VIDEOS = {
     src: "/videos/anuncio.mp4",
     title: "Recorrido por sucursal Eléctrica dos Hermanos",
     kicker: "En sucursal",
-    heading: "Recoge hoy en piso",
+    heading: "Recorre nuestra sucursal",
     text: "Más de 10,000 productos para obra, casa y negocio. Te armamos la lista el mismo día.",
     cta: "Ver sucursales",
     to: "/#sucursales",
@@ -44,7 +44,7 @@ export const VIDEOS = {
   promocion: {
     src: "/videos/tecnolite.mp4",
     title: "Promoción Tecnolite en Eléctrica dos Hermanos",
-    kicker: "Promoción",
+    kicker: "Tecnolite",
     heading: "Iluminación Tecnolite",
     text: "Luminarios Tecnolite en promoción, con existencias para recoger en sucursal o envío a todo México.",
     cta: "Ver Tecnolite",

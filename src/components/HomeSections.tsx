@@ -147,8 +147,21 @@ export function TrustBar() {
 export function PromoContactosVideo() {
   const video = VIDEOS.promocion;
   return (
-    <section className="w-full bg-background" aria-label={video.title}>
+    <section className="w-full bg-background py-10 sm:py-12" aria-labelledby="video-tecnolite">
       <div className="mx-auto max-w-7xl px-4">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase text-accent">{video.kicker}</span>
+            <h2 id="video-tecnolite" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+              {video.heading}
+            </h2>
+          </div>
+          <Button variant="ghost" className="hidden text-primary sm:flex" asChild>
+            <AppLink to={video.to}>
+              {video.cta} <ArrowRight />
+            </AppLink>
+          </Button>
+        </div>
         <AppLink to={video.to} className="block w-full overflow-hidden" aria-label={video.cta}>
           <StoreVideo
             src={video.src}
@@ -165,8 +178,21 @@ export function PromoContactosVideo() {
 export function SucursalTourVideo() {
   const video = VIDEOS.sucursal;
   return (
-    <section className="w-full bg-background py-6 sm:py-8" aria-label={video.title}>
+    <section className="w-full bg-background py-10 sm:py-12" aria-labelledby="video-sucursal">
       <div className="mx-auto max-w-7xl px-4">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <span className="text-xs font-bold uppercase text-accent">{video.kicker}</span>
+            <h2 id="video-sucursal" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+              {video.heading}
+            </h2>
+          </div>
+          <Button variant="ghost" className="hidden text-primary sm:flex" asChild>
+            <AppLink to={video.to}>
+              {video.cta} <ArrowRight />
+            </AppLink>
+          </Button>
+        </div>
         <AppLink to={video.to} className="block w-full overflow-hidden" aria-label={video.cta}>
           <StoreVideo
             src={video.src}
