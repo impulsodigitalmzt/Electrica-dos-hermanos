@@ -32,43 +32,20 @@ export function ScrollingBanner() {
   );
 }
 
-const LOGO_TAMANO: Partial<Record<(typeof MARCAS_CATALOGO)[number]["label"], string>> = {
-  TECNOLITE: "max-h-11 scale-110",
-  BTICINO: "max-h-11 scale-[1.45]",
-  CONDULAC: "max-h-11 scale-[1.55]",
-  CONDUMEX: "max-h-11 scale-[1.5]",
-  PHILIPS: "max-h-11 scale-[1.35]",
-  OSRAM: "max-h-11 scale-110",
-  SIEMENS: "max-h-11 scale-[1.6]",
-  VOLTECK: "max-h-11 scale-[1.45]",
-  MAGG: "max-h-11 scale-[1.55]",
-  IUSA: "max-h-11 scale-125",
-  ANCLO: "max-h-11 scale-125",
-  "ARROW HART": "max-h-11 scale-125",
-  EMMSA: "max-h-11 scale-125",
-  VIAKON: "max-h-11 scale-[1.35]",
-  "3M": "max-h-11 scale-125",
-  MAKITA: "max-h-11 scale-110",
-  TULMEX: "max-h-11 scale-125",
-  POLIFLEX: "max-h-11 scale-[1.35]",
-  RAWELT: "max-h-11 scale-125",
-  "SQUARE D": "max-h-11 scale-125",
-  "SOLA BASIC": "max-h-11 scale-[1.35]",
-  TORK: "max-h-11 scale-125",
-  TRUPER: "max-h-11 scale-110",
-};
-
-function logoMarcaClass(label: string): string {
-  return `w-full object-contain ${LOGO_TAMANO[label as keyof typeof LOGO_TAMANO] ?? "max-h-11 scale-110"}`;
-}
-
 export function BrandLogoMarquee() {
   function pista(prefijo: string, interactivo: boolean) {
     return (
-      <div className="flex items-center gap-3 px-3 sm:gap-4 sm:px-4" aria-hidden={interactivo ? undefined : true}>
+      <div className="flex items-center gap-8 px-6 sm:gap-10 sm:px-8" aria-hidden={interactivo ? undefined : true}>
         {MARCAS_CATALOGO.map((brand) => {
-          const celda = "flex h-14 w-24 shrink-0 items-center justify-center overflow-visible sm:h-16 sm:w-28";
-          const img = <img src={brand.logo} alt="" className={logoMarcaClass(brand.label)} />;
+          const celda =
+            "flex h-12 w-28 shrink-0 items-center justify-center overflow-hidden sm:h-14 sm:w-32";
+          const img = (
+            <img
+              src={brand.logo}
+              alt=""
+              className="max-h-10 w-auto max-w-full object-contain sm:max-h-11"
+            />
+          );
           return interactivo ? (
             <AppLink
               key={`${prefijo}-${brand.label}`}
@@ -89,7 +66,7 @@ export function BrandLogoMarquee() {
   }
 
   return (
-    <section className="overflow-hidden border-y bg-background py-4" aria-label="Marcas disponibles">
+    <section className="overflow-hidden border-y bg-background py-5" aria-label="Marcas disponibles">
       <div className="edh-marquee-brands flex w-max items-center">
         {pista("a", true)}
         {pista("b", false)}
@@ -203,17 +180,6 @@ export function SucursalTourVideo() {
   );
 }
 
-const LOGO_GRID: Partial<Record<(typeof MARCAS_CATALOGO)[number]["label"], string>> = {
-  TECNOLITE: "max-h-16 scale-110",
-  BTICINO: "max-h-16 scale-[1.55]",
-  CONDULAC: "max-h-16 scale-[1.5]",
-  CONDUMEX: "max-h-16 scale-[1.4]",
-  PHILIPS: "max-h-16 scale-[1.4]",
-  SIEMENS: "max-h-16 scale-[1.55]",
-  VOLTECK: "max-h-16 scale-[1.5]",
-  MAGG: "max-h-16 scale-[1.5]",
-};
-
 export function Brands() {
   const makita = VIDEOS.makita;
   return (
@@ -240,13 +206,13 @@ export function Brands() {
           <AppLink
             key={brand.label}
             to={`/buscar?q=${encodeURIComponent(brand.q)}`}
-            className="flex h-28 items-center justify-center overflow-hidden border-b border-r bg-background px-3 transition hover:bg-muted"
+            className="flex h-28 items-center justify-center overflow-hidden border-b border-r bg-background px-4 transition hover:bg-muted"
             aria-label={`Ver productos ${brand.label}`}
           >
             <img
               src={brand.logo}
               alt={brand.label}
-              className={`w-full object-contain ${LOGO_GRID[brand.label] ?? "max-h-14"}`}
+              className="max-h-14 w-auto max-w-full object-contain"
             />
           </AppLink>
         ))}
