@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { AppLink } from "@/lib/nav";
 import {
   BRANCHES,
-  EMPRESA_DESCRIPCION,
   EMPRESA_PRIORIDAD,
   EMPRESA_RAZON,
   LOGO_SRC,
@@ -42,22 +41,6 @@ export function ScrollingBanner() {
         <span className="px-6" aria-hidden>
           {frase.repeat(2)}
         </span>
-      </div>
-    </section>
-  );
-}
-
-export function EmpresaIntro() {
-  return (
-    <section className="bg-muted py-12 sm:py-16" aria-labelledby="empresa">
-      <div className="mx-auto max-w-7xl px-4">
-        <div className="mx-auto max-w-3xl text-center">
-          <span className="text-xs font-bold uppercase text-accent">{EMPRESA_RAZON}</span>
-          <h2 id="empresa" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
-            {EMPRESA_PRIORIDAD.replace(/\.$/, "")}
-          </h2>
-          <p className="mt-5 text-sm leading-relaxed text-muted-foreground sm:text-base">{EMPRESA_DESCRIPCION}</p>
-        </div>
       </div>
     </section>
   );

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
-import { Brands, BrandLogoMarquee, EmpresaIntro, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
+import { Brands, BrandLogoMarquee, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
@@ -13,6 +13,9 @@ import { fetchCatalogo } from "@/lib/api";
 import {
   CATEGORY_TILES,
   COLLECTION_CARDS,
+  EMPRESA_DESCRIPCION,
+  EMPRESA_PRIORIDAD,
+  EMPRESA_RAZON,
   HERO_SLIDES,
   SECTORES_TIENDA,
   PROMO_TEMPORADA,
@@ -126,16 +129,15 @@ export function HomePage() {
         </section>
 
         <ScrollingBanner />
-        <EmpresaIntro />
 
-        <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="sectores">
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="empresa">
           <div className="mb-8 text-center">
-            <span className="text-xs font-bold uppercase text-accent">Nuestros sectores</span>
-            <h2 id="sectores" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
-              Electricidad, plomería, ferretería y herramientas
+            <span className="text-xs font-bold uppercase text-accent">{EMPRESA_RAZON}</span>
+            <h2 id="empresa" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+              {EMPRESA_PRIORIDAD.replace(/\.$/, "")}
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-              Todo el catálogo de Eléctrica Dos Hermanos está basado en estos cuatro rubros para casa, negocio y obra.
+            <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {EMPRESA_DESCRIPCION}
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
