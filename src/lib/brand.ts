@@ -204,14 +204,6 @@ export const SECTORES_TIENDA = [
     image: "/intro/promo/3%20ferreteria.jpg",
     alt: "Ferretería: martillo, pinzas, tornillos y herrajes",
   },
-  {
-    id: "herramientas",
-    label: "Herramientas",
-    text: "Equipo profesional para instalación, corte y obra.",
-    to: "/buscar?q=herramientas",
-    image: "/intro/promo/4%20herramienta.jpg",
-    alt: "Herramientas eléctricas y de batería para obra",
-  },
 ] as const;
 
 export const COLLECTION_CARDS = [

@@ -130,19 +130,19 @@ export function HomePage() {
 
         <ScrollingBanner />
 
-        <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="empresa">
-          <div className="mb-8 text-center">
-            <span className="text-xs font-bold uppercase text-accent">{EMPRESA_RAZON}</span>
-            <h2 id="empresa" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+        <section className="mx-auto max-w-6xl px-4 py-10 sm:py-12" aria-labelledby="empresa">
+          <div className="mx-auto mb-8 max-w-3xl text-center sm:mb-10">
+            <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-accent">{EMPRESA_RAZON}</span>
+            <h2 id="empresa" className="mt-1.5 text-xl font-extrabold leading-tight text-primary sm:text-3xl">
               {EMPRESA_PRIORIDAD.replace(/\.$/, "")}
             </h2>
-            <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+            <p className="mx-auto mt-3 text-sm leading-relaxed text-muted-foreground sm:mt-3.5 sm:text-[15px]">
               {EMPRESA_DESCRIPCION}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 sm:gap-5 lg:gap-8">
             {SECTORES_TIENDA.map((item) => (
-              <AppLink key={item.id} to={item.to} className="group block text-left">
+              <AppLink key={item.id} to={item.to} className="group block text-center">
                 <div className="overflow-hidden bg-muted">
                   <img
                     src={item.image}
@@ -150,10 +150,10 @@ export function HomePage() {
                     className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-                <span className="mt-3 block font-display text-base font-extrabold text-primary sm:text-xl">
+                <span className="mt-3 block font-display text-lg font-extrabold text-primary">
                   {item.label}
                 </span>
-                <span className="mt-1 block text-xs leading-snug text-muted-foreground sm:text-sm">
+                <span className="mx-auto mt-1 block max-w-[16rem] text-sm leading-snug text-muted-foreground">
                   {item.text}
                 </span>
               </AppLink>
