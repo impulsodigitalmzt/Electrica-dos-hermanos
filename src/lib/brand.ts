@@ -171,6 +171,41 @@ export const PROMO_TILES = [
   { label: "Empotrados", to: "/iluminacion?q=downlight", image: FOTO.promoSpot },
 ] as const;
 
+export const SECTORES_TIENDA = [
+  {
+    id: "electricidad",
+    label: "Electricidad",
+    text: "Iluminación, contactos, placas, tubería y conductores.",
+    to: "/buscar?q=electricidad&categoria=electricidad",
+    image: "/intro/promo/1%20electricidad.jpg",
+    alt: "Material eléctrico: iluminación, contactos y protecciones",
+  },
+  {
+    id: "plomeria",
+    label: "Plomería",
+    text: "Llaves, tubería hidráulica y accesorios para instalación.",
+    to: "/buscar?q=plomeria&categoria=plomeria",
+    image: "/intro/promo/2%20plomeria.jpg",
+    alt: "Material de plomería: llaves, tubería y conexiones",
+  },
+  {
+    id: "ferreteria",
+    label: "Ferretería",
+    text: "Tornillería, herrajes y materiales para obra y mantenimiento.",
+    to: "/buscar?q=ferreteria",
+    image: "/intro/promo/3%20ferreteria.jpg",
+    alt: "Ferretería: martillo, pinzas, tornillos y herrajes",
+  },
+  {
+    id: "herramientas",
+    label: "Herramientas",
+    text: "Equipo profesional para instalación, corte y obra.",
+    to: "/buscar?q=herramientas",
+    image: "/intro/promo/4%20herramienta.jpg",
+    alt: "Herramientas eléctricas y de batería para obra",
+  },
+] as const;
+
 export const COLLECTION_CARDS = [
   { label: "Iluminación", to: "/iluminacion", image: FOTO.colgante },
   { label: "Contactos Residenciales", to: "/buscar?q=contacto", image: FOTO.contacto },

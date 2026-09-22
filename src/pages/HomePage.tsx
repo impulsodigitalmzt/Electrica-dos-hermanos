@@ -14,6 +14,7 @@ import {
   CATEGORY_TILES,
   COLLECTION_CARDS,
   HERO_SLIDES,
+  SECTORES_TIENDA,
   PROMO_TEMPORADA,
   PROMO_TEMPORADA_VIDEO,
   PROMO_TILES,
@@ -125,6 +126,37 @@ export function HomePage() {
         </section>
 
         <ScrollingBanner />
+
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="sectores">
+          <div className="mb-8 text-center">
+            <span className="text-xs font-bold uppercase text-accent">Nuestros sectores</span>
+            <h2 id="sectores" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+              Electricidad, plomería, ferretería y herramientas
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Todo el catálogo de Eléctrica Dos Hermanos está basado en estos cuatro rubros para casa, negocio y obra.
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-5">
+            {SECTORES_TIENDA.map((item) => (
+              <AppLink key={item.id} to={item.to} className="group block text-left">
+                <div className="overflow-hidden bg-muted">
+                  <img
+                    src={item.image}
+                    alt={item.alt}
+                    className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <span className="mt-3 block font-display text-base font-extrabold text-primary sm:text-xl">
+                  {item.label}
+                </span>
+                <span className="mt-1 block text-xs leading-snug text-muted-foreground sm:text-sm">
+                  {item.text}
+                </span>
+              </AppLink>
+            ))}
+          </div>
+        </section>
 
         <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="colecciones">
           <div className="mb-8 text-center">

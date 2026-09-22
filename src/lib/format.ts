@@ -7,6 +7,7 @@ export function etiquetaCategoria(categoria: string): string {
     electricidad: "Electricidad",
     ferreteria: "Ferretería",
     plomeria: "Plomería",
+    herramientas: "Herramientas",
     otro: "Más materiales",
     iluminacion: "Iluminación",
     contactos: "Contactos Residenciales",
