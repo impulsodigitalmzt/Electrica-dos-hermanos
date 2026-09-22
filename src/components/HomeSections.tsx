@@ -19,9 +19,9 @@ import { AppLink } from "@/lib/nav";
 import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS_CATALOGO, mapsDirHref, telHref, VIDEOS, WHATSAPP_URL, type Branch } from "@/lib/brand";
 
 export function ScrollingBanner() {
-  const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Recoge en sucursal Matriz Mazatlán  ·  Asesoría técnica en Culiacán y Los Cabos  ·  ";
+  const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Envío GRATIS dentro de zona de la misma ciudad, sin mínimo  ·  Asesoría técnica  ·  ";
   return (
-    <section className="overflow-hidden bg-primary py-3 text-primary-foreground" aria-label="Promociones de envío">
+    <section className="overflow-hidden bg-primary py-4 text-primary-foreground sm:py-5" aria-label="Promociones de envío">
       <div className="edh-marquee flex w-max whitespace-nowrap text-sm font-bold uppercase tracking-wide sm:text-base">
         <span className="px-6">{frase.repeat(2)}</span>
         <span className="px-6" aria-hidden>
