@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, PackageCheck, ShoppingCart } from "lucide-react";
 import { BrandLogo } from "@/components/BrandLogo";
 import { Header } from "@/components/Header";
-import { Brands, BrandLogoMarquee, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
+import { Brands, BrandLogoMarquee, EmpresaIntro, Faq, PreFooterLeyenda, PrivacyNotice, PromoContactosVideo, ScrollingBanner, SiteFooter, SucursalTourVideo, Sucursales, Testimonials, TrustBar } from "@/components/HomeSections";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { ProductCard } from "@/components/ProductCard";
 import { ProductImage } from "@/components/ProductImage";
@@ -126,6 +126,7 @@ export function HomePage() {
         </section>
 
         <ScrollingBanner />
+        <EmpresaIntro />
 
         <section className="mx-auto max-w-7xl px-4 py-14 sm:py-16" aria-labelledby="sectores">
           <div className="mb-8 text-center">

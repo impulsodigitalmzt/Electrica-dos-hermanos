@@ -16,7 +16,23 @@ import { StoreVideo } from "@/components/StoreVideo";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
 import { AppLink } from "@/lib/nav";
-import { BRANCHES, LOGO_SRC, MAIN_EMAIL, MARCAS_CATALOGO, mapsDirHref, telHref, VIDEOS, WHATSAPP_URL, type Branch } from "@/lib/brand";
+import {
+  BRANCHES,
+  BRANCHES_OFICIALES,
+  EMPRESA_DESCRIPCION,
+  EMPRESA_PRIORIDAD,
+  EMPRESA_RAZON,
+  LOGO_SRC,
+  MAIN_EMAIL,
+  MAIN_EMAILS,
+  MARCAS_CATALOGO,
+  emailDe,
+  mapsDirHref,
+  telHref,
+  VIDEOS,
+  WHATSAPP_URL,
+  type Branch,
+} from "@/lib/brand";
 
 export function ScrollingBanner() {
   const frase = "Más de 10,000 productos disponibles  ·  Envío GRATIS en compras mayores a $1,000  ·  Envío GRATIS dentro de zona de la misma ciudad, sin mínimo  ·  Asesoría técnica  ·  ";
@@ -27,6 +43,50 @@ export function ScrollingBanner() {
         <span className="px-6" aria-hidden>
           {frase.repeat(2)}
         </span>
+      </div>
+    </section>
+  );
+}
+
+export function EmpresaIntro() {
+  return (
+    <section className="bg-muted py-12 sm:py-16" aria-labelledby="empresa">
+      <div className="mx-auto max-w-7xl px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="text-xs font-bold uppercase text-accent">{EMPRESA_RAZON}</span>
+          <h2 id="empresa" className="mt-2 text-2xl font-extrabold text-primary sm:text-4xl">
+            {EMPRESA_PRIORIDAD.replace(/\.$/, "")}
+          </h2>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground sm:text-base">{EMPRESA_DESCRIPCION}</p>
+        </div>
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {BRANCHES_OFICIALES.map((branch) => (
+            <article key={branch.id} className="border bg-card p-5">
+              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">{branch.city}</p>
+              <h3 className="mt-1 font-display text-base font-extrabold text-primary">{branch.name}</h3>
+              <p className="mt-3 text-sm leading-snug text-muted-foreground">
+                {branch.address}
+                {branch.note ? <span className="mt-1 block font-semibold text-primary">{branch.note}</span> : null}
+              </p>
+              <ul className="mt-4 space-y-1.5 text-sm">
+                {branch.phones.map((phone) => (
+                  <li key={phone}>
+                    <a href={telHref(phone)} className="font-semibold text-primary hover:underline">
+                      Tel. {phone}
+                    </a>
+                  </li>
+                ))}
+                {branch.emails.map((correo) => (
+                  <li key={correo}>
+                    <a href={`mailto:${correo}`} className="break-all text-xs font-semibold text-primary hover:underline sm:text-sm">
+                      {correo}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -292,9 +352,8 @@ export function Sucursales() {
       <div className="text-center">
         <span className="text-xs font-bold uppercase text-accent">Estamos cerca de ti</span>
         <h2 className="mt-2 text-3xl font-extrabold text-primary sm:text-4xl">Nuestras sucursales</h2>
-        <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-          Material eléctrico en alta y baja tensión, ferretería y plomería en Mazatlán, Culiacán, San José del Cabo y Cabo San
-          Lucas, con envíos a todo México.
+        <p className="mx-auto mt-4 max-w-3xl text-muted-foreground">
+          {EMPRESA_PRIORIDAD} Visítanos en Mazatlán, Culiacán, San José del Cabo y Cabo San Lucas, o pide envío a todo México.
         </p>
       </div>
       <div className="mx-auto mt-10 max-w-3xl overflow-hidden rounded-3xl border bg-black shadow-sm">
@@ -355,10 +414,13 @@ export function Sucursales() {
                 <h3 className="mt-0.5 truncate font-display text-lg font-extrabold text-primary sm:text-xl">{branch.name}</h3>
               </div>
             </div>
-            <div className="mt-3 flex flex-col gap-1.5 text-xs text-muted-foreground sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-5 sm:text-sm">
+            <div className="mt-3 flex flex-col gap-1.5 text-xs text-muted-foreground sm:text-sm">
               <p className="flex min-w-0 items-start gap-1.5">
                 <MapPin className="mt-0.5 size-3.5 shrink-0 text-secondary" />
-                <span className="leading-snug">{branch.address}</span>
+                <span className="leading-snug">
+                  {branch.address}
+                  {branch.note ? ` · ${branch.note}` : ""}
+                </span>
               </p>
               <p className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
                 <Phone className="size-3.5 shrink-0 text-secondary" />
@@ -368,10 +430,18 @@ export function Sucursales() {
                   </a>
                 ))}
               </p>
-              <a href={`mailto:${branch.email}`} className="flex min-w-0 items-center gap-1.5 break-all font-semibold text-primary hover:underline">
-                <Mail className="size-3.5 shrink-0 text-secondary" />
-                {branch.email}
-              </a>
+              <div className="flex flex-col gap-1">
+                {branch.emails.map((correo) => (
+                  <a
+                    key={correo}
+                    href={`mailto:${correo}`}
+                    className="flex min-w-0 items-center gap-1.5 break-all font-semibold text-primary hover:underline"
+                  >
+                    <Mail className="size-3.5 shrink-0 text-secondary" />
+                    {correo}
+                  </a>
+                ))}
+              </div>
             </div>
             <div className="mt-3 grid grid-cols-3 gap-2">
               <Button asChild className="h-10 rounded-xl bg-secondary px-2 text-xs font-bold text-secondary-foreground shadow-none hover:bg-secondary/90 sm:text-sm">
@@ -385,7 +455,7 @@ export function Sucursales() {
                 </a>
               </Button>
               <Button asChild variant="outline" className="h-10 rounded-xl border-primary/15 px-2 text-xs font-bold text-primary hover:bg-primary hover:text-primary-foreground sm:text-sm">
-                <a href={`mailto:${branch.email}`}>
+                <a href={`mailto:${emailDe(branch)}`}>
                   <Mail /> Cotizar
                 </a>
               </Button>
@@ -403,9 +473,10 @@ export function PrivacyNotice() {
       <div className="mx-auto max-w-3xl px-4 text-center">
         <h2 className="text-2xl font-extrabold text-primary">Aviso de privacidad</h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Eléctrica dos Hermanos S.A. de C.V., con domicilio en División del Nte. 1900, Francisco Villa, 82127 Mazatlán,
-          Sin., utiliza tus datos personales únicamente para atender cotizaciones, pedidos, facturación y envíos. No compartimos
-          tu información con terceros ajenos a estos fines. Para ejercer tus derechos ARCO escríbenos a{" "}
+          {EMPRESA_RAZON}, con domicilio en División del Norte #1900, Col. Francisco Villa, C.P. 82117, Mazatlán, Sin.,
+          frente a Gasolinera La Marina, utiliza tus datos personales únicamente para atender cotizaciones, pedidos,
+          facturación y envíos. No compartimos tu información con terceros ajenos a estos fines. Para ejercer tus derechos
+          ARCO escríbenos a{" "}
           <a className="font-semibold text-primary hover:underline" href={`mailto:${MAIN_EMAIL}`}>
             {MAIN_EMAIL}
           </a>
@@ -431,9 +502,9 @@ export function SiteFooter() {
               dos Hermanos
             </span>
           </div>
-          <p className="mt-4 text-sm font-semibold text-primary-foreground/80">Eléctrica dos Hermanos S.A. de C.V.</p>
+          <p className="mt-4 text-sm font-semibold text-primary-foreground/80">{EMPRESA_RAZON}</p>
           <p className="mt-2 text-sm leading-relaxed text-primary-foreground/70">
-            Material eléctrico en alta y baja tensión, ferretería y plomería para su hogar o negocio.
+            Material eléctrico en alta y baja tensión, ferretería y plomería. {EMPRESA_PRIORIDAD}
           </p>
           <div className="mt-5 flex gap-2">
             <Button size="icon" variant="outline" className="border-primary-foreground/30 bg-transparent text-primary-foreground" asChild>
@@ -458,22 +529,29 @@ export function SiteFooter() {
           <ul className="mt-4 space-y-3 text-sm text-primary-foreground/70">
             <li>
               <a className="hover:text-primary-foreground" href={telHref("6699407077")}>
-                Tel. (669) 940-7077
+                Tel. (669) 940-70-77
               </a>
             </li>
             <li>
               <a className="hover:text-primary-foreground" href={telHref("6699407088")}>
-                Tel. (669) 940-7088
+                Tel. (669) 940-70-88
               </a>
             </li>
             <li>
-              <a className="break-all hover:text-primary-foreground" href={`mailto:${MAIN_EMAIL}`}>
-                {MAIN_EMAIL}
+              <a className="hover:text-primary-foreground" href={telHref("6691332119")}>
+                Tel. (669) 133-21-19
               </a>
             </li>
+            {MAIN_EMAILS.map((correo) => (
+              <li key={correo}>
+                <a className="break-all hover:text-primary-foreground" href={`mailto:${correo}`}>
+                  {correo}
+                </a>
+              </li>
+            ))}
             <li>
               <a className="hover:text-primary-foreground" href={WHATSAPP_URL} target="_blank" rel="noreferrer">
-                WhatsApp (669) 940-7077
+                WhatsApp (669) 940-70-77
               </a>
             </li>
           </ul>

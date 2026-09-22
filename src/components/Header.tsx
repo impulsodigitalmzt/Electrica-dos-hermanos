@@ -76,7 +76,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
             <span className="leading-snug">Envíos gratis a todo México en compras mayores a $1,000</span>
           </span>
           <div className="hidden items-center gap-5 lg:flex">
-            <a href={telHref("6699407077")}>Tel. (669) 940-7077 / 940-7088</a>
+            <a href={telHref("6699407077")}>Tel. (669) 940-70-77 / 940-70-88 / 133-21-19</a>
             <a href={`mailto:${MAIN_EMAIL}`}>{MAIN_EMAIL}</a>
             <a className="flex items-center gap-1 text-secondary" href={WHATSAPP_URL}>
               <MessageCircle className="size-4" /> WhatsApp
@@ -182,7 +182,7 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
                 <div className="min-w-0 text-white">
                   <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-secondary">Bienvenido</p>
                   <p className="font-display text-lg font-extrabold leading-tight">Eléctrica Dos Hermanos</p>
-                  <p className="mt-0.5 text-xs text-white/80">Material eléctrico · Iluminación · Ferretería</p>
+                  <p className="mt-0.5 text-xs text-white/80">Material eléctrico · Ferretería · Plomería</p>
                 </div>
               </div>
             </button>
@@ -259,14 +259,14 @@ export function Header({ query, onQueryChange, variant = "home", searchPath = "/
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
                     <MapPin className="size-4" />
                   </span>
-                  <span className="pt-1.5">Matriz Mazatlán · 5 sucursales más en Sin. y B.C.S.</span>
+                  <span className="pt-1.5">Matriz Mazatlán · Culiacán · San José del Cabo · Cabo San Lucas</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-[#eef2f7] text-primary">
                     <Phone className="size-4" />
                   </span>
                   <a className="pt-1.5 hover:text-primary" href={telHref("6699407077")}>
-                    (669) 940-7077 / 940-7088
+                    (669) 940-70-77 / 940-70-88 / 133-21-19
                   </a>
                 </li>
                 <li className="flex gap-3">
