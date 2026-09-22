@@ -387,8 +387,6 @@ export const BRANCHES: Branch[] = [
   },
 ];
 
-export const BRANCHES_OFICIALES = BRANCHES.filter((branch) => branch.oficial);
-
 export function emailDe(branch: Branch): string {
   return branch.emails[0] ?? MAIN_EMAIL;
 }

@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { AppLink } from "@/lib/nav";
 import {
   BRANCHES,
-  BRANCHES_OFICIALES,
   EMPRESA_DESCRIPCION,
   EMPRESA_PRIORIDAD,
   EMPRESA_RAZON,
@@ -58,34 +57,6 @@ export function EmpresaIntro() {
             {EMPRESA_PRIORIDAD.replace(/\.$/, "")}
           </h2>
           <p className="mt-5 text-sm leading-relaxed text-muted-foreground sm:text-base">{EMPRESA_DESCRIPCION}</p>
-        </div>
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-          {BRANCHES_OFICIALES.map((branch) => (
-            <article key={branch.id} className="border bg-card p-5">
-              <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-accent">{branch.city}</p>
-              <h3 className="mt-1 font-display text-base font-extrabold text-primary">{branch.name}</h3>
-              <p className="mt-3 text-sm leading-snug text-muted-foreground">
-                {branch.address}
-                {branch.note ? <span className="mt-1 block font-semibold text-primary">{branch.note}</span> : null}
-              </p>
-              <ul className="mt-4 space-y-1.5 text-sm">
-                {branch.phones.map((phone) => (
-                  <li key={phone}>
-                    <a href={telHref(phone)} className="font-semibold text-primary hover:underline">
-                      Tel. {phone}
-                    </a>
-                  </li>
-                ))}
-                {branch.emails.map((correo) => (
-                  <li key={correo}>
-                    <a href={`mailto:${correo}`} className="break-all text-xs font-semibold text-primary hover:underline sm:text-sm">
-                      {correo}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </article>
-          ))}
         </div>
       </div>
     </section>
