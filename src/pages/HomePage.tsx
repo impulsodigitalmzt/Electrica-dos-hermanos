@@ -230,7 +230,7 @@ export function HomePage() {
           </div>
           <AppLink
             to="/buscar"
-            className="group relative mb-4 block w-full overflow-hidden"
+            className="group relative mb-4 block w-full overflow-hidden lg:mx-auto lg:w-[90%]"
             aria-label="Ofertas de temporada hasta 35% de descuento — comprar ahora"
           >
             <img
