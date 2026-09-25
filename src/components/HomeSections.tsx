@@ -80,10 +80,18 @@ export function BrandLogoMarquee() {
   }
 
   return (
-    <section className="overflow-hidden border-y bg-background py-5" aria-label="Marcas disponibles">
-      <div className="edh-marquee-brands flex w-max items-center">
-        {pista("a", true)}
-        {pista("b", false)}
+    <section className="border-y bg-background py-8 sm:py-10" aria-labelledby="marcas-barra">
+      <div className="mx-auto mb-5 max-w-7xl px-4 text-center sm:mb-6">
+        <span className="text-xs font-bold uppercase text-accent">Marcas de confianza</span>
+        <h2 id="marcas-barra" className="mt-1.5 text-xl font-extrabold text-primary sm:text-2xl">
+          Tenemos las mejores marcas del mercado
+        </h2>
+      </div>
+      <div className="overflow-hidden">
+        <div className="edh-marquee-brands flex w-max items-center">
+          {pista("a", true)}
+          {pista("b", false)}
+        </div>
       </div>
     </section>
   );
